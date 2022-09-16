@@ -21,6 +21,6 @@ struct Film:Codable {
     let video: Bool?
     let vote_average: Double
     let vote_count: Int
-
+    let genre_ids: [Int]
 
 }

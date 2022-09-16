@@ -70,8 +70,63 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         collectionView.deselectItem(at: indexPath, animated: true)
+        
+//        let attributes = collectionView.layoutAttributesForItem(at: indexPath)
+//        let realCenter = collectionView.convert(attributes!.frame, to: collectionView.superview?.superview?.superview?.superview)
+//        print(realCenter)
+
         let film = films[indexPath.row]
         delegate?.didTapCell(film: film)
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config1 = UIContextMenuConfiguration(identifier: nil) { () -> UIViewController? in
+            return ProfileViewController()
+        } actionProvider: { _ -> UIMenu? in
+            let yourlistAction = UIAction(title: "Your list", image: UIImage(systemName: "list.dash"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                print("Your list")
+                }
+            let favoriteAction = UIAction(title: "Favorite", image: UIImage(systemName: "heart.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                print("Favorite")
+                }
+            
+            let watchListAction = UIAction(title: "Watch list", image: UIImage(systemName: "bookmark.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                print("Watch list")
+                }
+            let rateItAction = UIAction(title: "Rate it", image: UIImage(systemName: "star.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                print("Rate it")
+                }
+            let playTrailerAction = UIAction(title: "Play Trailer", image: UIImage(systemName: "play.circle.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                print("Play Trailer")
+                }
+           
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [yourlistAction, favoriteAction, watchListAction, rateItAction, playTrailerAction])
+        }
+
+
+//        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ -> UIMenu? in
+//
+////
+//            let yourlistAction = UIAction(title: "Your list", image: UIImage(systemName: "list.dash"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Your list")
+//                }
+//            let favoriteAction = UIAction(title: "Favorite", image: UIImage(systemName: "heart.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Favorite")
+//                }
+//
+//            let watchListAction = UIAction(title: "Watch list", image: UIImage(systemName: "bookmark.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Watch list")
+//                }
+//            let rateItAction = UIAction(title: "Rate it", image: UIImage(systemName: "star.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Rate it")
+//                }
+//            let playTrailerAction = UIAction(title: "Play Trailer", image: UIImage(systemName: "play.circle.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Play Trailer")
+//                }
+//
+//            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [yourlistAction, favoriteAction, watchListAction, rateItAction, playTrailerAction])
+//        }
+        return config1
     }
 }

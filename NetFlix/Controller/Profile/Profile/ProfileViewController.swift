@@ -7,9 +7,11 @@
 
 import UIKit
 enum ProfilePage:String, CaseIterable {
-    case addtolist = "Add To lis"
-    case infor = "Information"
-    case setting = "Setting"
+    case favorite = "Favorite"
+    case recommendation = "Recommendation"
+    case list = "Your list"
+    case rating = "Ratings"
+    case watchList = "Watch list"
 }
 class ProfileViewController: UIViewController {
 
@@ -20,12 +22,26 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        setupTableView()
     }
 
     func setupTableView(){
-        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
 
+}
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        return cell
+    }
+    
+    
 }
