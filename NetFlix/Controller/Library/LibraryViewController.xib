@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LibraryViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
                 <outlet property="libraryScrollView" destination="Vwi-em-s8p" id="JON-zP-uEz"/>
+                <outlet property="topView" destination="pwc-XK-GE5" id="RbM-Z7-8NJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,10 +20,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vwi-em-s8p">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <viewLayoutGuide key="contentLayoutGuide" id="hb6-Vo-FP9"/>
-                    <viewLayoutGuide key="frameLayoutGuide" id="Yac-gD-uwS"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pwc-XK-GE5">
+                    <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="CtV-WV-6LS"/>
+                    </constraints>
+                </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vwi-em-s8p">
+                    <rect key="frame" x="0.0" y="94" width="414" height="768"/>
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -30,7 +36,10 @@
             <constraints>
                 <constraint firstItem="Vwi-em-s8p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1iv-gd-DIK"/>
                 <constraint firstItem="Vwi-em-s8p" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Cwi-je-MSE"/>
-                <constraint firstItem="Vwi-em-s8p" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Ybh-dH-F43"/>
+                <constraint firstItem="pwc-XK-GE5" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="E2z-HN-P5h"/>
+                <constraint firstItem="Vwi-em-s8p" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="Ybh-dH-F43"/>
+                <constraint firstItem="pwc-XK-GE5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bXQ-Za-8xu"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pwc-XK-GE5" secondAttribute="trailing" id="cHh-kR-Xtp"/>
                 <constraint firstItem="Vwi-em-s8p" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="zXh-D7-yot"/>
             </constraints>
             <point key="canvasLocation" x="-42.028985507246382" y="64.955357142857139"/>

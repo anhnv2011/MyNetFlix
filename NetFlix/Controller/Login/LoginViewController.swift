@@ -12,15 +12,22 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameTextfiled: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     
+    @IBOutlet weak var loginButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI()
     }
     
     func login(username: String, password: String, requestToken: String){
         
         
     }
+    func setupUI(){
+        usernameTextfiled.layer.cornerRadius  = 12
+        passwordTextfield.layer.cornerRadius = 12
+        loginButton.layer.cornerRadius = 12
+    }
+    
     @IBAction func actionLogin(_ sender: Any) {
         guard let username = self.usernameTextfiled.text, !username.isEmpty,
               let password = self.passwordTextfield.text, !password.isEmpty else {

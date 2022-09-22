@@ -9,6 +9,9 @@ import UIKit
 
 class LibraryViewController: UIViewController{
     @IBOutlet weak var libraryScrollView: UIScrollView!
+    @IBOutlet weak var topView: UIView!
+    
+    var state: ToggleState = .movie
     
     let movieVC = MovieLibraryViewController()
     let tvShowVC = TvShowLibraryViewController()
@@ -41,13 +44,13 @@ class LibraryViewController: UIViewController{
         tvShowVC.didMove(toParent: self)
     }
     func setupToggle(){
-        view.addSubview(toggleView)
-        toggleView.frame = CGRect(x: 0, y: 100, width: 200, height: 55)
+        topView.addSubview(toggleView)
+        toggleView.frame = topView.bounds
+//        toggleView.frame = CGRect(x: 0, y: 100, width: 200, height: 55)
         toggleView.movieHandler = {
             self.libraryScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }
         toggleView.tvHandler = {
-            
             self.libraryScrollView.setContentOffset(CGPoint(x: self.widthScreen, y: 0), animated: true)
         }
     }
@@ -55,12 +58,21 @@ class LibraryViewController: UIViewController{
 }
 extension LibraryViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.x >= (view.width-100) {
-            toggleView.update(for: .movie)
-           
+        
+        if scrollView.contentOffset.x >= (view.width) {
+            if self.state == .movie {
+                toggleView.update(for: .tv)
+                self.state = .tv
+            }
         }
-        else {
-            toggleView.update(for: .tv)
+        if scrollView.contentOffset.x == 0 {
+            if self.state == .tv {
+                toggleView.update(for: .movie)
+                self.state = .movie
+            }
         }
+//        else {
+//            toggleView.update(for: .movie)
+//        }
     }
 }

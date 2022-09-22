@@ -7,19 +7,20 @@
 
 import Foundation
 import UIKit
-class ToggleView:UIView{
-    
-    enum State {
-        case movie
-        case tv
-    }
 
-    var state: State = .movie
+enum ToggleState {
+    case movie
+    case tv
+}
+
+class ToggleView:UIView{
+
+    var state: ToggleState = .movie
     
     private let movieButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
-        button.setTitle("movies", for: .normal)
+        button.setTitle("Movies", for: .normal)
         return button
     }()
 
@@ -32,7 +33,7 @@ class ToggleView:UIView{
 
     private let indicatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .cyan
+        view.backgroundColor = .black
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -40,6 +41,7 @@ class ToggleView:UIView{
     
     var movieHandler: (() -> Void)?
     var tvHandler : (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(movieButton)
@@ -47,6 +49,11 @@ class ToggleView:UIView{
         addSubview(indicatorView)
         movieButton.addTarget(self, action: #selector(didTapmovies), for: .touchUpInside)
         tvsButton.addTarget(self, action: #selector(didTaptvs), for: .touchUpInside)
+        
+        
+        movieButton.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        tvsButton.frame = CGRect(x: movieButton.right, y: 0, width: 100, height: 40)
+        layoutIndicator()
     }
     
     required init?(coder: NSCoder) {
@@ -70,48 +77,28 @@ class ToggleView:UIView{
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        movieButton.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
-        tvsButton.frame = CGRect(x: movieButton.right, y: 0, width: 100, height: 40)
-        layoutIndicator()
+//        movieButton.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+//        tvsButton.frame = CGRect(x: movieButton.right, y: 0, width: 100, height: 40)
+//        layoutIndicator()
     }
 
     func layoutIndicator() {
       
         if state == .movie {
             indicatorView.frame = CGRect(x: 0, y: movieButton.bottom, width: 100, height: 3)
+
+            movieButton.setTitleColor(.blue, for: .normal)
+            tvsButton.setTitleColor(.label, for: .normal)
         } else {
-            indicatorView.frame = CGRect(x: 100, y: movieButton.bottom, width: 100, height: 3)
+            indicatorView.frame = CGRect(x: 100, y: tvsButton.bottom, width: 100, height: 3)
+            movieButton.setTitleColor(.label, for: .normal)
+            tvsButton.setTitleColor(.blue, for: .normal)
         }
     }
-    func update(for state: State) {
+    func update(for state: ToggleState) {
         self.state = state
         UIView.animate(withDuration: 0.2) {
             self.layoutIndicator()
         }
-    }
-}
-extension UIView {
-    var width: CGFloat {
-        return frame.size.width
-    }
-
-    var height: CGFloat {
-        return frame.size.height
-    }
-
-    var left: CGFloat {
-        return frame.origin.x
-    }
-
-    var right: CGFloat {
-        return left + width
-    }
-
-    var top: CGFloat {
-        return frame.origin.y
-    }
-
-    var bottom: CGFloat {
-        return top + height
     }
 }

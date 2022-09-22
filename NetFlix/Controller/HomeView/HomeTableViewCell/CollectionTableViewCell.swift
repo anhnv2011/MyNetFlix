@@ -82,7 +82,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config1 = UIContextMenuConfiguration(identifier: nil) { () -> UIViewController? in
-            return ProfileViewController()
+            return PreviewViewController()
         } actionProvider: { _ -> UIMenu? in
             let yourlistAction = UIAction(title: "Your list", image: UIImage(systemName: "list.dash"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
                 print("Your list")

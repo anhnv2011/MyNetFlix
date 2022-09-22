@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
+                <outlet property="loginButton" destination="S8K-vY-7B5" id="mhQ-XB-DBZ"/>
                 <outlet property="passwordTextfield" destination="lhx-FP-EE7" id="uFn-i4-oGL"/>
                 <outlet property="usernameTextfiled" destination="Bqz-ze-mbl" id="PsO-Lj-EDr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,11 +32,8 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8K-vY-7B5">
-                    <rect key="frame" x="172" y="360" width="70" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="70" id="XsH-mJ-IBH"/>
-                        <constraint firstAttribute="height" constant="30" id="pFi-wS-DZ9"/>
-                    </constraints>
+                    <rect key="frame" x="16" y="832" width="382" height="30"/>
+                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Login"/>
                     <connections>
                         <action selector="actionLogin:" destination="-1" eventType="touchUpInside" id="yXo-7a-nak"/>
@@ -43,23 +41,24 @@
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" systemColor="labelColor"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="S8K-vY-7B5" secondAttribute="bottom" id="3IU-f2-6AW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Bqz-ze-mbl" secondAttribute="trailing" constant="16" id="6aF-1G-SEM"/>
-                <constraint firstItem="S8K-vY-7B5" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="8HO-ii-ArT"/>
                 <constraint firstItem="Bqz-ze-mbl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Nu3-vy-CFt"/>
                 <constraint firstItem="lhx-FP-EE7" firstAttribute="top" secondItem="Bqz-ze-mbl" secondAttribute="bottom" constant="32" id="PMh-n2-wWS"/>
                 <constraint firstItem="lhx-FP-EE7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="UK6-y6-nWT"/>
                 <constraint firstItem="Bqz-ze-mbl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="200" id="cbi-Wh-SjR"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lhx-FP-EE7" secondAttribute="trailing" constant="10" id="hyN-Jc-XUU"/>
-                <constraint firstItem="S8K-vY-7B5" firstAttribute="top" secondItem="lhx-FP-EE7" secondAttribute="bottom" constant="16" id="x2Q-lP-uw3"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="S8K-vY-7B5" secondAttribute="trailing" constant="16" id="qJi-YW-Gqr"/>
+                <constraint firstItem="S8K-vY-7B5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="y5x-Yu-gYP"/>
             </constraints>
             <point key="canvasLocation" x="-146" y="94"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

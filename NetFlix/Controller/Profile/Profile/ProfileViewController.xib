@@ -28,7 +28,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-vQ-Vml">
                     <rect key="frame" x="0.0" y="44" width="414" height="200"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KCZ-Ut-6Vg">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netflixLogo" translatesAutoresizingMaskIntoConstraints="NO" id="KCZ-Ut-6Vg">
                             <rect key="frame" x="157" y="16" width="100" height="100"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="KCZ-Ut-6Vg" secondAttribute="height" multiplier="1:1" id="F1m-iJ-K1B"/>
@@ -68,6 +68,7 @@
         </view>
     </objects>
     <resources>
+        <image name="netflixLogo" width="50" height="50"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

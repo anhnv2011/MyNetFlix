@@ -6,7 +6,7 @@
 //
 
 import Foundation
-enum MediaType {
+enum MediaType: CaseIterable {
     case all
     case movie
     case tv

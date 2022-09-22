@@ -74,21 +74,30 @@ class HomeViewController: UIViewController {
         image = image?.withRenderingMode(.alwaysOriginal)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
         
+        let profileButton =   UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: #selector(didtapProfileButton))
+        let playButton = UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+          profileButton,
+            playButton
         ]
+        
         navigationController?.navigationBar.tintColor = .white
+    }
+    
+    @objc func didtapProfileButton(){
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     var widthConstraint1: NSLayoutConstraint?
     var widthConstraint2: NSLayoutConstraint?
+   
     func setupDiscoveryButton(){
         
         view.addSubview(discoveryButton)
-        discoveryButton.configure(with: DiscoveryButtonViewModel(text: "Khám phá phim",
+        discoveryButton.configure(with: DiscoveryButtonViewModel(text: "Phim ngẫu nhiên",
                                                                  image: UIImage(systemName: "shuffle"),
-                                                                 backgroundColor: .blue))
+                                                                 backgroundColor: .black))
         let tabBarHeight = self.tabBarController!.tabBar.intrinsicContentSize.height + 16
         
         discoveryButton.anchor(bottom: view.bottomAnchor, right: view.rightAnchor, height: 56, bottomPadding: tabBarHeight, rightPadding: 8)
@@ -110,15 +119,21 @@ class HomeViewController: UIViewController {
        
         if discoveryState == .close {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
-                self.widthConstraint1?.isActive = false
-                self.widthConstraint2?.isActive = true
+//                self.widthConstraint1?.isActive = false
+//                self.widthConstraint2?.isActive = true
+                self.widthConstraint1?.constant = 250
+                self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
             })
         } else {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
-                self.widthConstraint1?.isActive = true
-                self.widthConstraint2?.isActive = false
-                            self.view.layoutIfNeeded()
+//                self.widthConstraint1?.isActive = true
+//                self.widthConstraint2?.isActive = false
+//                            self.view.layoutIfNeeded()
+                
+                self.widthConstraint1?.constant = 56
+                self.view.setNeedsUpdateConstraints()
+                self.view.layoutIfNeeded()
                 
             })
         }
@@ -225,20 +240,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return 150
     }
     
-    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    //        let defaultOffset = view.safeAreaInsets.top - 90
-    //        let offset = scrollView.contentOffset.y + defaultOffset
-    //
-    //        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
-    //    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let defaultOffset = view.safeAreaInsets.top
-        print(defaultOffset)
-        
-        let offset = scrollView.contentOffset.y + defaultOffset
-        print(scrollView.contentOffset.y)
-        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
+//        let defaultOffset = view.safeAreaInsets.top
+//        print(defaultOffset)
+//
+//        let offset = scrollView.contentOffset.y + defaultOffset
+//        print(scrollView.contentOffset.y)
+//        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
         
         let currentVelocityY =  scrollView.panGestureRecognizer.velocity(in: scrollView.superview).y
         let currentVelocityYSign = Int(currentVelocityY).signum()

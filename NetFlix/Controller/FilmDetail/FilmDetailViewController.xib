@@ -31,7 +31,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuK-O2-gW5">
                     <rect key="frame" x="0.0" y="414" width="414" height="448"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KSc-os-vxF">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_2019-11-10 16.27.16" translatesAutoresizingMaskIntoConstraints="NO" id="KSc-os-vxF">
                             <rect key="frame" x="8" y="8" width="140" height="200"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="200" id="ZOd-x7-tvL"/>
@@ -216,6 +216,7 @@
     </designables>
     <resources>
         <image name="cross" catalog="system" width="128" height="116"/>
+        <image name="photo_2019-11-10 16.27.16" width="1280" height="853"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
