@@ -6,16 +6,21 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var usernameTextfiled: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
-    
     @IBOutlet weak var loginButton: UIButton!
+    
+    private let loginViewModel = LoginViewModel()
+    let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        bindData()
     }
     
     func login(username: String, password: String, requestToken: String){
@@ -27,6 +32,35 @@ class LoginViewController: UIViewController {
         passwordTextfield.layer.cornerRadius = 12
         loginButton.layer.cornerRadius = 12
     }
+    
+    func bindData(){
+        usernameTextfiled.becomeFirstResponder()
+        usernameTextfiled.rx.text.map({$0 ?? ""})
+            .bind(to: loginViewModel.usernameTextFieldSubject)
+            .disposed(by: disposeBag)
+        passwordTextfield.rx.text.map({$0 ?? ""})
+            .bind(to: loginViewModel.passwordTextFieldSubject)
+            .disposed(by: disposeBag)
+        loginViewModel.isValid()
+            .bind(to: loginButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+//        loginButton.rx.tap
+//            .asDriver()
+//            .drive { [weak self] _ in
+//                self?.login()
+//            }
+//            .disposed(by: disposeBag)
+       
+            
+    }
+//    func login(){
+//        let username = self.usernameTextfiled.text
+//        let password = self.passwordTextfield.text
+////        loginViewModel.login(username: username!, password: password!){_ in
+////
+////        }
+//
+//    }
     
     @IBAction func actionLogin(_ sender: Any) {
         guard let username = self.usernameTextfiled.text, !username.isEmpty,

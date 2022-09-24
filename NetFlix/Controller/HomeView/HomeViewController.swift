@@ -160,6 +160,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 switch result {
                 case .success(let film):
                     cell.configCollectionView(with: film)
+//                    cell.films.onNext(film)
+
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -171,6 +173,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 switch result {
                 case .success(let movie):
                     cell.configCollectionView(with: movie)
+                print("")
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -182,6 +185,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 switch result {
                 case .success(let tv):
                     cell.configCollectionView(with: tv)
+                print("")
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -193,6 +197,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 switch result {
                 case .success(let movie):
                     cell.configCollectionView(with: movie)
+                    print("")
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -202,6 +207,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 switch result {
                 case .success(let movie):
                     cell.configCollectionView(with: movie)
+                    print("")
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

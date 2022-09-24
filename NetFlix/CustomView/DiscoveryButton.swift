@@ -54,12 +54,14 @@ class DiscoveryButton:UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-
         imageButton.anchor(top: topAnchor, bottom: bottomAnchor, left: leftAnchor,width: 40, height: 40, topPadding: 8, bottomPadding: 8, leftPadding: 8)
         
 
-        titleButton.anchor(top: topAnchor, bottom: bottomAnchor, left: imageButton.rightAnchor, right: rightAnchor, topPadding: 8, bottomPadding: 8, leftPadding: 8, rightPadding: 8)
+//        titleButton.anchor(top: topAnchor, bottom: bottomAnchor, left: imageButton.rightAnchor, right: rightAnchor, topPadding: 8, bottomPadding: 8, leftPadding: 8, rightPadding: 8)
+     
+        titleButton.anchor(left: imageButton.rightAnchor, right: rightAnchor, centerY: centerYAnchor, leftPadding: 7, rightPadding: 8)
+
+      
         
     }
 }

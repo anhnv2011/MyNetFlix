@@ -84,7 +84,7 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
         let currentmovie = movie[indexPath.row]
         let path = currentmovie.poster_path
         let name = (currentmovie.original_name ?? currentmovie.original_title) ?? "unknow"
-        cell.configDetailMovieTableCell(posterPath: path, name: name)
+        cell.configDetailMovieTableCell(posterPath: path!, name: name)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

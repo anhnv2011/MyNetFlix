@@ -56,6 +56,7 @@
 		04D789E728677F8D007030DE /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D789E528677F8D007030DE /* DownloadViewController.swift */; };
 		04D789E828677F8D007030DE /* DownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D789E628677F8D007030DE /* DownloadViewController.xib */; };
 		04D789F02867808F007030DE /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D789EF2867808F007030DE /* APICaller.swift */; };
+		04EF691C28DDFAF9005D5C0A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF691B28DDFAF9005D5C0A /* LoginViewModel.swift */; };
 		04F8470B28D9DDB100CA99F3 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F8470928D9DDB100CA99F3 /* PreviewViewController.swift */; };
 		04F8470C28D9DDB100CA99F3 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F8470A28D9DDB100CA99F3 /* PreviewViewController.xib */; };
 		04FEB078288E55B000A88F5A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FEB076288E55B000A88F5A /* LoginViewController.swift */; };
@@ -138,6 +139,7 @@
 		04D789E528677F8D007030DE /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		04D789E628677F8D007030DE /* DownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadViewController.xib; sourceTree = "<group>"; };
 		04D789EF2867808F007030DE /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		04EF691B28DDFAF9005D5C0A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		04F8470928D9DDB100CA99F3 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		04F8470A28D9DDB100CA99F3 /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
 		04FEB076288E55B000A88F5A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -175,13 +177,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0423F2DA2869B4860075903B /* CustomCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CustomCell;
-			sourceTree = "<group>";
-		};
 		0423F2DB2869B48F0075903B /* UpCommingTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,11 +255,9 @@
 		045A3AD8286779DB000F84DE /* NetFlix */ = {
 			isa = PBXGroup;
 			children = (
-				04E7199628DC991400A3CB08 /* ViewModel */,
 				04248A7328D1919000CD0876 /* Extension */,
 				0464F3F728695100008F6015 /* API */,
 				0464F401286958B1008F6015 /* Model */,
-				0423F2DA2869B4860075903B /* CustomCell */,
 				047C201328D07129000DB9D6 /* CustomView */,
 				0464F3F82869510A008F6015 /* Controller */,
 				045A3B0F28677A20000F84DE /* AppDelegate */,
@@ -458,13 +451,6 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
-		04E7199628DC991400A3CB08 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		04F8470828D9DD6E00CA99F3 /* PreviewVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +474,7 @@
 			children = (
 				04FEB076288E55B000A88F5A /* LoginViewController.swift */,
 				04FEB077288E55B000A88F5A /* LoginViewController.xib */,
+				04EF691B28DDFAF9005D5C0A /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -706,6 +693,7 @@
 				0423F2DE2869B4B00075903B /* UpCommingTableViewCell.swift in Sources */,
 				04754F9328D03AC2002C5C72 /* DiscoveryButton.swift in Sources */,
 				040A24BF2869AC7400F92978 /* UpComing.swift in Sources */,
+				04EF691C28DDFAF9005D5C0A /* LoginViewModel.swift in Sources */,
 				0464F40328695CEB008F6015 /* Trending.swift in Sources */,
 				0464F3EE28694CC9008F6015 /* CollectionViewCell.swift in Sources */,
 				04A5BCBC28D4D06B00B6C3DF /* LibraryViewController.swift in Sources */,

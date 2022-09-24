@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 protocol CollectionTableViewCellDelegate:AnyObject {
     func didTapCell(film: Film)
 }
@@ -15,6 +17,10 @@ class CollectionTableViewCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var films:[Film] = []
+//    var films = PublishSubject<[Film]>()
+    private let disposeBag = DisposeBag()
+
+
     var delegate: CollectionTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -25,14 +31,28 @@ class CollectionTableViewCell: UITableViewCell {
 //
 //
 //        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CollectionViewCell")
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    
+    setupCollectionView()
+        
+//        binddata()
        
     }
+//    func binddata(){
+//        collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CollectionViewCell")
+//        films.bind(to: collectionView.rx.items(cellIdentifier: "CollectionViewCell", cellType: CollectionViewCell.self)) {  (row,film,cell) in
+////            cell.album = album
+////            cell.withBackView = true
+//                
+//            cell.configPosterImage(posterPath: film.poster_path)
+//            }.disposed(by: disposeBag)
+//    }
 
+    func setupCollectionView(){
+        collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CollectionViewCell")
+
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -43,24 +63,28 @@ class CollectionTableViewCell: UITableViewCell {
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
-       
-        
+
+
     }
     
 }
 extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+
+//extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return films.count
-        
+
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-        
+
         let path = films[indexPath.row].poster_path
-          
-        
-        cell.configPosterImage(posterPath: path)
+
+
+        cell.configPosterImage(posterPath: path!)
         return cell
     }
     
@@ -81,7 +105,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let config1 = UIContextMenuConfiguration(identifier: nil) { () -> UIViewController? in
+        let config = UIContextMenuConfiguration(identifier: nil) { () -> UIViewController? in
             return PreviewViewController()
         } actionProvider: { _ -> UIMenu? in
             let yourlistAction = UIAction(title: "Your list", image: UIImage(systemName: "list.dash"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
@@ -127,6 +151,6 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
 //
 //            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [yourlistAction, favoriteAction, watchListAction, rateItAction, playTrailerAction])
 //        }
-        return config1
+        return config
     }
 }
