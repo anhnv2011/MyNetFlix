@@ -20,6 +20,8 @@ struct Constans {
     static let ApiKey = "dc7bb41154658ee8cd23ecf49d7203c2"
     static let baseUrl = "https://api.themoviedb.org/"
     //60e988a2bc23f3c503e4f13773f593db83efadce
+    static let YoutubeAPI_KEY = "AIzaSyDyHzGYOyLL5yRPjwfQafppIavwUUFrZKo"
+    static let YoutubeBaseURL = "https://youtube.googleapis.com/youtube/v3/search?"
     struct Parameters {
            static let userId = "userId"
        }

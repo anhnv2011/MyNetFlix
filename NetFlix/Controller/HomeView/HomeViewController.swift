@@ -50,7 +50,7 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .blue
-        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 400))
+        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 500))
         tableView.tableHeaderView = headerView
         
     }
@@ -243,17 +243,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 180
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-//        let defaultOffset = view.safeAreaInsets.top
+        let defaultOffset = view.safeAreaInsets.top
 //        print(defaultOffset)
 //
-//        let offset = scrollView.contentOffset.y + defaultOffset
+        let offset = scrollView.contentOffset.y + defaultOffset
 //        print(scrollView.contentOffset.y)
-//        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
         
         let currentVelocityY =  scrollView.panGestureRecognizer.velocity(in: scrollView.superview).y
         let currentVelocityYSign = Int(currentVelocityY).signum()
@@ -271,6 +271,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             
             // print("SCOLLING UP")
         }
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        35
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        0.001
+    }
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else {return}
+        header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
+        header.textLabel?.textColor = .white
+        header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
     }
     
 }

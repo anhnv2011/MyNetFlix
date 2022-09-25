@@ -13,6 +13,7 @@
                 <outlet property="addtoListButton" destination="cHg-pA-Xra" id="WNL-ZY-MOw"/>
                 <outlet property="contenView" destination="uuK-O2-gW5" id="Nyz-2W-dth"/>
                 <outlet property="cosmosView" destination="qWc-1W-rzZ" id="egF-z5-ky5"/>
+                <outlet property="dismissButton" destination="F8f-fJ-aHx" id="lsa-Qy-0NH"/>
                 <outlet property="downloadButton" destination="54G-mM-Y5c" id="Its-RH-9VJ"/>
                 <outlet property="filmNameLabel" destination="WBU-Sn-VOy" id="xZC-5e-Xes"/>
                 <outlet property="overviewLabel" destination="DSe-M7-2Gp" id="6CP-7V-nmN"/>
@@ -153,6 +154,9 @@
                             </constraints>
                             <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" image="xmark" catalog="system"/>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="rXW-zG-Bhr"/>
+                            </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWc-1W-rzZ" customClass="CosmosView" customModule="Cosmos">
                             <rect key="frame" x="156" y="71" width="182" height="30"/>

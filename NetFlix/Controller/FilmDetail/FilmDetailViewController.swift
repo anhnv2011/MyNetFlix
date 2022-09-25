@@ -18,6 +18,7 @@ class FilmDetailViewController: UIViewController {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     
+    @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var playButton: DetailFilmButton!
     @IBOutlet weak var downloadButton: DetailFilmButton!
     @IBOutlet weak var addtoListButton: DetailFilmButton!
@@ -30,14 +31,24 @@ class FilmDetailViewController: UIViewController {
         contenView.layer.cornerRadius = 20
         setupRateStar()
         
-        playButton.layer.cornerRadius = 30
-        downloadButton.layer.cornerRadius = 30
-        addtoListButton.layer.cornerRadius = 30
-        shareButton.layer.cornerRadius = 30
+//        playButton.layer.cornerRadius = 30
+//        downloadButton.layer.cornerRadius = 30
+//        addtoListButton.layer.cornerRadius = 30
+//        shareButton.layer.cornerRadius = 30
 
     }
 
-
+    @IBAction func buttonAction(_ sender: UIButton) {
+        switch sender {
+        case dismissButton:
+            dismiss(animated: true, completion: nil)
+            
+        default:
+            print("")
+        }
+        
+    }
+    
     private func setupRateStar(){
         //can edit star
         cosmosView.settings.updateOnTouch = true

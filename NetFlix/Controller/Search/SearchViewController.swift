@@ -9,32 +9,43 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
-    @IBOutlet weak var searchMovieBar: UISearchBar!
     
     @IBOutlet weak var tableView: UITableView!
     private var films: [Film] = [Film]()
     
-    //let search:uise
+    private let searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: SearchResultViewController())
+        controller.searchBar.placeholder = "Search for a Movie or a Tv show"
+        return controller
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupNavigation()
         fetchDiscoverMovies()
-        setUpTableView()
-//        searchMovieBar.searchResultsUpdater
+        setupTableView()
         setupSearchBar()
         
     }
 
-    func setUpTableView(){
+    func setupNavigation(){
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.tintColor = .white
+        title = "Search"
+        navigationItem.searchController = searchController
+
+    }
+    
+    func setupTableView(){
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: "UpCommingTableViewCell")
     }
     
     func setupSearchBar(){
-        searchMovieBar.delegate = self
-        searchMovieBar.placeholder =  "Search for a Movie or a Tv show"
-        searchMovieBar.searchBarStyle = .minimal
+
+        searchController.searchResultsUpdater = self
 
     }
 
@@ -53,7 +64,12 @@ class SearchViewController: UIViewController {
     }
 
 }
-extension SearchViewController: UISearchBarDelegate {
+
+extension SearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+    
     
 }
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {

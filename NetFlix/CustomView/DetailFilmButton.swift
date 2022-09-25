@@ -9,6 +9,16 @@ import UIKit
 
 class DetailFilmButton: UIButton {
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layer.cornerRadius = frame.size.height / 2
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
+        layer.cornerRadius = frame.size.height / 2
+
+    }
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
