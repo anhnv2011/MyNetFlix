@@ -16,10 +16,11 @@ class MainTabBarViewController: UITabBarController {
         let vc1 = UINavigationController(rootViewController: HomeViewController())
         let vc2 = UINavigationController(rootViewController: UpcommingViewController())
         let vc3 = UINavigationController(rootViewController: SearchViewController())
-//        let vc3 = SearchViewController()
-
         let vc4 = UINavigationController(rootViewController: DownloadViewController())
-        
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().barTintColor = .black
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
         vc1.title = "Home"
         vc2.title = "Upcomming"
         vc3.title = "Search"

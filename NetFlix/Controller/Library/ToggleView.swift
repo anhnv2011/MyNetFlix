@@ -16,6 +16,13 @@ enum ToggleState {
 class ToggleView:UIView{
 
     var state: ToggleState = .movie
+    {
+        didSet {
+            UIView.animate(withDuration: 0.2) {
+                self.layoutIndicator()
+            }
+        }
+    }
     
     private let movieButton: UIButton = {
         let button = UIButton()

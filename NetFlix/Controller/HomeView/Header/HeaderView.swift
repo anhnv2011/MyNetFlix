@@ -12,7 +12,7 @@ class HeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(imageView)
-        backgroundColor = .red
+        backgroundColor = .black
     }
     
     required init?(coder: NSCoder) {
@@ -22,7 +22,7 @@ class HeaderView: UIView {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         //imageView.image = UIImage(named: "netflixLogo")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     override func layoutSubviews() {

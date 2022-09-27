@@ -46,6 +46,7 @@ class SearchViewController: UIViewController {
     func setupSearchBar(){
 
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
 
     }
 
@@ -67,9 +68,31 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
         
+        guard let query = searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty,
+              query.trimmingCharacters(in: .whitespaces).count >= 3,
+              let resultsController = searchController.searchResultsController as? SearchResultViewController else {
+                  return
+              }
+        
+        APICaller.share.search(with: query) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let films):
+                    resultsController.films = films
+                    resultsController.searchResultsCollectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
+}
+
+extension SearchViewController:UISearchBarDelegate {
     
 }
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
@@ -81,7 +104,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UpCommingTableViewCell", for: indexPath) as! UpCommingTableViewCell
         let film = films[indexPath.row]
-        cell.configDetailMovieTableCell(posterPath: film.poster_path ?? "", name: film.original_name ?? film.original_title ?? "Unknown name" )
+        cell.configDetailMovieTableCell(posterPath: film.poster_path , name: film.original_name ?? film.original_title ?? "Unknown name" )
         
        
         

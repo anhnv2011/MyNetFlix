@@ -6,9 +6,9 @@
 //
 
 import Foundation
-enum MediaType: CaseIterable {
-    case all
-    case movie
-    case tv
-    case person
+enum MediaType: String {
+    case all = "all"
+    case movie = "movie"
+    case tv = "tv"
+    case person = "person"
 }

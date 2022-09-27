@@ -30,12 +30,6 @@ class FilmDetailViewController: UIViewController {
         view.backgroundColor = .red
         contenView.layer.cornerRadius = 20
         setupRateStar()
-        
-//        playButton.layer.cornerRadius = 30
-//        downloadButton.layer.cornerRadius = 30
-//        addtoListButton.layer.cornerRadius = 30
-//        shareButton.layer.cornerRadius = 30
-
     }
 
     @IBAction func buttonAction(_ sender: UIButton) {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-enum TimeWindow{
-    case day
-    case week
+enum TimeWindow: String{
+    case day = "day"
+    case week = "week"
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04040AAC28E2FA5C00ABBF06 /* ImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04040AAB28E2FA5C00ABBF06 /* ImageName.swift */; };
+		04040AB428E2FBF100ABBF06 /* UIFont-Extensiont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04040AB328E2FBF100ABBF06 /* UIFont-Extensiont.swift */; };
+		04040AC828E3008600ABBF06 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04040AC728E3008600ABBF06 /* Profile.swift */; };
 		040A24BF2869AC7400F92978 /* UpComing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A24BE2869AC7400F92978 /* UpComing.swift */; };
 		0423F2DE2869B4B00075903B /* UpCommingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0423F2DC2869B4B00075903B /* UpCommingTableViewCell.swift */; };
 		0423F2DF2869B4B00075903B /* UpCommingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0423F2DD2869B4B00075903B /* UpCommingTableViewCell.xib */; };
@@ -51,6 +54,8 @@
 		04A5BCCD28D4D27600B6C3DF /* TvShowLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5BCCB28D4D27600B6C3DF /* TvShowLibraryViewController.swift */; };
 		04A5BCCE28D4D27600B6C3DF /* TvShowLibraryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A5BCCC28D4D27600B6C3DF /* TvShowLibraryViewController.xib */; };
 		04A5BCD328D4D2E600B6C3DF /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5BCD228D4D2E600B6C3DF /* ToggleView.swift */; };
+		04CB4CF928E3569700E021EF /* ExpenableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CB4CF828E3569700E021EF /* ExpenableHeaderView.xib */; };
+		04CB4CFE28E356A600E021EF /* ExpenableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB4CFD28E356A600E021EF /* ExpenableHeaderView.swift */; };
 		04D789C928677EA5007030DE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D789C728677EA5007030DE /* HomeViewController.swift */; };
 		04D789CA28677EA5007030DE /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D789C828677EA5007030DE /* HomeViewController.xib */; };
 		04D789D428677ED6007030DE /* UpcommingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D789D228677ED6007030DE /* UpcommingViewController.swift */; };
@@ -88,6 +93,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04040AAB28E2FA5C00ABBF06 /* ImageName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageName.swift; sourceTree = "<group>"; };
+		04040AB328E2FBF100ABBF06 /* UIFont-Extensiont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont-Extensiont.swift"; sourceTree = "<group>"; };
+		04040AC728E3008600ABBF06 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		040A24BE2869AC7400F92978 /* UpComing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpComing.swift; sourceTree = "<group>"; };
 		0423F2DC2869B4B00075903B /* UpCommingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpCommingTableViewCell.swift; sourceTree = "<group>"; };
 		0423F2DD2869B4B00075903B /* UpCommingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpCommingTableViewCell.xib; sourceTree = "<group>"; };
@@ -138,6 +146,8 @@
 		04A5BCCB28D4D27600B6C3DF /* TvShowLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvShowLibraryViewController.swift; sourceTree = "<group>"; };
 		04A5BCCC28D4D27600B6C3DF /* TvShowLibraryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TvShowLibraryViewController.xib; sourceTree = "<group>"; };
 		04A5BCD228D4D2E600B6C3DF /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
+		04CB4CF828E3569700E021EF /* ExpenableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpenableHeaderView.xib; sourceTree = "<group>"; };
+		04CB4CFD28E356A600E021EF /* ExpenableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenableHeaderView.swift; sourceTree = "<group>"; };
 		04D789C728677EA5007030DE /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		04D789C828677EA5007030DE /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		04D789D228677ED6007030DE /* UpcommingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcommingViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +219,7 @@
 			children = (
 				04248A7428D191AC00CD0876 /* UIView-Extension.swift */,
 				047ED7B628E014950006F6B3 /* String-Extension.swift */,
+				04040AB328E2FBF100ABBF06 /* UIFont-Extensiont.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -265,7 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				04248A7328D1919000CD0876 /* Extension */,
-				0464F3F728695100008F6015 /* API */,
+				0464F3F728695100008F6015 /* Manager */,
 				0464F401286958B1008F6015 /* Model */,
 				047C201328D07129000DB9D6 /* CustomView */,
 				0464F3F82869510A008F6015 /* Controller */,
@@ -320,13 +331,14 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
-		0464F3F728695100008F6015 /* API */ = {
+		0464F3F728695100008F6015 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				04D789EF2867808F007030DE /* APICaller.swift */,
 				0457F01B28D21E4800DDE8B9 /* DataManager.swift */,
+				04040AAB28E2FA5C00ABBF06 /* ImageName.swift */,
 			);
-			path = API;
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		0464F3F82869510A008F6015 /* Controller */ = {
@@ -358,6 +370,7 @@
 				049C75B4288EA46E00060F12 /* test.swift */,
 				04FEB07D288E59F700A88F5A /* RequestToken.swift */,
 				049C75AF288E88A700060F12 /* SessionId.swift */,
+				04040AC728E3008600ABBF06 /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -418,6 +431,15 @@
 				04A5BCC528D4D25D00B6C3DF /* MovieLibraryViewController.xib */,
 			);
 			path = MovieLibrary;
+			sourceTree = "<group>";
+		};
+		04CB4D0528E356C900E021EF /* ExpenableHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				04CB4CFD28E356A600E021EF /* ExpenableHeaderView.swift */,
+				04CB4CF828E3569700E021EF /* ExpenableHeaderView.xib */,
+			);
+			path = ExpenableHeaderView;
 			sourceTree = "<group>";
 		};
 		04D789C628677E82007030DE /* HomeView */ = {
@@ -483,6 +505,7 @@
 		04FAE18B28D3647D00227F99 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				04CB4D0528E356C900E021EF /* ExpenableHeaderView */,
 				0484EB2728D34FB90007A268 /* ProfileViewController.swift */,
 				0484EB2828D34FB90007A268 /* ProfileViewController.xib */,
 			);
@@ -633,6 +656,7 @@
 				0423F2FF2869F3750075903B /* SearchResultViewController.xib in Resources */,
 				04248A7E28D1D52500CD0876 /* FilmDetailViewController.xib in Resources */,
 				0423F2DF2869B4B00075903B /* UpCommingTableViewCell.xib in Resources */,
+				04CB4CF928E3569700E021EF /* ExpenableHeaderView.xib in Resources */,
 				04A5BCBD28D4D06B00B6C3DF /* LibraryViewController.xib in Resources */,
 				0481B8F728E0A3CA0039BD7B /* SearchResultCollectionViewCell.xib in Resources */,
 				04D789DD28677EF1007030DE /* SearchViewController.xib in Resources */,
@@ -711,9 +735,11 @@
 				045A3ADA286779DB000F84DE /* AppDelegate.swift in Sources */,
 				0464F410286963FE008F6015 /* Film.swift in Sources */,
 				04248A7528D191AC00CD0876 /* UIView-Extension.swift in Sources */,
+				04040AAC28E2FA5C00ABBF06 /* ImageName.swift in Sources */,
 				0423F2DE2869B4B00075903B /* UpCommingTableViewCell.swift in Sources */,
 				04754F9328D03AC2002C5C72 /* DiscoveryButton.swift in Sources */,
 				040A24BF2869AC7400F92978 /* UpComing.swift in Sources */,
+				04040AC828E3008600ABBF06 /* Profile.swift in Sources */,
 				04EF691C28DDFAF9005D5C0A /* LoginViewModel.swift in Sources */,
 				0464F40328695CEB008F6015 /* Trending.swift in Sources */,
 				0464F3EE28694CC9008F6015 /* CollectionViewCell.swift in Sources */,
@@ -726,6 +752,8 @@
 				0464F3FA2869513C008F6015 /* HeaderView.swift in Sources */,
 				04546ADE28D1E9D2002F894B /* DetailFilmButton.swift in Sources */,
 				047ED7B728E014950006F6B3 /* String-Extension.swift in Sources */,
+				04CB4CFE28E356A600E021EF /* ExpenableHeaderView.swift in Sources */,
+				04040AB428E2FBF100ABBF06 /* UIFont-Extensiont.swift in Sources */,
 				042F893D28D3426C00C2F1D4 /* FilmType.swift in Sources */,
 				042F894528D3434800C2F1D4 /* TimeWindow.swift in Sources */,
 				0457F01C28D21E4800DDE8B9 /* DataManager.swift in Sources */,

@@ -12,50 +12,184 @@ enum DiscoveryState{
     case expanse
 }
 
+enum HomeSection {
+    case trendingAll(model: [Film])
+    case trendingMovie(model: [Film])
+    case trendingTv(model: [Film])
+    case popularMovie(model: [Film])
+    case popularTv(model: [Film])
+    case topRateMovie(model: [Film])
+    case topRateTV(model: [Film])
+    var title: String {
+        switch self {
+        case .trendingAll:
+            return "Trending"
+        case .trendingMovie:
+            return "Trending Movie"
+        case .trendingTv:
+            return "Trending TV"
+        case .popularMovie:
+            return "Popular Movie"
+        case .popularTv:
+            return "Popular TV"
+        case .topRateMovie:
+            return "Top Rate Movie"
+        case .topRateTV:
+            return "Top Rate TV"
+        
+        }
+    }
+
+}
+
 class HomeViewController: UIViewController {
-    //    @IBOutlet weak var discoveryButtonWidth: NSLayoutConstraint!
-    //    @IBOutlet weak var discoveryButton: UIButton!
-    
     @IBOutlet weak var tableView: UITableView!
+    
+    var homeSection = [HomeSection]()
+  
+    
     var headerView: HeaderView?
     var lastVelocityYSign = 0
     let discoveryButton = DiscoveryButton()
     var discoveryState: DiscoveryState = . close
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupTableView()
-        setupHeader()
-        setupNavbar()
-        //        let button = DiscoveryButton(frame: CGRect())
-        setupDiscoveryButton()
-        let sessionId = DataManager.shared.getSaveSessionId()
+        let sessionid = DataManager.shared.getSaveSessionId()
+        print(sessionid)
+//        setupTableView()
+//        setupHeader()
+//        setupNavbar()
+//        setupDiscoveryButton()
+//        fetchData()
 
-        print(sessionId)
+        APICaller.share.postFavorite()
+        
     }
-    
-    
-    //    @IBAction func buttonAction(_ sender: UIButton) {
-    //        switch sender {
-    //        case discoveryButton:
-    //            print("")
-    //        default:
-    //            print("")
-    //        }
-    //    }
+   
+    func fetchData(){
+        let group = DispatchGroup()
+        group.enter()
+        APICaller.share.getTrending(mediaType: .all, time: .day) { [weak self] result in
+            
+            defer {
+                group.leave()
+            }
+            switch result {
+            case .success(let movie):
+                self?.homeSection.append(.trendingAll(model: movie))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
+        group.enter()
+        APICaller.share.getTrending(mediaType: .movie, time: .day) { [weak self] result in
+            
+            defer {
+                group.leave()
+            }
+            switch result {
+            case .success(let movie):
+                self?.homeSection.append(.trendingMovie(model: movie))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
+        group.enter()
+        APICaller.share.getTrending(mediaType: .tv, time: .day) { [weak self] result in
+            
+            defer {
+                group.leave()
+            }
+            
+            switch result {
+            case .success(let tv):
+                self?.homeSection.append(.trendingTv(model: tv))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
+        
+        group.enter()
+
+        APICaller.share.getPopular(mediaType: .movie) { [weak self] result in
+            defer {
+                group.leave()
+            }
+            switch result {
+            case .success(let movie):
+                self?.homeSection.append(.popularMovie(model: movie))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        group.enter()
+
+        APICaller.share.getPopular(mediaType: .tv) { [weak self] result in
+            defer {
+                group.leave()
+            }
+            
+            switch result {
+            case .success(let tv):
+                self?.homeSection.append(.popularTv(model: tv))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        group.enter()
+
+        APICaller.share.getTopRate(mediaType: .movie) { [weak self] result in
+            defer {
+                group.leave()
+            }
+            
+            switch result {
+            case .success(let movie):
+                self?.homeSection.append(.topRateMovie(model: movie))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        group.enter()
+
+        APICaller.share.getTopRate(mediaType: .tv) { [weak self] result in
+            defer {
+                group.leave()
+            }
+            
+            switch result {
+            case .success(let tv):
+                self?.homeSection.append(.topRateTV(model: tv))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+       
+    }
+
     
     func setupTableView(){
         tableView.register(UINib(nibName: "CollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CollectionTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .blue
+        tableView.backgroundColor = .darkGray
         headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 500))
         tableView.tableHeaderView = headerView
         
     }
     func setupHeader(){
-        APICaller.share.getTrending(mediaType: "movie", time: "day") { (result) in
+        APICaller.share.getTrending(mediaType: .movie, time: .day) { (result) in
             switch result {
             case .success(let movie):
                 let random = movie.randomElement()
@@ -69,7 +203,8 @@ class HomeViewController: UIViewController {
     }
     
     private func setupNavbar() {
-        //        title  = "Home"
+                title  = "Home"
+
         var image = UIImage(named: "netflixLogo")
         image = image?.withRenderingMode(.alwaysOriginal)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
@@ -80,8 +215,9 @@ class HomeViewController: UIViewController {
           profileButton,
             playButton
         ]
-        
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
+
     }
     
     @objc func didtapProfileButton(){
@@ -90,7 +226,6 @@ class HomeViewController: UIViewController {
     }
     
     var widthConstraint1: NSLayoutConstraint?
-    var widthConstraint2: NSLayoutConstraint?
    
     func setupDiscoveryButton(){
         
@@ -103,7 +238,6 @@ class HomeViewController: UIViewController {
         discoveryButton.anchor(bottom: view.bottomAnchor, right: view.rightAnchor, height: 56, bottomPadding: tabBarHeight, rightPadding: 8)
         discoveryButton.layer.cornerRadius = 28
         widthConstraint1 = discoveryButton.widthAnchor.constraint(equalToConstant: 56)
-        widthConstraint2 = discoveryButton.widthAnchor.constraint(equalToConstant: 200)
         widthConstraint1?.isActive = true
         discoveryButton.addTarget(self, action: #selector(discoveryFilm), for: .touchUpInside)
         
@@ -119,17 +253,14 @@ class HomeViewController: UIViewController {
        
         if discoveryState == .close {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
-//                self.widthConstraint1?.isActive = false
-//                self.widthConstraint2?.isActive = true
+
                 self.widthConstraint1?.constant = 250
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
             })
         } else {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
-//                self.widthConstraint1?.isActive = true
-//                self.widthConstraint2?.isActive = false
-//                            self.view.layoutIfNeeded()
+
                 
                 self.widthConstraint1?.constant = 56
                 self.view.setNeedsUpdateConstraints()
@@ -144,7 +275,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return HomeSection.allCases.count
+//        return HomeSection.allCases.count
+        return homeSection.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,92 +286,31 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CollectionTableViewCell", for: indexPath) as! CollectionTableViewCell
         cell.delegate = self
-        switch indexPath.section {
-        case 0:
-            APICaller.share.getTrending(mediaType: "all", time: "day") { result in
-                switch result {
-                case .success(let film):
-                    cell.configCollectionView(with: film)
-//                    cell.films.onNext(film)
-
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-                
-            }
-        case 1:
-            APICaller.share.getTrending(mediaType: "movie", time: "day") { result in
-                switch result {
-                case .success(let movie):
-                    cell.configCollectionView(with: movie)
-                print("")
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-                
-            }
-        case 2:
-            APICaller.share.getTrending(mediaType: "tv", time: "day") { result in
-                switch result {
-                case .success(let tv):
-                    cell.configCollectionView(with: tv)
-                print("")
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-                
-            }
-        case 3:
-            APICaller.share.getPopular(mediaType: "movie") { (result) in
-                switch result {
-                case .success(let movie):
-                    cell.configCollectionView(with: movie)
-                    print("")
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        case 4:
-            APICaller.share.getTopRate(mediaType: "movie") { (result) in
-                switch result {
-                case .success(let movie):
-                    cell.configCollectionView(with: movie)
-                    print("")
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        default:
-            print("error")
-        }
         
+        let type = homeSection[indexPath.section]
+        switch type {
+        case .trendingAll(model: let model):
+            cell.films = model
+        case .trendingMovie(model: let model):
+            cell.films = model
+        case .trendingTv(model: let model):
+            cell.films = model
+        case .popularMovie(model: let model):
+            cell.films = model
+        case .popularTv(model: let model):
+            cell.films = model
+        case .topRateMovie(model: let model):
+            cell.films = model
+        case .topRateTV(model: let model):
+            cell.films = model
+        }
         
         return cell
     }
     
-    //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //
-    //        switch section {
-    //        case 0:
-    //            title = HomeSection.TrendingAll.title
-    //        case 1:
-    //            title = HomeSection.TrendingMovie.title
-    //        case 2 :
-    //            title = HomeSection.TrendingTv.title
-    //        case 3:
-    //            title = HomeSection.Popular.title
-    //        case 4:
-    //            title = HomeSection.TopRate.title
-    //        default:
-    //            print("error")
-    //        }
-    //        return title
-    //    }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return HomeSection.allCases[section].title
+//        return HomeSection.allCases[section].title
+        return homeSection[section].title
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -293,7 +364,7 @@ extension HomeViewController: CollectionTableViewCellDelegate{
         print(film)
         let vc = FilmDetailViewController()
         vc.view.backgroundColor = .clear
-        vc.contenView.alpha = 1
+//        vc.contenView.alpha = 0.5
         present(vc, animated: true, completion: nil)
     }
     

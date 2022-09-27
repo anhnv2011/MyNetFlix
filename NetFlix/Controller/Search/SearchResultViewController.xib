@@ -10,7 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchResultViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
-                <outlet property="searchResultCollectionView" destination="vBR-EC-wWb" id="4xT-V0-xGn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,26 +17,8 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vBR-EC-wWb">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DcZ-aA-WQN">
-                        <size key="itemSize" width="128" height="128"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
-            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vBR-EC-wWb" secondAttribute="bottom" id="XEM-eN-8MM"/>
-                <constraint firstItem="vBR-EC-wWb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YAJ-hQ-VtG"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vBR-EC-wWb" secondAttribute="trailing" id="kpp-4R-yOH"/>
-                <constraint firstItem="vBR-EC-wWb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="sZT-Aa-IRc"/>
-            </constraints>
             <point key="canvasLocation" x="-146" y="64"/>
         </view>
     </objects>

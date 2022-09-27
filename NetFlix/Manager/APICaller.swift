@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 import RxSwift
 
 enum ApiError: Error {
@@ -16,12 +17,13 @@ enum ApiError: Error {
     case internalServerError    //Status code 500
 }
 
-struct Constans {
+struct Constanst {
     static let ApiKey = "dc7bb41154658ee8cd23ecf49d7203c2"
     static let baseUrl = "https://api.themoviedb.org/"
-    //60e988a2bc23f3c503e4f13773f593db83efadce
     static let YoutubeAPI_KEY = "AIzaSyDyHzGYOyLL5yRPjwfQafppIavwUUFrZKo"
     static let YoutubeBaseURL = "https://youtube.googleapis.com/youtube/v3/search?"
+    
+    static let ImageBaseUrl = "https://image.tmdb.org/t/p/w500/"
     struct Parameters {
            static let userId = "userId"
        }
@@ -88,7 +90,7 @@ class APICaller {
     }
     
     func creatSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (Result<TestAPi, Error>) -> Void){
-        guard let url = URL(string: "\(Constans.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constans.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
+        guard let url = URL(string: "\(Constanst.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constanst.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
             print("invalid url")
             return
         }
@@ -117,7 +119,7 @@ class APICaller {
         
     }
     func getSessionId(requesToken:String, completion: @escaping (Result<String, Error>)->Void){
-        guard let url = URL(string: "\(Constans.baseUrl)3/authentication/session/new?api_key=\(Constans.ApiKey)&request_token=\(requesToken)") else {
+        guard let url = URL(string: "\(Constanst.baseUrl)3/authentication/session/new?api_key=\(Constanst.ApiKey)&request_token=\(requesToken)") else {
             print("invalid url")
             return
         }
@@ -146,7 +148,7 @@ class APICaller {
         task.resume()
     }
     func login(username: String, password: String, requestToken: String, completion: @escaping (Result<Authentication, Error>) -> Void){
-        guard let url = URL(string: "\(Constans.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constans.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
+        guard let url = URL(string: "\(Constanst.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constanst.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
             print("invalid url")
             return
         }
@@ -175,7 +177,7 @@ class APICaller {
     }
     
     func getRequestToken(compeltion: @escaping (Result<RequestToken, Error>) -> Void){
-        guard let url = URL(string: "\(Constans.baseUrl)3/authentication/token/new?api_key=\(Constans.ApiKey)") else {
+        guard let url = URL(string: "\(Constanst.baseUrl)3/authentication/token/new?api_key=\(Constanst.ApiKey)") else {
             return
         }
         print(url)
@@ -201,8 +203,8 @@ class APICaller {
         task.resume()
         
     }
-    func getTrending (mediaType: String, time:String, completion: @escaping (Result<[Film], Error>) -> Void){
-        guard let url = URL(string: "\(Constans.baseUrl)3/trending/\(mediaType)/\(time)?api_key=\(Constans.ApiKey)") else {return}
+    func getTrending (mediaType: MediaType, time: TimeWindow, completion: @escaping (Result<[Film], Error>) -> Void){
+        guard let url = URL(string: "\(Constanst.baseUrl)3/trending/\(mediaType.rawValue)/\(time.rawValue)?api_key=\(Constanst.ApiKey)") else {return}
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
             guard let data = data,
                   error == nil else {return}
@@ -219,8 +221,8 @@ class APICaller {
         task.resume()
     }
     
-    func getPopular (mediaType: String, completion: @escaping (Result<[Film], Error>) -> Void) {
-        guard let url = URL(string: "\(Constans.baseUrl)3/\(mediaType)/popular?api_key=\(Constans.ApiKey)&language=en-US&page=1") else {return}
+    func getPopular (mediaType: MediaType, completion: @escaping (Result<[Film], Error>) -> Void) {
+        guard let url = URL(string: "\(Constanst.baseUrl)3/\(mediaType.rawValue)/popular?api_key=\(Constanst.ApiKey)&language=en-US&page=1") else {return}
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data,
                   error == nil else {return}
@@ -235,8 +237,8 @@ class APICaller {
         
     }
     
-    func getTopRate (mediaType: String, completion: @escaping (Result<[Film], Error>) -> Void) {
-        guard let url = URL(string: "\(Constans.baseUrl)3/\(mediaType)/top_rated?api_key=\(Constans.ApiKey)&language=en-US&page=1") else {return}
+    func getTopRate (mediaType: MediaType, completion: @escaping (Result<[Film], Error>) -> Void) {
+        guard let url = URL(string: "\(Constanst.baseUrl)3/\(mediaType.rawValue)/top_rated?api_key=\(Constanst.ApiKey)&language=en-US&page=1") else {return}
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data,
                   error == nil else {return}
@@ -251,7 +253,7 @@ class APICaller {
         
     }
     func getUpcomming (mediaType: String, completion: @escaping (Result<UpComming, Error>) -> Void) {
-        guard let url = URL(string: "\(Constans.baseUrl)3/\(mediaType)/upcoming?api_key=\(Constans.ApiKey)&language=en-US&page=1") else {return}
+        guard let url = URL(string: "\(Constanst.baseUrl)3/\(mediaType)/upcoming?api_key=\(Constanst.ApiKey)&language=en-US&page=1") else {return}
        
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data,
@@ -270,7 +272,7 @@ class APICaller {
     }
     
     func getDiscoverMovies(completion: @escaping (Result<[Film], Error>) -> Void) {
-        guard let url = URL(string: "\(Constans.baseUrl)3/discover/movie?api_key=\(Constans.ApiKey)&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {return }
+        guard let url = URL(string: "\(Constanst.baseUrl)3/discover/movie?api_key=\(Constanst.ApiKey)&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {return }
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
             guard let data = data, error == nil else {
                 return
@@ -292,7 +294,7 @@ class APICaller {
     func search(with query: String, completion: @escaping (Result<[Film], Error>) -> Void) {
         
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
-        guard let url = URL(string: "\(Constans.baseUrl)3/search/movie?api_key=\(Constans.ApiKey)&query=\(query)") else {
+        guard let url = URL(string: "\(Constanst.baseUrl)3/search/movie?api_key=\(Constanst.ApiKey)&query=\(query)") else {
             return
         }
         
@@ -311,5 +313,83 @@ class APICaller {
 
         }
         task.resume()
+    }
+    
+  
+    func getCurrentProfile(completion: @escaping (Result<Profile, Error>) -> Void){
+        let url = "\(Constanst.baseUrl)3/account"
+        let sessionid = DataManager.shared.getSaveSessionId()
+        print(sessionid)
+        let parameters: Parameters = [
+            "api_key" : "\(Constanst.ApiKey)" ,
+            "session_id" : sessionid
+        ]
+        AF.request(url, method: .get, parameters: parameters).responseJSON { (response) in
+            
+            switch response.result {
+            case .success(let data):
+                let profile = Profile(JSON(data))
+                completion(.success(profile))
+            case .failure(let error):
+                completion(.failure(error))
+                
+            }
+        }
+
+    }
+
+    func postFavorite(){
+        let sessionid = DataManager.shared.getSaveSessionId()
+
+        let url = "\(Constanst.baseUrl)3/account/12405634/favorite?api_key=\(Constanst.ApiKey)&session_id=\(sessionid)"
+//        let url = "https://api.themoviedb.org/3/account/12405634/favorite?api_key=dc7bb41154658ee8cd23ecf49d7203c2&session_id=e93545ffb948fff28596f7fa8958749ec1a7e05f"
+//        let parameters: Parameters = [
+//            "api_key" : "\(Constanst.ApiKey)" ,
+//            "session_id" : sessionid
+//        ]
+//        let headers = ["Content-Type" : "application/json;charset=utf-8"]
+//        let body = [
+//            "media_type": "movie",
+//            "media_id": "550",
+//            "favorite": "true"
+//          ]
+       
+        var request = URLRequest(url: URL(string: url)!)
+        request.addValue("application/json;charset=utf-8", forHTTPHeaderField: "Content-Type")
+       
+        // Serialize HTTP Body data as JSON
+        let body = [
+            "media_type": "movie",
+            "media_id": 550,
+            "favorite": true
+        ] as [String : Any]
+        let bodyData = try? JSONSerialization.data(
+            withJSONObject: body,
+            options: []
+        )
+
+        // Change the URLRequest to a POST request
+        request.httpMethod = "POST"
+        request.httpBody = bodyData
+
+        // Create the HTTP request
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+
+            if let error = error {
+               print(error)
+            } else if let data = data {
+                do {
+                    let results = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(results)
+                } catch {
+                    print("")
+                }
+            } else {
+                // Handle unexpected error
+            }
+        }
+        task.resume()
+
     }
 }

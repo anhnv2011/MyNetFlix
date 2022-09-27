@@ -84,7 +84,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
         let path = films[indexPath.row].poster_path
 
 
-        cell.configPosterImage(posterPath: path!)
+        cell.configPosterImage(posterPath: path)
         return cell
     }
     

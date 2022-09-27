@@ -24,6 +24,7 @@ class LibraryViewController: UIViewController{
         setupScrollView()
         addChildView()
         setupToggle()
+        setupPositionView()
     }
     
     func setupScrollView(){
@@ -45,6 +46,7 @@ class LibraryViewController: UIViewController{
     }
     func setupToggle(){
         topView.addSubview(toggleView)
+        
         toggleView.frame = topView.bounds
 //        toggleView.frame = CGRect(x: 0, y: 100, width: 200, height: 55)
         toggleView.movieHandler = {
@@ -52,6 +54,17 @@ class LibraryViewController: UIViewController{
         }
         toggleView.tvHandler = {
             self.libraryScrollView.setContentOffset(CGPoint(x: self.widthScreen, y: 0), animated: true)
+        }
+    }
+    
+    func setupPositionView(){
+        if state == .movie {
+            libraryScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            toggleView.state = .movie
+
+        } else if state == .tv {
+            libraryScrollView.setContentOffset(CGPoint(x: self.widthScreen, y: 0), animated: true)
+            toggleView.state = .tv
         }
     }
     

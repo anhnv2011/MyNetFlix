@@ -9,8 +9,20 @@ import UIKit
 
 class SearchResultViewController: UISearchController {
 
-    @IBOutlet weak var searchResultCollectionView: UICollectionView!
-    private var films = [Film]()
+    public var films = [Film]()
+    
+    public let searchResultsCollectionView: UICollectionView = {
+
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: 200)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return collectionView
+    }()
+    
+//    @IBOutlet weak var searchResultsCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,24 +32,29 @@ class SearchResultViewController: UISearchController {
 
 
     func setupCollectionView(){
-        searchResultCollectionView.delegate = self
-        searchResultCollectionView.dataSource = self
-        searchResultCollectionView.register(UINib(nibName: "SearchResultCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+        view.addSubview(searchResultsCollectionView)
+
+        searchResultsCollectionView.delegate = self
+        searchResultsCollectionView.dataSource = self
+        searchResultsCollectionView.register(UINib(nibName: "SearchResultCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchResultsCollectionView.frame = view.bounds
+    }
     
     
 }
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return films.count
+        
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         
         
         let film = films[indexPath.row]
@@ -48,19 +65,6 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        
-//        let title = titles[indexPath.row]
-//        let titleName = title.original_title ?? ""
-//        APICaller.shared.getMovie(with: titleName) { [weak self] result in
-//            switch result {
-//            case .success(let videoElement):
-//                self?.delegate?.searchResultsViewControllerDidTapItem(TitlePreviewViewModel(title: title.original_title ?? "", youtubeView: videoElement, titleOverview: title.overview ?? ""))
-//
-//                
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
         
 
     }
