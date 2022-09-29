@@ -56,18 +56,25 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let sessionid = DataManager.shared.getSaveSessionId()
-        print(sessionid)
-//        setupTableView()
-//        setupHeader()
-//        setupNavbar()
-//        setupDiscoveryButton()
-//        fetchData()
-
-        APICaller.share.postFavorite()
+        
+        setupTableView()
+        setupHeader()
+        setupNavbar()
+        setupDiscoveryButton()
+        fetchData()
+        setupTopView()
         
     }
-   
+    let topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = . red
+        return view
+    }()
+    func setupTopView(){
+        navigationController?.hidesBarsOnSwipe = true
+        view.addSubview(topView)
+        topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 0, leftPadding: 0, rightPadding: 0)
+    }
     func fetchData(){
         let group = DispatchGroup()
         group.enter()
@@ -181,9 +188,11 @@ class HomeViewController: UIViewController {
     
     func setupTableView(){
         tableView.register(UINib(nibName: "CollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CollectionTableViewCell")
+        tableView.register(TableSectionHeader.self, forHeaderFooterViewReuseIdentifier: TableSectionHeader.identifier)
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .darkGray
+//        tableView.backgroundColor = .darkGray
         headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 500))
         tableView.tableHeaderView = headerView
         
@@ -203,7 +212,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupNavbar() {
-                title  = "Home"
+        title  = "Home"
 
         var image = UIImage(named: "netflixLogo")
         image = image?.withRenderingMode(.alwaysOriginal)
@@ -211,10 +220,7 @@ class HomeViewController: UIViewController {
         
         let profileButton =   UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: #selector(didtapProfileButton))
         let playButton = UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
-        navigationItem.rightBarButtonItems = [
-          profileButton,
-            playButton
-        ]
+        navigationItem.rightBarButtonItems = [profileButton,playButton]
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
 
@@ -230,9 +236,9 @@ class HomeViewController: UIViewController {
     func setupDiscoveryButton(){
         
         view.addSubview(discoveryButton)
-        discoveryButton.configure(with: DiscoveryButtonViewModel(text: "Phim ngẫu nhiên",
+        discoveryButton.configure(with: DiscoveryButtonModel(text: "Phim ngẫu nhiên",
                                                                  image: UIImage(systemName: "shuffle"),
-                                                                 backgroundColor: .black))
+                                                                 backgroundColor: .white))
         let tabBarHeight = self.tabBarController!.tabBar.intrinsicContentSize.height + 16
         
         discoveryButton.anchor(bottom: view.bottomAnchor, right: view.rightAnchor, height: 56, bottomPadding: tabBarHeight, rightPadding: 8)
@@ -275,7 +281,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-//        return HomeSection.allCases.count
         return homeSection.count
     }
     
@@ -297,35 +302,35 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.films = model
         case .popularMovie(model: let model):
             cell.films = model
+            cell.tableCellNumber = indexPath.section
         case .popularTv(model: let model):
             cell.films = model
+            cell.tableCellNumber = indexPath.section
         case .topRateMovie(model: let model):
             cell.films = model
+            cell.tableCellNumber = indexPath.section
         case .topRateTV(model: let model):
             cell.films = model
+            cell.tableCellNumber = indexPath.section
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return HomeSection.allCases[section].title
-        return homeSection[section].title
-    }
-    
+  
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 180
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let defaultOffset = view.safeAreaInsets.top
-//        print(defaultOffset)
+//        let defaultOffset = view.safeAreaInsets.top
+////        print(defaultOffset)
+////
+//        let offset = scrollView.contentOffset.y + defaultOffset
+////        print(scrollView.contentOffset.y)
+//        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
 //
-        let offset = scrollView.contentOffset.y + defaultOffset
-//        print(scrollView.contentOffset.y)
-        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
-        
         let currentVelocityY =  scrollView.panGestureRecognizer.velocity(in: scrollView.superview).y
         let currentVelocityYSign = Int(currentVelocityY).signum()
         if currentVelocityYSign != lastVelocityYSign &&
@@ -343,30 +348,78 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // print("SCOLLING UP")
         }
     }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        35
+    
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        35
+//    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        20
+//    }
+    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+////        return HomeSection.allCases[section].title
+//        return homeSection[section].title
+//    }
+//
+//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        guard let header = view as? UITableViewHeaderFooterView else {return}
+//        header.textLabel?.font = UIFont.semibold(ofSize: 18)
+//        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
+//        header.textLabel?.textColor = .white
+//        header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
+//        header.backgroundColor = .red
+//    }
+//
+//    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+//        guard let footer = view as? UITableViewHeaderFooterView else {return}
+//        footer.backgroundColor = .red
+//    }
+//
+//
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerSection = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableSectionHeader.identifier) as! TableSectionHeader
+        let title = homeSection[section].title
+        headerSection.configureLabel(text: title)
+        return headerSection
     }
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        0.001
-    }
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else {return}
-        header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
-        header.textLabel?.textColor = .white
-        header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard let footer = view as? UITableViewHeaderFooterView else {return}
+        footer.contentView.backgroundColor = .orange
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        2
+    }
 }
 
 extension HomeViewController: CollectionTableViewCellDelegate{
-    func didTapCell(film: Film) {
-        print(film)
+    func didTapCell(film: Film, tableCellNumber: Int) {
         let vc = FilmDetailViewController()
+        vc.film = film
+        
+        var type = ""
+        if tableCellNumber == 3 || tableCellNumber == 5 {
+            type = "movie"
+        }
+        if tableCellNumber == 4 || tableCellNumber == 6 {
+            type = "tv"
+        }
+                
+        print(type)
+        vc.mediaType = type
         vc.view.backgroundColor = .clear
+//        vc.view.alpha = 0.5
 //        vc.contenView.alpha = 0.5
         present(vc, animated: true, completion: nil)
     }
+    
+ 
+    
+  
     
     
 }

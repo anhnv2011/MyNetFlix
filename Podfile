@@ -10,4 +10,5 @@ pod 'RxCocoa'
 pod 'RxAlamofire'
 pod 'Cosmos'
 pod 'SwiftyJSON'
+pod 'youtube-ios-player-helper'
 end

@@ -32,6 +32,13 @@ class ProfileViewController: UIViewController {
 
     var profileSetting = [ProfileSetting]()
     var profileData: Profile?
+    {
+        didSet {
+            DispatchQueue.main.async {
+                self.setupUI()
+            }
+        }
+    }
    
     @IBOutlet weak var avartarImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -62,19 +69,8 @@ class ProfileViewController: UIViewController {
     }
     private func fetchData(){
         settingProfile()
-        APICaller.share.getCurrentProfile { [weak self] result in
-            switch result {
-            case .success(let profile):
-                self?.profileData = profile
-//                print(profile)
-                DispatchQueue.main.async {
-                    self?.setupUI()
-                }
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+
+        self.profileData = DataManager.shared.profileData
         
     }
     func setupUI(){
@@ -145,7 +141,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
             navigationController?.pushViewController(vc, animated: true)
 
         }
-       
+        
+    }
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
     }
     

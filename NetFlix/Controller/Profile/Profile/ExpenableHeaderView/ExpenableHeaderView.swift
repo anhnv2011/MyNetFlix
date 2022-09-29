@@ -23,12 +23,14 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction))
         self.addGestureRecognizer(tapGesture)
+
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction))
         self.addGestureRecognizer(tapGesture)
+
     }
     
     func customInit(title: String,image: String, section: Int, delegate: ExpenableHeaderViewDelegate){
@@ -38,7 +40,7 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
         self.clipsToBounds = true
         self.section = section
         self.delegate = delegate
-        self.backgroundColor = .darkGray
+//        self.backgroundColor = .darkGray
     }
     
     @objc func selectHeaderAction(gestureRecognizer: UITapGestureRecognizer){
@@ -47,7 +49,6 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.contentView.backgroundColor = .darkGray
     }
 
 }

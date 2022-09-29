@@ -25,29 +25,29 @@ struct Constanst {
     
     static let ImageBaseUrl = "https://image.tmdb.org/t/p/w500/"
     struct Parameters {
-           static let userId = "userId"
-       }
-       
-       //The header fields
-       enum HttpHeaderField: String {
-           case authentication = "Authorization"
-           case contentType = "Content-Type"
-           case acceptType = "Accept"
-           case acceptEncoding = "Accept-Encoding"
-       }
-       
-       //The content type (JSON)
-       enum ContentType: String {
-           case json = "application/json"
-       }
+        static let userId = "userId"
+    }
+    
+    //The header fields
+    enum HttpHeaderField: String {
+        case authentication = "Authorization"
+        case contentType = "Content-Type"
+        case acceptType = "Accept"
+        case acceptEncoding = "Accept-Encoding"
+    }
+    
+    //The content type (JSON)
+    enum ContentType: String {
+        case json = "application/json"
+    }
 }
 struct Friend: Codable {
-
+    
     let firstname: String
     let id: Int
     let lastname: String
     let phonenumber: String
-
+    
 }
 enum GetFriendsFailureReason: Int, Error {
     case unAuthorized = 401
@@ -57,37 +57,6 @@ enum GetFriendsFailureReason: Int, Error {
 class APICaller {
     static let share = APICaller()
     
-    func getFriends() -> Observable<[Friend]> {
-        return Observable.create { observer -> Disposable in
-            AF.request("http://friendservice.herokuapp.com/listFriends")
-                .validate()
-                .responseJSON { response in
-                    switch response.result {
-                    case .success:
-                        guard let data = response.data else {
-                        
-                            observer.onError(response.error ?? GetFriendsFailureReason.notFound)
-                            return
-                        }
-                        do {
-                            let friends = try JSONDecoder().decode([Friend].self, from: data)
-                            observer.onNext(friends)
-                        } catch {
-                            observer.onError(error)
-                        }
-                    case .failure(let error):
-                        if let statusCode = response.response?.statusCode,
-                            let reason = GetFriendsFailureReason(rawValue: statusCode)
-                        {
-                            observer.onError(reason)
-                        }
-                        observer.onError(error)
-                    }
-            }
-
-            return Disposables.create()
-        }
-    }
     
     func creatSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (Result<TestAPi, Error>) -> Void){
         guard let url = URL(string: "\(Constanst.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constanst.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
@@ -106,7 +75,7 @@ class APICaller {
                 let result = try JSONDecoder().decode(TestAPi.self, from: data)
                 print(result)
                 completion(.success(result))
-
+                
             } catch {
                 print("nhap sai user")
                 completion(.failure(error))
@@ -131,9 +100,9 @@ class APICaller {
             }
             do {
                 
-//                let result = try JSONDecoder().decode(SessionId.self, from: data)
-//                print(result.session_id)
-               //completion(.success(result.session_id))
+                //                let result = try JSONDecoder().decode(SessionId.self, from: data)
+                //                print(result.session_id)
+                //completion(.success(result.session_id))
                 let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 print(result)
                 let a = try JSONDecoder().decode(SessionId.self, from: data)
@@ -163,7 +132,7 @@ class APICaller {
                 //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 let result = try JSONDecoder().decode(Authentication.self, from: data)
                 completion(.success(result))
-
+                
             } catch {
                 print("nhap sai user")
                 completion(.failure(error))
@@ -184,7 +153,7 @@ class APICaller {
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
             guard let data = data,
                   error == nil else {
-               
+                
                 return
                 
             }
@@ -194,7 +163,7 @@ class APICaller {
                 print(result)
                 compeltion(.success(result))
                 //print(result.request_token)
-            
+                
             } catch {
                 compeltion(.failure(error))
                 print(error.localizedDescription)
@@ -244,6 +213,7 @@ class APICaller {
                   error == nil else {return}
             do {
                 let result = try JSONDecoder().decode(Trending.self, from: data)
+                
                 completion(.success(result.results))
             } catch {
                 completion(.failure(error))
@@ -254,7 +224,7 @@ class APICaller {
     }
     func getUpcomming (mediaType: String, completion: @escaping (Result<UpComming, Error>) -> Void) {
         guard let url = URL(string: "\(Constanst.baseUrl)3/\(mediaType)/upcoming?api_key=\(Constanst.ApiKey)&language=en-US&page=1") else {return}
-       
+        
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data,
                   error == nil else {return}
@@ -281,11 +251,11 @@ class APICaller {
             do {
                 let results = try JSONDecoder().decode(Trending.self, from: data)
                 completion(.success(results.results))
-
+                
             } catch {
                 completion(.failure(error))
             }
-
+            
         }
         task.resume()
     }
@@ -306,20 +276,19 @@ class APICaller {
             do {
                 let results = try JSONDecoder().decode(Trending.self, from: data)
                 completion(.success(results.results))
-
+                
             } catch {
                 completion(.failure(error))
             }
-
+            
         }
         task.resume()
     }
     
-  
+    
     func getCurrentProfile(completion: @escaping (Result<Profile, Error>) -> Void){
         let url = "\(Constanst.baseUrl)3/account"
         let sessionid = DataManager.shared.getSaveSessionId()
-        print(sessionid)
         let parameters: Parameters = [
             "api_key" : "\(Constanst.ApiKey)" ,
             "session_id" : sessionid
@@ -335,61 +304,206 @@ class APICaller {
                 
             }
         }
-
+        
     }
-
-    func postFavorite(){
+    
+    
+    
+}
+//MARK:- WatchList
+extension APICaller {
+    func getWatchList(mediaType: String,sessonid: String, profileID: String, completion: @escaping (Result<[Film], Error>) -> Void) {
+  
+        
+        guard let url = URL(string:       "\(Constanst.baseUrl)3/account/\(profileID)/watchlist/\(mediaType)?api_key=\(Constanst.ApiKey)&language=en-US&session_id=\(sessonid)&sort_by=created_at.asc&page=1") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                             print(json)
+                let result = try JSONDecoder().decode(Trending.self, from: data)
+                
+                completion(.success(result.results))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    func postWatchList(mediaType: String, mediaId: Int,type:Bool, completion: @escaping (Result<StatusResponse, Error>) -> Void){
         let sessionid = DataManager.shared.getSaveSessionId()
-
-        let url = "\(Constanst.baseUrl)3/account/12405634/favorite?api_key=\(Constanst.ApiKey)&session_id=\(sessionid)"
-//        let url = "https://api.themoviedb.org/3/account/12405634/favorite?api_key=dc7bb41154658ee8cd23ecf49d7203c2&session_id=e93545ffb948fff28596f7fa8958749ec1a7e05f"
-//        let parameters: Parameters = [
-//            "api_key" : "\(Constanst.ApiKey)" ,
-//            "session_id" : sessionid
-//        ]
-//        let headers = ["Content-Type" : "application/json;charset=utf-8"]
-//        let body = [
-//            "media_type": "movie",
-//            "media_id": "550",
-//            "favorite": "true"
-//          ]
-       
+        let profileid = DataManager.shared.getProfileId()
+        let url = "\(Constanst.baseUrl)3/account/\(profileid)/watchlist?api_key=\(Constanst.ApiKey)&session_id=\(sessionid)"
+   
+        
         var request = URLRequest(url: URL(string: url)!)
         request.addValue("application/json;charset=utf-8", forHTTPHeaderField: "Content-Type")
-       
+        
         // Serialize HTTP Body data as JSON
         let body = [
-            "media_type": "movie",
-            "media_id": 550,
-            "favorite": true
+            "media_type": mediaType,
+            "media_id": mediaId,
+            "watchlist": type
         ] as [String : Any]
         let bodyData = try? JSONSerialization.data(
             withJSONObject: body,
             options: []
         )
-
+        
         // Change the URLRequest to a POST request
         request.httpMethod = "POST"
         request.httpBody = bodyData
-
+        
         // Create the HTTP request
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
+            
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(json)
+                let result = try JSONDecoder().decode(StatusResponse.self, from: data)
+                print(result)
+                completion(.success(result))
+                
+            } catch {
+                completion(.failure(error))
+            }
+            
+        }
+        task.resume()
+        
+    }
+}
 
-            if let error = error {
-               print(error)
-            } else if let data = data {
-                do {
-                    let results = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(results)
-                } catch {
-                    print("")
-                }
-            } else {
-                // Handle unexpected error
+//MARK:- Favorite
+extension APICaller {
+    func postFavorite(mediaType: String, mediaId: Int,type: Bool, completion: @escaping (Result<StatusResponse, Error>) -> Void){
+        let sessionid = DataManager.shared.getSaveSessionId()
+        let profileid = DataManager.shared.getProfileId()
+        let url = "\(Constanst.baseUrl)3/account/\(profileid)/favorite?api_key=\(Constanst.ApiKey)&session_id=\(sessionid)"
+   
+        
+        var request = URLRequest(url: URL(string: url)!)
+        request.addValue("application/json;charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        // Serialize HTTP Body data as JSON
+        let body = [
+            "media_type": mediaType,
+            "media_id": mediaId,
+            "favorite": type
+        ] as [String : Any]
+        let bodyData = try? JSONSerialization.data(
+            withJSONObject: body,
+            options: []
+        )
+        
+        // Change the URLRequest to a POST request
+        request.httpMethod = "POST"
+        request.httpBody = bodyData
+        
+        // Create the HTTP request
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(json)
+                let result = try JSONDecoder().decode(StatusResponse.self, from: data)
+                print(result)
+                completion(.success(result))
+                
+            } catch {
+                completion(.failure(error))
+            }
+            
+        }
+        task.resume()
+        
+    }
+    
+    func getMovieFavorite(sessonid: String, profileID: String, completion: @escaping (Result<[Film], Error>) -> Void) {
+       
+        guard let url = URL(string: "\(Constanst.baseUrl)3/account/\(profileID)/favorite/movies?api_key=\(Constanst.ApiKey)&session_id=\(sessonid)&language=en-US&sort_by=created_at.asc&page=1") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(json)
+                let result = try JSONDecoder().decode(Trending.self, from: data)
+                
+                completion(.success(result.results))
+            } catch {
+                completion(.failure(error))
             }
         }
         task.resume()
-
     }
+    
+    func getTVFavorite(sessonid: String, profileID: String, completion: @escaping (Result<[Film], Error>) -> Void) {
+       
+        guard let url = URL(string: "\(Constanst.baseUrl)3/account/\(profileID)/favorite/tv?api_key=\(Constanst.ApiKey)&session_id=\(sessonid)&language=en-US&sort_by=created_at.asc&page=1") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
+                let result = try JSONDecoder().decode(Trending.self, from: data)
+                
+                completion(.success(result.results))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+}
+
+//MARK:- Get Genres
+extension APICaller {
+    
+    
+}
+extension APICaller {
+    
+    //    func getFriends() -> Observable<[Friend]> {
+    //        return Observable.create { observer -> Disposable in
+    //            AF.request("http://friendservice.herokuapp.com/listFriends")
+    //                .validate()
+    //                .responseJSON { response in
+    //                    switch response.result {
+    //                    case .success:
+    //                        guard let data = response.data else {
+    //
+    //                            observer.onError(response.error ?? GetFriendsFailureReason.notFound)
+    //                            return
+    //                        }
+    //                        do {
+    //                            let friends = try JSONDecoder().decode([Friend].self, from: data)
+    //                            observer.onNext(friends)
+    //                        } catch {
+    //                            observer.onError(error)
+    //                        }
+    //                    case .failure(let error):
+    //                        if let statusCode = response.response?.statusCode,
+    //                            let reason = GetFriendsFailureReason(rawValue: statusCode)
+    //                        {
+    //                            observer.onError(reason)
+    //                        }
+    //                        observer.onError(error)
+    //                    }
+    //            }
+    //
+    //            return Disposables.create()
+    //        }
+    //    }
 }

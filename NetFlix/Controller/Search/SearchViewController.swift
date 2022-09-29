@@ -29,9 +29,11 @@ class SearchViewController: UIViewController {
     }
 
     func setupNavigation(){
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.tintColor = .white
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationItem.largeTitleDisplayMode = .always
+//        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
         title = "Search"
         navigationItem.searchController = searchController
 

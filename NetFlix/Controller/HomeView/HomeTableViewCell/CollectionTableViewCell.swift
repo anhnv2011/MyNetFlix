@@ -9,7 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 protocol CollectionTableViewCellDelegate:AnyObject {
-    func didTapCell(film: Film)
+    func didTapCell(film: Film, tableCellNumber: Int)
 }
 
 class CollectionTableViewCell: UITableViewCell {
@@ -18,6 +18,7 @@ class CollectionTableViewCell: UITableViewCell {
     
     var films:[Film] = []
 //    var films = PublishSubject<[Film]>()
+    var tableCellNumber = 0
     private let disposeBag = DisposeBag()
 
 
@@ -81,10 +82,9 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
 
-        let path = films[indexPath.row].poster_path
+        let film = films[indexPath.row]
+        cell.film = film
 
-
-        cell.configPosterImage(posterPath: path)
         return cell
     }
     
@@ -99,13 +99,15 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
 //        let realCenter = collectionView.convert(attributes!.frame, to: collectionView.superview?.superview?.superview?.superview)
 //        print(realCenter)
 
+     
         let film = films[indexPath.row]
-        delegate?.didTapCell(film: film)
+        
+        delegate?.didTapCell(film: film, tableCellNumber: tableCellNumber)
         
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        return UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8

@@ -11,13 +11,16 @@ class DetailFilmButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.cornerRadius = frame.size.height / 2
+        setupButton()
     }
     
     required init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
-        layer.cornerRadius = frame.size.height / 2
+        setupButton()
 
+    }
+    func setupButton(){
+        layer.cornerRadius = frame.size.height / 2
     }
     override var isHighlighted: Bool {
         didSet {

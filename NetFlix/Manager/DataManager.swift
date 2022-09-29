@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 struct DataManager {
-    static let shared = DataManager()
+    static var shared = DataManager()
     
     //MARK:- User defaultValue
     //key
     var SessionId = ""
-    
+    var ProfileId = ""
     func saveSessionId (id: String) {
         UserDefaults.standard.setValue(id, forKey: "SessionId")
         UserDefaults.standard.synchronize()
@@ -22,4 +22,21 @@ struct DataManager {
         let string = UserDefaults.standard.string(forKey: "SessionId") ?? ""
         return string
     }
+    
+    func saveProfileId (id: String) {
+        UserDefaults.standard.setValue(id, forKey: "ProfileId")
+        UserDefaults.standard.synchronize()
+    }
+    func getProfileId() -> String {
+        let string = UserDefaults.standard.string(forKey: "ProfileId") ?? ""
+        return string
+    }
+    
+    
+    var profileData:Profile?
+    var favoriteMovie:[Film]?
+    var favoriteTv:[Film]?
+    var watchListMovie:[Film]?
+    var watchListTv:[Film]?
+    
 }

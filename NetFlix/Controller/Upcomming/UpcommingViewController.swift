@@ -51,15 +51,7 @@ class UpcommingViewController: UIViewController {
                 
             }
         }
-//        APICaller.share.getUpcomming(mediaType: "tv") { (result) in
-//            switch result {
-//            case.success(let tv):
-//                self.comming.append(.Tv(model: tv))
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                
-//            }
-//        }
+
     }
 
     func setupTableView(){
@@ -90,7 +82,28 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        // initia state
+        let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
+        let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
+//        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 100, 0)
+        cell.layer.transform = rotationTransform
+        
+        //defind final state after animation
+        UIView.animate(withDuration: 1) {
+            cell.layer.transform = CATransform3DIdentity
+        }
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let vc = FilmDetailViewController()
+        vc.view.backgroundColor = .clear
+        vc.film = movie[indexPath.row]
+        vc.mediaType = "movie"
+        present(vc, animated: true, completion: nil)
+    }
 }
 
 

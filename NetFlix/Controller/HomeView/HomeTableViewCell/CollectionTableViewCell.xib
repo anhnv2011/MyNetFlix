@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wgr-vl-UBe">
-                        <rect key="frame" x="0.0" y="8" width="246" height="184"/>
+                        <rect key="frame" x="0.0" y="0.0" width="246" height="200"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TmE-0R-ERz">
                             <size key="itemSize" width="128" height="128"/>
@@ -29,10 +29,10 @@
                     </collectionView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="wgr-vl-UBe" secondAttribute="bottom" constant="8" id="HAu-2t-M5A"/>
-                    <constraint firstItem="wgr-vl-UBe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JzQ-vv-wWY"/>
-                    <constraint firstItem="wgr-vl-UBe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="TuY-BP-XvN"/>
-                    <constraint firstAttribute="trailing" secondItem="wgr-vl-UBe" secondAttribute="trailing" id="mGe-CN-3hS"/>
+                    <constraint firstAttribute="trailing" secondItem="wgr-vl-UBe" secondAttribute="trailing" id="BqQ-Q7-Bws"/>
+                    <constraint firstAttribute="bottom" secondItem="wgr-vl-UBe" secondAttribute="bottom" id="C8l-ix-qpY"/>
+                    <constraint firstItem="wgr-vl-UBe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="EgU-ir-nUo"/>
+                    <constraint firstItem="wgr-vl-UBe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Fbh-W5-GEa"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

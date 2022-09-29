@@ -11,6 +11,15 @@ import SDWebImage
 class CollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var posterImage: UIImageView!
+    var film:Film?
+    {
+        didSet {
+            guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(film?.poster_path ?? "")") else {
+                return
+            }
+            posterImage.sd_setImage(with: url, completed: nil)
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         

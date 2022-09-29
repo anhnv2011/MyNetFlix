@@ -58,7 +58,8 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         
         
         let film = films[indexPath.row]
-        cell.configPosterImage(posterPath: film.poster_path ?? "")
+        cell.film = film
+//        cell.configPosterImage(posterPath: film.poster_path ?? "")
         return cell
     }
     
