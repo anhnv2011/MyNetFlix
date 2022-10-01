@@ -26,6 +26,8 @@ class FilmDetailViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIView!
     @IBOutlet weak var watchListButton: UIView!
     
+    
+    var completion: (() -> Void)?
     var film:Film!
     var mediaType = ""
     var mediaId = 0
@@ -106,7 +108,7 @@ class FilmDetailViewController: UIViewController {
             markWatchList(mediaType: mediaType, mediaId: mediaId, type: !isWatchListed)
             isWatchListed = !isWatchListed
         case downloadButton:
-            print("")
+            downloadFilm()
         case addtoListButton:
             print("")
 
@@ -117,6 +119,12 @@ class FilmDetailViewController: UIViewController {
         
     }
     
+    func downloadFilm(){
+        print("")
+        completion!()
+        
+    }
+    
     private func setupRateStar(){
         //can edit star
         cosmosView.settings.updateOnTouch = true
@@ -124,8 +132,14 @@ class FilmDetailViewController: UIViewController {
         cosmosView.settings.fillMode = .precise
         // Change the size of the stars
         cosmosView.settings.starSize = 30
+        cosmosView.didTouchCosmos = { [weak self] rating in
+            self?.ratingFilm()
+        }
     }
     
+    func ratingFilm(){
+        
+    }
 
     func setupFavoriteButton(){
         if isFavorited == false {

@@ -23,7 +23,7 @@ enum HomeSection {
     var title: String {
         switch self {
         case .trendingAll:
-            return "Trending"
+            return "Trending All"
         case .trendingMovie:
             return "Trending Movie"
         case .trendingTv:
@@ -46,7 +46,13 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var homeSection = [HomeSection]()
-  
+    {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+            }
+        }
+    }
     
     var headerView: HeaderView?
     var lastVelocityYSign = 0
@@ -380,6 +386,27 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerSection = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableSectionHeader.identifier) as! TableSectionHeader
         let title = homeSection[section].title
+        headerSection.completion = {
+            let vc = SeeAllViewController()
+            let type = self.homeSection[section]
+            switch type {
+            case .trendingAll(model: let model):
+                vc.films = model
+            case .trendingMovie(model: let model):
+                vc.films = model
+            case .trendingTv(model: let model):
+                vc.films = model
+            case .popularMovie(model: let model):
+                vc.films = model
+            case .popularTv(model: let model):
+                vc.films = model
+            case .topRateMovie(model: let model):
+                vc.films = model
+            case .topRateTV(model: let model):
+                vc.films = model
+            }
+            self.present(vc, animated: true, completion: nil)
+        }
         headerSection.configureLabel(text: title)
         return headerSection
     }
@@ -414,6 +441,14 @@ extension HomeViewController: CollectionTableViewCellDelegate{
         vc.view.backgroundColor = .clear
 //        vc.view.alpha = 0.5
 //        vc.contenView.alpha = 0.5
+        vc.completion = {
+            if let tabItems = self.tabBarController?.tabBar.items {
+                // In this case we want to modify the badge number of the third tab:
+                let tabItem = tabItems[3]
+                tabItem.badgeValue = "NEw"
+            }
+        }
+        
         present(vc, animated: true, completion: nil)
     }
     

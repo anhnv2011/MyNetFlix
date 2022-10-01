@@ -7,38 +7,25 @@
 
 import UIKit
 
-enum Comming {
-    case Movie(model: [Film])
-    case Tv (model: [Film])
-    var tittle: String {
-        switch self {
-        case .Movie:
-            return "UpComming Movie"
-        case .Tv:
-            return "UpComming TV"
-        }
-    }
-}
 
 class UpcommingViewController: UIViewController {
-
-    var comming:[Comming] = []
+    
     var movie = [Film]()
-    var upcomming = [UpComming]()
+    var cellAimationFlag = [Int]()
     
     @IBOutlet weak var upCommingTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         fetchData()
-   
-    
+        
+        
     }
     func fetchData(){
         APICaller.share.getUpcomming(mediaType: "movie") { (result) in
             switch result {
             case.success(let model):
-              
+                
                 self.movie = model.results
                 let dateTitle = "From: " + model.dates.minimum + "  to " + model.dates.maximum
                 DispatchQueue.main.async {
@@ -51,16 +38,16 @@ class UpcommingViewController: UIViewController {
                 
             }
         }
-
+        
     }
-
+    
     func setupTableView(){
         upCommingTableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: "UpCommingTableViewCell")
         upCommingTableView.delegate = self
         upCommingTableView.dataSource = self
     }
-   
-
+    
+    
 }
 
 extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -84,16 +71,40 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        // initia state
-        let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
-        let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
-//        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 100, 0)
-        cell.layer.transform = rotationTransform
+        //        // initia state
+        //        let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
+        //        let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
+        //        cell.layer.transform = rotationTransform
+        //
+        //        //defind final state after animation
+        //        UIView.animate(withDuration: 1) {
+        //            cell.layer.transform = CATransform3DIdentity
+        //        }
         
-        //defind final state after animation
-        UIView.animate(withDuration: 1) {
-            cell.layer.transform = CATransform3DIdentity
+        if cellAimationFlag.contains(indexPath.row) == false {
+            // initia state
+            cell.alpha = 0
+            if indexPath.row % 2 == 0 {
+                let transform = CATransform3DTranslate(CATransform3DIdentity, -500, 20, 0)
+                cell.layer.transform = transform
+                
+            } else {
+                let transform = CATransform3DTranslate(CATransform3DIdentity, 500, 20, 0)
+                cell.layer.transform = transform
+                
+            }
+            
+            UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn) {
+                cell.alpha = 1
+                cell.layer.transform = CATransform3DIdentity
+            } completion: { (_) in
+                
+            }
+            cellAimationFlag.append(indexPath.row)
         }
+        
+        
+
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
