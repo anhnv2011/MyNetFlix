@@ -6,15 +6,27 @@
 //
 
 import UIKit
+import youtube_ios_player_helper
 
 class PreviewViewController: UIViewController {
 
+    @IBOutlet weak var playerView: YTPlayerView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        playerView.load(withVideoId: "bsM1qdGAVbU")
+        setupPlayer()
     }
 
+    func setupPlayer(){
+        
+        playerView.delegate = self
+        playerView.load(withVideoId: "bsM1qdGAVbU", playerVars: ["playsinline": 1])
+    }
+    
+}
 
-
+extension PreviewViewController: YTPlayerViewDelegate {
+    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+        playerView.playVideo()
+    }
 }

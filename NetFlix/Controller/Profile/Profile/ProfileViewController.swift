@@ -7,13 +7,13 @@
 
 import UIKit
 import SDWebImage
-enum ProfilePage:String, CaseIterable {
-    case favorite = "Favorite"
-    case recommendation = "Recommendation"
-    case list = "Your list"
-    case rating = "Ratings"
-    case watchList = "Watch list"
-}
+//enum ProfilePage:String, CaseIterable {
+//    case favorite = "Favorite"
+//    case recommendation = "Recommendation"
+//    case list = "Your list"
+//    case rating = "Ratings"
+//    case watchList = "Watch list"
+//}
 
 class ProfileSetting{
     let title: String
@@ -29,6 +29,7 @@ class ProfileSetting{
 }
 
 class ProfileViewController: UIViewController {
+//    var transitionDelegate: UIViewControllerTransitioningDelegate!
 
     var profileSetting = [ProfileSetting]()
     var profileData: Profile?
@@ -44,13 +45,30 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var logOutButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupTableView()
         fetchData()
+        self.transitioningDelegate = self
     }
 
+    
+    //MARK:- button Action
+    @IBAction func buttonAction(_ sender: UIButton) {
+        switch sender {
+        case dismissButton:
+            dismiss(animated: true, completion: nil)
+        case logOutButton:
+            print("")
+            
+        default:
+            break
+        }
+    
+    }
     
     func setupTableView(){
         tableView.delegate = self
@@ -64,7 +82,6 @@ class ProfileViewController: UIViewController {
             ProfileSetting(title: "Recommendation", option: ["Movie", "Tv"], image: "person", isopen: false),
             ProfileSetting(title: "Your list", option: ["Movie", "Tv"], image: "person", isopen: false),
             ProfileSetting(title: "Ratings", option: ["Movie", "Tv"], image: "person", isopen: false)
-
         ]
     }
     private func fetchData(){

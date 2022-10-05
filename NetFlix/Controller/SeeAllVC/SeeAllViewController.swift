@@ -8,7 +8,8 @@
 import UIKit
 
 class SeeAllViewController: UIViewController {
-
+    var cellAimationFlag = [Int]()
+    
     @IBOutlet weak var seeAllCollectionView: UICollectionView!
     var films = [Film]()
 
@@ -16,7 +17,6 @@ class SeeAllViewController: UIViewController {
         super.viewDidLoad()
 
         setupCollectionView()
-        print(films)
     }
 
 
@@ -34,7 +34,7 @@ class SeeAllViewController: UIViewController {
         let horizontaltem = CompositionalLayout.createItem(width: .fractionalWidth(0.5), height: .fractionalHeight(1), spacing: 1)
         let horizontalGroup = CompositionalLayout.createGroup(alignment: .horizontal, width: .fractionalWidth(1), height: .fractionalHeight(1), item: horizontaltem, count: 2)
         
-        let verticalitem = CompositionalLayout.createItem(width: .fractionalWidth(1), height: .fractionalHeight(1), spacing: 1)
+//        let verticalitem = CompositionalLayout.createItem(width: .fractionalWidth(1), height: .fractionalHeight(1), spacing: 1)
         let verticalgroup = CompositionalLayout.createGroup(alignment: .vertical, width: .fractionalWidth(0.5), height: .fractionalHeight(1), item: horizontalGroup, count: 2)
         
         //group
@@ -56,5 +56,41 @@ extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if cellAimationFlag.contains(indexPath.row) == false {
+//            // initia state
+//            cell.alpha = 0
+//            if indexPath.row % 2 == 0 {
+//                let transform = CATransform3DTranslate(CATransform3DIdentity, -500, 20, 0)
+//                cell.layer.transform = transform
+//
+//            } else {
+//                let transform = CATransform3DTranslate(CATransform3DIdentity, 500, -200, 0)
+//                cell.layer.transform = transform
+//
+//            }
+//            let value = Double(indexPath.row) / 10
+//            let delay = min(1, value)
+//            print(delay)
+//            UIView.animate(withDuration: 1, delay: TimeInterval(delay), options: .curveEaseIn) {
+//
+//                cell.alpha = 1
+//                cell.layer.transform = CATransform3DIdentity
+//            } completion: { (_) in
+//
+//            }
+//            cellAimationFlag.append(indexPath.row)
+//        }
+        
+                // initia state
+                let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
+                let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
+                cell.layer.transform = rotationTransform
+        
+                //defind final state after animation
+                UIView.animate(withDuration: 1) {
+                    cell.layer.transform = CATransform3DIdentity
+                }
+    }
     
 }

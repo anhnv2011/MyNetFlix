@@ -2,11 +2,11 @@
 //  HomeViewController.swift
 //  NetFlix
 //
-//  Created by MAC on 6/26/22.
+//  Created by MAC on 8/26/22.
 //
 
 import UIKit
-
+import youtube_ios_player_helper
 enum DiscoveryState{
     case close
     case expanse
@@ -44,7 +44,9 @@ enum HomeSection {
 
 class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    
+
+//    let transitionDelegate = TransitionDelegate()
+        
     var homeSection = [HomeSection]()
     {
         didSet {
@@ -54,23 +56,27 @@ class HomeViewController: UIViewController {
         }
     }
     
-    var headerView: HeaderView?
     var lastVelocityYSign = 0
     let discoveryButton = DiscoveryButton()
     var discoveryState: DiscoveryState = . close
     
     
+   
+
+    var headerView: HeaderView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTableView()
         setupHeader()
         setupNavbar()
         setupDiscoveryButton()
         fetchData()
         setupTopView()
+//        self.transitioningDelegate = transitionDelegate
         
     }
+    //MARK:- UI
     let topView: UIView = {
         let view = UIView()
         view.backgroundColor = . red
@@ -81,6 +87,108 @@ class HomeViewController: UIViewController {
         view.addSubview(topView)
         topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 0, leftPadding: 0, rightPadding: 0)
     }
+   
+
+    
+    func setupTableView(){
+        tableView.register(UINib(nibName: "CollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CollectionTableViewCell")
+        tableView.register(TableSectionHeader.self, forHeaderFooterViewReuseIdentifier: TableSectionHeader.identifier)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+//        tableView.backgroundColor = .darkGray
+        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 500))
+        tableView.tableHeaderView = headerView
+        
+    }
+    
+   
+    func setupHeader(){
+        APICaller.share.getTrending(mediaType: .movie, time: .day) { (result) in
+            switch result {
+            case .success(let movie):
+                let random = movie.randomElement()
+                DispatchQueue.main.async {
+                    self.headerView?.configHeader(posterPath: random?.poster_path ?? "")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func setupNavbar() {
+        title  = "Home"
+
+        var image = UIImage(named: "netflixLogo")
+        image = image?.withRenderingMode(.alwaysOriginal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
+        
+        let profileButton =   UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: #selector(didtapProfileButton))
+        let playButton = UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+        navigationItem.rightBarButtonItems = [profileButton,playButton]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
+
+    }
+    func updateDiscoveryButton(){
+       
+        if discoveryState == .close {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
+
+                self.widthConstraint1?.constant = 250
+                self.view.setNeedsUpdateConstraints()
+                self.view.layoutIfNeeded()
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
+
+                
+                self.widthConstraint1?.constant = 56
+                self.view.setNeedsUpdateConstraints()
+                self.view.layoutIfNeeded()
+                
+            })
+        }
+       
+    }
+    
+    //MARK:- Button action
+    @objc func didtapProfileButton(){
+        let vc = ProfileViewController()
+        vc.transitioningDelegate = self
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+//        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func discoveryFilm(){
+        print("11")
+      
+       
+    }
+    
+    var widthConstraint1: NSLayoutConstraint?
+   
+    func setupDiscoveryButton(){
+        
+        view.addSubview(discoveryButton)
+        discoveryButton.configure(with: DiscoveryButtonModel(text: "Phim ngẫu nhiên",
+                                                                 image: UIImage(systemName: "shuffle"),
+                                                                 backgroundColor: .white))
+        let tabBarHeight = self.tabBarController!.tabBar.intrinsicContentSize.height + 16
+        
+        discoveryButton.anchor(bottom: view.bottomAnchor, right: view.rightAnchor, height: 56, bottomPadding: tabBarHeight, rightPadding: 8)
+        discoveryButton.layer.cornerRadius = 28
+        widthConstraint1 = discoveryButton.widthAnchor.constraint(equalToConstant: 56)
+        widthConstraint1?.isActive = true
+        discoveryButton.addTarget(self, action: #selector(discoveryFilm), for: .touchUpInside)
+        
+    }
+    
+   
+    
+    //MARK:- Fetch data
     func fetchData(){
         let group = DispatchGroup()
         group.enter()
@@ -190,98 +298,6 @@ class HomeViewController: UIViewController {
         }
        
     }
-
-    
-    func setupTableView(){
-        tableView.register(UINib(nibName: "CollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CollectionTableViewCell")
-        tableView.register(TableSectionHeader.self, forHeaderFooterViewReuseIdentifier: TableSectionHeader.identifier)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-//        tableView.backgroundColor = .darkGray
-        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 500))
-        tableView.tableHeaderView = headerView
-        
-    }
-    func setupHeader(){
-        APICaller.share.getTrending(mediaType: .movie, time: .day) { (result) in
-            switch result {
-            case .success(let movie):
-                let random = movie.randomElement()
-                DispatchQueue.main.async {
-                    self.headerView?.configHeader(posterPath: random?.poster_path ?? "")
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func setupNavbar() {
-        title  = "Home"
-
-        var image = UIImage(named: "netflixLogo")
-        image = image?.withRenderingMode(.alwaysOriginal)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
-        
-        let profileButton =   UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: #selector(didtapProfileButton))
-        let playButton = UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
-        navigationItem.rightBarButtonItems = [profileButton,playButton]
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-
-
-    }
-    
-    @objc func didtapProfileButton(){
-        let vc = ProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    var widthConstraint1: NSLayoutConstraint?
-   
-    func setupDiscoveryButton(){
-        
-        view.addSubview(discoveryButton)
-        discoveryButton.configure(with: DiscoveryButtonModel(text: "Phim ngẫu nhiên",
-                                                                 image: UIImage(systemName: "shuffle"),
-                                                                 backgroundColor: .white))
-        let tabBarHeight = self.tabBarController!.tabBar.intrinsicContentSize.height + 16
-        
-        discoveryButton.anchor(bottom: view.bottomAnchor, right: view.rightAnchor, height: 56, bottomPadding: tabBarHeight, rightPadding: 8)
-        discoveryButton.layer.cornerRadius = 28
-        widthConstraint1 = discoveryButton.widthAnchor.constraint(equalToConstant: 56)
-        widthConstraint1?.isActive = true
-        discoveryButton.addTarget(self, action: #selector(discoveryFilm), for: .touchUpInside)
-        
-    }
-    
-    @objc func discoveryFilm(){
-        print("11")
-      
-       
-    }
-    
-    func updateDiscoveryButton(){
-       
-        if discoveryState == .close {
-            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
-
-                self.widthConstraint1?.constant = 250
-                self.view.setNeedsUpdateConstraints()
-                self.view.layoutIfNeeded()
-            })
-        } else {
-            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
-
-                
-                self.widthConstraint1?.constant = 56
-                self.view.setNeedsUpdateConstraints()
-                self.view.layoutIfNeeded()
-                
-            })
-        }
-       
-    }
 }
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -337,6 +353,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 ////        print(scrollView.contentOffset.y)
 //        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
 //
+        headerView?.scrollViewDidScroll(scrollView: tableView)
+      
+        
         let currentVelocityY =  scrollView.panGestureRecognizer.velocity(in: scrollView.superview).y
         let currentVelocityYSign = Int(currentVelocityY).signum()
         if currentVelocityYSign != lastVelocityYSign &&
@@ -425,19 +444,21 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: CollectionTableViewCellDelegate{
     func didTapCell(film: Film, tableCellNumber: Int) {
-        let vc = FilmDetailViewController()
-        vc.film = film
+        let vc = FilmDetailPopUpViewController()
         
-        var type = ""
+        var choosefilm = film
+        
         if tableCellNumber == 3 || tableCellNumber == 5 {
-            type = "movie"
+            choosefilm.media_type = "movie"
         }
         if tableCellNumber == 4 || tableCellNumber == 6 {
-            type = "tv"
+            choosefilm.media_type = "tv"
         }
                 
-        print(type)
-        vc.mediaType = type
+//        print(type)
+//        vc.mediaType = type
+        
+        vc.film = choosefilm
         vc.view.backgroundColor = .clear
 //        vc.view.alpha = 0.5
 //        vc.contenView.alpha = 0.5
@@ -445,7 +466,7 @@ extension HomeViewController: CollectionTableViewCellDelegate{
             if let tabItems = self.tabBarController?.tabBar.items {
                 // In this case we want to modify the badge number of the third tab:
                 let tabItem = tabItems[3]
-                tabItem.badgeValue = "NEw"
+                tabItem.badgeValue = "New"
             }
         }
         
@@ -453,8 +474,5 @@ extension HomeViewController: CollectionTableViewCellDelegate{
     }
     
  
-    
-  
-    
-    
+
 }

@@ -45,6 +45,7 @@ class UpcommingViewController: UIViewController {
         upCommingTableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: "UpCommingTableViewCell")
         upCommingTableView.delegate = self
         upCommingTableView.dataSource = self
+        
     }
     
     
@@ -89,12 +90,15 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.layer.transform = transform
                 
             } else {
-                let transform = CATransform3DTranslate(CATransform3DIdentity, 500, 20, 0)
+                let transform = CATransform3DTranslate(CATransform3DIdentity, 500, -200, 0)
                 cell.layer.transform = transform
                 
             }
-            
-            UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn) {
+            let value = Double(indexPath.row) / 10
+            let delay = min(1, value)
+            print(delay)
+            UIView.animate(withDuration: 1, delay: TimeInterval(delay), options: .curveEaseIn) {
+               
                 cell.alpha = 1
                 cell.layer.transform = CATransform3DIdentity
             } completion: { (_) in
@@ -109,10 +113,13 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = FilmDetailViewController()
+        let vc = FilmDetailPopUpViewController()
+        
+        var choseFilm = movie[indexPath.row]
+        choseFilm.media_type = "movie"
+        print(choseFilm)
+        vc.film = choseFilm
         vc.view.backgroundColor = .clear
-        vc.film = movie[indexPath.row]
-        vc.mediaType = "movie"
         present(vc, animated: true, completion: nil)
     }
 }

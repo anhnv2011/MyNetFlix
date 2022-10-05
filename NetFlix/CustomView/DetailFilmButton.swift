@@ -26,7 +26,7 @@ class DetailFilmButton: UIButton {
         didSet {
             if isHighlighted {
                 UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: []) {
-                    
+                
                     self.transform = .init(scaleX: 0.4, y: 0.4)
                     self.layoutIfNeeded()
                 }

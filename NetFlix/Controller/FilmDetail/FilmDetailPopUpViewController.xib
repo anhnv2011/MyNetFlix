@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilmDetailViewController" customModule="NetFlix" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilmDetailPopUpViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
                 <outlet property="addtoListButton" destination="54G-mM-Y5c" id="Wo3-aN-lEg"/>
                 <outlet property="contenView" destination="uuK-O2-gW5" id="Nyz-2W-dth"/>
@@ -20,6 +20,7 @@
                 <outlet property="overviewLabel" destination="DSe-M7-2Gp" id="6CP-7V-nmN"/>
                 <outlet property="playButton" destination="z1q-7F-TaA" id="GG0-1Q-VfQ"/>
                 <outlet property="posterFilmImage" destination="KSc-os-vxF" id="ytu-lF-wZQ"/>
+                <outlet property="rateLabel" destination="EmB-i2-dGs" id="dKg-Tw-3ov"/>
                 <outlet property="releaseDateLabel" destination="v50-3Q-hgh" id="IoR-eO-4dn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="watchListButton" destination="MR7-vc-4oH" id="xV1-kn-wMk"/>
@@ -43,7 +44,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v50-3Q-hgh">
                             <rect key="frame" x="152" y="42" width="268" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="A wooden puppet embarks on a thrilling adventure to become a real boy." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSe-M7-2Gp">
@@ -199,11 +200,11 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWc-1W-rzZ" customClass="CosmosView" customModule="Cosmos">
-                            <rect key="frame" x="152" y="66.333333333333314" width="182" height="30"/>
+                            <rect key="frame" x="152" y="66.333333333333314" width="150" height="30"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="bMp-R1-2BW"/>
-                                <constraint firstAttribute="width" constant="182" id="bvm-Q6-4Zg"/>
+                                <constraint firstAttribute="width" constant="150" id="bvm-Q6-4Zg"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -213,10 +214,16 @@
                                     <integer key="value" value="5"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="number" keyPath="starSize">
-                                    <real key="value" value="30"/>
+                                    <real key="value" value="25"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your rate : 1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EmB-i2-dGs">
+                            <rect key="frame" x="306" y="71.666666666666686" width="114" height="19.333333333333329"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.26444212147887325" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -226,7 +233,9 @@
                         <constraint firstItem="DSe-M7-2Gp" firstAttribute="leading" secondItem="KSc-os-vxF" secondAttribute="trailing" constant="4" id="6vR-u0-TCo"/>
                         <constraint firstItem="F8f-fJ-aHx" firstAttribute="leading" secondItem="WBU-Sn-VOy" secondAttribute="trailing" constant="4" id="Dg6-3P-KLy"/>
                         <constraint firstItem="DSe-M7-2Gp" firstAttribute="bottom" secondItem="KSc-os-vxF" secondAttribute="bottom" id="EC2-Up-dOJ"/>
+                        <constraint firstAttribute="trailing" secondItem="EmB-i2-dGs" secondAttribute="trailing" constant="8" id="FX9-Wm-Q9Y"/>
                         <constraint firstAttribute="trailing" secondItem="K05-Op-o9k" secondAttribute="trailing" constant="8" id="FsY-aC-W1o"/>
+                        <constraint firstItem="EmB-i2-dGs" firstAttribute="leading" secondItem="qWc-1W-rzZ" secondAttribute="trailing" constant="4" id="Jh4-me-VGm"/>
                         <constraint firstItem="F8f-fJ-aHx" firstAttribute="top" secondItem="uuK-O2-gW5" secondAttribute="top" constant="8" id="L8A-PI-TBi"/>
                         <constraint firstItem="WBU-Sn-VOy" firstAttribute="top" secondItem="uuK-O2-gW5" secondAttribute="top" constant="8" id="THi-Ba-G71"/>
                         <constraint firstAttribute="trailing" secondItem="F8f-fJ-aHx" secondAttribute="trailing" constant="8" id="XuQ-Mh-utf"/>
@@ -239,6 +248,7 @@
                         <constraint firstAttribute="trailing" secondItem="v50-3Q-hgh" secondAttribute="trailing" constant="8" id="n27-qv-D6Y"/>
                         <constraint firstItem="v50-3Q-hgh" firstAttribute="leading" secondItem="KSc-os-vxF" secondAttribute="trailing" constant="4" id="t5c-hK-dFn"/>
                         <constraint firstItem="KSc-os-vxF" firstAttribute="top" secondItem="uuK-O2-gW5" secondAttribute="top" constant="8" id="tEb-ZZ-q7l"/>
+                        <constraint firstItem="EmB-i2-dGs" firstAttribute="centerY" secondItem="qWc-1W-rzZ" secondAttribute="centerY" id="zdG-dy-c7O"/>
                     </constraints>
                 </view>
             </subviews>
@@ -255,7 +265,7 @@
     </objects>
     <designables>
         <designable name="qWc-1W-rzZ">
-            <size key="intrinsicContentSize" width="170" height="30"/>
+            <size key="intrinsicContentSize" width="145" height="25"/>
         </designable>
     </designables>
     <resources>

@@ -8,7 +8,8 @@
 import UIKit
 import SDWebImage
 class UpCommingTableViewCell: UITableViewCell {
-
+    static let identifier = "UpCommingTableViewCell"
+    
     @IBOutlet weak var detailImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
@@ -24,10 +25,8 @@ class UpCommingTableViewCell: UITableViewCell {
     }
     
     func configDetailMovieTableCell (posterPath: String, name: String){
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)") else {
-            return
-        }
-        detailImageView.sd_setImage(with: url, completed: nil)
+        let url = "\(Constanst.ImageBaseUrl)\(posterPath)"
+        detailImageView.loadImageUsingCache(url)
         nameLabel.text = name
         
     }

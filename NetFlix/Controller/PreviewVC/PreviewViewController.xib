@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
+                <outlet property="playerView" destination="ibB-RL-BFR" id="htn-2k-ECN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,33 +19,36 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_2019-11-10 16.27.16" translatesAutoresizingMaskIntoConstraints="NO" id="i9I-wy-UyT">
-                    <rect key="frame" x="0.0" y="44" width="414" height="448"/>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đồng cỏ châu phi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ta7-hs-Xzr">
                     <rect key="frame" x="116" y="471" width="182" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ibB-RL-BFR" customClass="YTPlayerView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="448"/>
+                    <color key="backgroundColor" systemColor="labelColor"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="ta7-hs-Xzr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="116" id="05V-eG-IMS"/>
-                <constraint firstItem="i9I-wy-UyT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Acb-8q-jyB"/>
+                <constraint firstItem="ibB-RL-BFR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="8FM-w7-286"/>
+                <constraint firstItem="ibB-RL-BFR" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="A9d-mb-QXB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ibB-RL-BFR" secondAttribute="trailing" id="AGa-pG-8IE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ta7-hs-Xzr" secondAttribute="bottom" constant="370" id="CoL-qc-5hw"/>
                 <constraint firstItem="ta7-hs-Xzr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="427" id="Gji-Kq-OFZ"/>
-                <constraint firstItem="i9I-wy-UyT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="g07-fa-F7b"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="i9I-wy-UyT" secondAttribute="trailing" id="gbA-HY-GQz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ta7-hs-Xzr" secondAttribute="trailing" constant="116" id="tjm-JR-2pU"/>
-                <constraint firstItem="i9I-wy-UyT" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.5" id="zBY-N9-fOR"/>
+                <constraint firstItem="ibB-RL-BFR" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.5" id="yUx-1i-nCS"/>
             </constraints>
             <point key="canvasLocation" x="105.79710144927537" y="75.669642857142847"/>
         </view>
     </objects>
     <resources>
-        <image name="photo_2019-11-10 16.27.16" width="1280" height="853"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

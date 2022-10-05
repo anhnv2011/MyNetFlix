@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListViewController" customModule="NetFlix" customModuleProvider="target">
+            <connections>
+                <outlet property="creatNewListButton" destination="A78-6s-8Fg" id="CDg-Lj-yeJ"/>
+                <outlet property="searchTextField" destination="JNo-ba-1qa" id="MOS-O0-05f"/>
+                <outlet property="statusLabel" destination="9fX-J0-MIl" id="Ru7-lm-TEp"/>
+                <outlet property="tableView" destination="rbI-aS-kaA" id="dDE-jj-zky"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A78-6s-8Fg">
+                    <rect key="frame" x="8" y="60" width="398" height="22"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="Creat New List" image="plus" catalog="system"/>
+                    <connections>
+                        <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="Pih-Vf-Ndn"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JNo-ba-1qa">
+                    <rect key="frame" x="8" y="90" width="398" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add xxxx to ....Add xxxx to ....Add xxxx to ...." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fX-J0-MIl">
+                    <rect key="frame" x="8" y="132" width="398" height="24"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rbI-aS-kaA">
+                    <rect key="frame" x="8" y="164" width="398" height="690"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="JNo-ba-1qa" firstAttribute="top" secondItem="A78-6s-8Fg" secondAttribute="bottom" constant="8" id="2SS-CQ-Pbp"/>
+                <constraint firstItem="JNo-ba-1qa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2sh-ae-w7q"/>
+                <constraint firstItem="A78-6s-8Fg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="7B1-RG-Xfk"/>
+                <constraint firstItem="9fX-J0-MIl" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9yD-KC-kuI"/>
+                <constraint firstItem="9fX-J0-MIl" firstAttribute="top" secondItem="JNo-ba-1qa" secondAttribute="bottom" constant="8" id="F5o-Rp-tnY"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rbI-aS-kaA" secondAttribute="trailing" constant="8" id="IgV-ZU-ijr"/>
+                <constraint firstItem="JNo-ba-1qa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="RkR-h5-4ff"/>
+                <constraint firstItem="rbI-aS-kaA" firstAttribute="top" secondItem="9fX-J0-MIl" secondAttribute="bottom" constant="8" id="VTE-Jp-IkX"/>
+                <constraint firstItem="A78-6s-8Fg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="aam-D9-b3U"/>
+                <constraint firstItem="rbI-aS-kaA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="iBJ-xU-hxY"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="A78-6s-8Fg" secondAttribute="trailing" constant="8" id="iLA-hv-mAc"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9fX-J0-MIl" secondAttribute="trailing" constant="8" id="jQs-ep-5iu"/>
+                <constraint firstItem="A78-6s-8Fg" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lCU-h6-hVE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JNo-ba-1qa" secondAttribute="trailing" constant="8" id="mZN-dX-6XX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rbI-aS-kaA" secondAttribute="bottom" constant="8" id="qU9-XM-Jz6"/>
+                <constraint firstItem="9fX-J0-MIl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="zoN-g8-bGM"/>
+            </constraints>
+            <point key="canvasLocation" x="-55" y="-238"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

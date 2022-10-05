@@ -40,7 +40,6 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
         self.clipsToBounds = true
         self.section = section
         self.delegate = delegate
-//        self.backgroundColor = .darkGray
     }
     
     @objc func selectHeaderAction(gestureRecognizer: UITapGestureRecognizer){

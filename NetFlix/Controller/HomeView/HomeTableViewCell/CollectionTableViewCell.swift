@@ -79,6 +79,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
 
     }
 
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
 
@@ -131,8 +132,11 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
                 print("Watch list")
                 }
             let rateItAction = UIAction(title: "Rate it", image: UIImage(systemName: "star.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                let vc = PreviewViewController()
+                
                 print("Rate it")
                 }
+            
             let playTrailerAction = UIAction(title: "Play Trailer", image: UIImage(systemName: "play.circle.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
                 print("Play Trailer")
                 }
@@ -165,4 +169,32 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
 //        }
         return config
     }
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+//        animator.addCompletion {
+//
+//            // We should have our image name set as the identifier of the configuration
+////            if let identifier = configuration.identifier as? String {
+////                let viewController = PreviewViewController()
+////                self.show(viewController, sender: self)
+////            }
+//            
+//            let vc = PreviewViewController()
+//            
+//        }
+//        let vc = PreviewViewController()
+//        vc.present(vc, animated: true, completion: nil)
+        
+        guard let destinationViewController = animator.previewViewController else {
+                return
+            }
+
+        
+        
+            animator.addAnimations {
+//                self.show(destinationViewController, sender: self)
+//                self.
+            }
+    }
+   
+
 }
