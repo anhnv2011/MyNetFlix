@@ -114,7 +114,7 @@ class ProfileViewController: UIViewController {
     private func setupUI(){
         setupTableView()
 
-        view.backgroundColor = .black
+//        view.backgroundColor = UIColor.popupBackground()
         accountView.backgroundColor = UIColor.sectionBackground()
         logOutButton.backgroundColor = UIColor.buttonBackground()
         
