@@ -16,15 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
 //        window?.rootViewController = LoginViewController()
-//        window?.rootViewController = MainTabBarViewController()
+        window?.rootViewController = MainTabBarViewController()
 //        window?.rootViewController = LibraryViewController()
 //        window?.rootViewController = LoginViewController()
-        if UserDefaults.standard.string(forKey: "SessionId") == nil  {
-            window?.rootViewController = LoginViewController()
-
-        } else {
-            window?.rootViewController = MainTabBarViewController()
-        }
+//        if UserDefaults.standard.string(forKey: "SessionId") == nil  {
+//            window?.rootViewController = LoginViewController()
+//
+//        } else {
+//            window?.rootViewController = MainTabBarViewController()
+//        }
         window?.makeKeyAndVisible()
         return true
     }
