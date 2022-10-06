@@ -118,6 +118,8 @@ class ProfileViewController: UIViewController {
         accountView.backgroundColor = UIColor.sectionBackground()
         logOutButton.backgroundColor = UIColor.buttonBackground()
         
+        avartarImageView.layer.cornerRadius = avartarImageView.frame.size.height / 2 
+        
         let url = URL(string: "\(Constanst.ImageBaseUrl)\(profileData?.avatar?.tmdb?.avatarPath ?? "")")
         
         avartarImageView.sd_setImage(with: url, completed: nil)

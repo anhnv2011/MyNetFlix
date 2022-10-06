@@ -66,6 +66,7 @@ class Animator: NSObject, UIViewControllerAnimatedTransitioning {
             [weak self] in
             if self!.presenting {
                 toView.transform = CGAffineTransform.identity
+                toView.layoutIfNeeded()
                 toView.alpha = 1
             } else {
                 fromView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
