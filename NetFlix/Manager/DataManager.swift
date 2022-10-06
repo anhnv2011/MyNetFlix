@@ -12,23 +12,23 @@ struct DataManager {
     
     //MARK:- User defaultValue
     //key
-    var SessionId = ""
-    var ProfileId = ""
+    let SessionId = "SessionId"
+    let ProfileId = "ProfileId"
     func saveSessionId (id: String) {
-        UserDefaults.standard.setValue(id, forKey: "SessionId")
+        UserDefaults.standard.setValue(id, forKey: "\(SessionId)")
         UserDefaults.standard.synchronize()
     }
     func getSaveSessionId() -> String {
-        let string = UserDefaults.standard.string(forKey: "SessionId") ?? ""
+        let string = UserDefaults.standard.string(forKey: "\(SessionId)") ?? ""
         return string
     }
     
     func saveProfileId (id: String) {
-        UserDefaults.standard.setValue(id, forKey: "ProfileId")
+        UserDefaults.standard.setValue(id, forKey: "\(ProfileId)")
         UserDefaults.standard.synchronize()
     }
     func getProfileId() -> String {
-        let string = UserDefaults.standard.string(forKey: "ProfileId") ?? ""
+        let string = UserDefaults.standard.string(forKey: "\(ProfileId)") ?? ""
         return string
     }
     

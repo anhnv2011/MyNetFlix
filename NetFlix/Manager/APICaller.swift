@@ -619,8 +619,7 @@ extension APICaller {
             }
             
             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                print(json)
+              
                 let results = try JSONDecoder().decode(YoutubeSearchResponse.self, from: data)
                 
                 completion(.success(results.items[0]))
@@ -700,13 +699,32 @@ extension APICaller {
             
             do {
                 let result = try JSONDecoder().decode(StatusResponse.self, from: data)
-                print(result)
+//                print(result)
                 completion(.success(result))
                 
             } catch {
                 completion(.failure(error))
             }
             
+        }
+        task.resume()
+    }
+}
+
+//MARK:- Similar
+extension APICaller {
+    func getSimilarFilm(mediaType: String, filmID: Int, completion: @escaping (Result<[Film], Error>) -> Void){
+        guard let url = URL(string: "\(Constanst.baseUrl)3/\(mediaType)/\(filmID)/similar?api_key=\(Constanst.ApiKey)") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
+                let result = try JSONDecoder().decode(Trending.self, from: data)
+                
+                completion(.success(result.results))
+            } catch {
+                completion(.failure(error))
+            }
         }
         task.resume()
     }

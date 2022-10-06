@@ -81,16 +81,21 @@ extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSo
 //            }
 //            cellAimationFlag.append(indexPath.row)
 //        }
+//
+//                // initia state
+//                let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
+//                let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
+//                cell.layer.transform = rotationTransform
+//
+//                //defind final state after animation
+//                UIView.animate(withDuration: 1) {
+//                    cell.layer.transform = CATransform3DIdentity
+//                }
         
-                // initia state
-                let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
-                let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
-                cell.layer.transform = rotationTransform
-        
-                //defind final state after animation
-                UIView.animate(withDuration: 1) {
-                    cell.layer.transform = CATransform3DIdentity
-                }
+        cell.alpha = 0
+        UIView.animate(withDuration: 1) {
+            cell.alpha = 1
+        }
     }
     
 }

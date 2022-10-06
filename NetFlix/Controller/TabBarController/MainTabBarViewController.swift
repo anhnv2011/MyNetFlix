@@ -24,7 +24,7 @@ class MainTabBarViewController: UITabBarController {
         let vc3 = UINavigationController(rootViewController: SearchViewController())
         let vc4 = UINavigationController(rootViewController: DownloadViewController())
         UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().barTintColor = .black
+        UINavigationBar.appearance().barTintColor = UIColor.naviBackground()
 
         vc1.title = "Home"
         vc2.title = "Upcomming"
@@ -37,7 +37,7 @@ class MainTabBarViewController: UITabBarController {
         vc4.tabBarItem.image = UIImage(systemName: "square.and.arrow.down")
         
         self.tabBarController?.tabBar.backgroundColor = .black
-        self.tabBar.barTintColor = .black
+        self.tabBar.barTintColor = UIColor.tabbarBackground()
         self.tabBar.tintColor = .blue
         setViewControllers([vc1,vc2, vc3, vc4], animated: true)
     }

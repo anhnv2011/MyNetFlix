@@ -8,7 +8,11 @@
 import Foundation
 struct ImageName {
     static let shared = ImageName()
-    
-    
-    
+    let bookmarkButton = "bookmark.fill"
+    let listButton = "list.bullet"
+    let favoriteButton = "suit.heart.fill"
+    let playButton = "play.fill"
+    let dismissButton = "xmark"
+    let rateButton = "star.fill"
+    let xmark = "xmark"
 }

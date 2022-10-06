@@ -21,6 +21,7 @@ class DetailFilmButton: UIButton {
     }
     func setupButton(){
         layer.cornerRadius = frame.size.height / 2
+        backgroundColor = UIColor.buttonBackground()
     }
     override var isHighlighted: Bool {
         didSet {

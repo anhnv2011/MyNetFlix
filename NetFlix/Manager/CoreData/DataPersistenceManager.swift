@@ -91,6 +91,7 @@ class DataPersistenceManager {
         } catch {
             completion(.failure(CoreDataError.failedToDeleteData))
         }
-        
     }
+    
+   
 }

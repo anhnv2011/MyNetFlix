@@ -21,22 +21,27 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
     var section: Int!
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction))
-        self.addGestureRecognizer(tapGesture)
-
+        addGesture()
+        
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        addGesture()
+        
+    }
+    
+    func addGesture(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction))
         self.addGestureRecognizer(tapGesture)
-
     }
     
     func customInit(title: String,image: String, section: Int, delegate: ExpenableHeaderViewDelegate){
-//        self.textLabel?.text = title
+        //        self.textLabel?.text = title
         self.sectionTitleLabel.text = title
+        self.sectionTitleLabel.textColor = .white
         self.imageView.image = UIImage(systemName: image)
+        self.imageView.tintColor = .white
         self.clipsToBounds = true
         self.section = section
         self.delegate = delegate
@@ -49,5 +54,5 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-
+    
 }

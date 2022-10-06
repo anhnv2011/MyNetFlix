@@ -18,23 +18,23 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="deO-1W-xDu">
-                            <rect key="frame" x="16" y="0.0" width="44" height="44"/>
+                            <rect key="frame" x="16" y="4" width="36" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="deO-1W-xDu" secondAttribute="height" multiplier="1:1" id="AAU-SH-WsR"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-oo-wII">
-                            <rect key="frame" x="76" y="11.5" width="330" height="21"/>
+                            <rect key="frame" x="68" y="11.5" width="338" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="deO-1W-xDu" secondAttribute="bottom" id="8G9-Xt-NWP"/>
+                        <constraint firstAttribute="bottom" secondItem="deO-1W-xDu" secondAttribute="bottom" constant="4" id="8G9-Xt-NWP"/>
                         <constraint firstItem="deO-1W-xDu" firstAttribute="leading" secondItem="0A1-8G-2Ci" secondAttribute="leading" constant="16" id="9Mr-rI-Ayp"/>
-                        <constraint firstItem="deO-1W-xDu" firstAttribute="top" secondItem="0A1-8G-2Ci" secondAttribute="top" id="TRX-9f-kpj"/>
+                        <constraint firstItem="deO-1W-xDu" firstAttribute="top" secondItem="0A1-8G-2Ci" secondAttribute="top" constant="4" id="TRX-9f-kpj"/>
                         <constraint firstItem="DiM-oo-wII" firstAttribute="centerY" secondItem="0A1-8G-2Ci" secondAttribute="centerY" id="d02-sF-9mj"/>
                         <constraint firstItem="DiM-oo-wII" firstAttribute="leading" secondItem="deO-1W-xDu" secondAttribute="trailing" constant="16" id="dEL-TT-T50"/>
                         <constraint firstAttribute="trailing" secondItem="DiM-oo-wII" secondAttribute="trailing" constant="8" id="wiV-14-cYM"/>
