@@ -16,7 +16,7 @@ class DownloadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupTableView()
+        
         setupNotification()
         fetchLocalStorageForDownload()
     }
@@ -57,6 +57,7 @@ class DownloadViewController: UIViewController {
         }
     }
     func setupUI(){
+        setupTableView()
         setupTabbar()
         setupNav()
     }
@@ -86,6 +87,21 @@ class DownloadViewController: UIViewController {
             tabItem.badgeValue = nil
         }
     }
+    
+    
+    func deleteData(index: Int){
+        DataPersistenceManager.shared.deleteFilm(model: filmItems[index]) { [weak self] result in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .success():
+                strongSelf.makeAlert(title: "Success", messaage: "Deleted")
+                
+            case .failure(let error):
+                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+            }
+            self?.filmItems.remove(at: index)
+        }
+    }
 }
 
 extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
@@ -112,21 +128,22 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            
-            DataPersistenceManager.shared.deleteFilm(model: filmItems[indexPath.row]) { [weak self] result in
+            let alert = UIAlertController(title: "Cảnh báo", message: "Are you sure?", preferredStyle: .alert)
+            let deleteButton = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
                 guard let strongSelf = self else {return}
-                switch result {
-                case .success():
-                    strongSelf.makeAlert(title: "Success", messaage: "UpCommingTableViewCell")
-                case .failure(let error):
-                    strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
-                }
-                self?.filmItems.remove(at: indexPath.row)
+                strongSelf.deleteData(index: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
+            let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(deleteButton)
+            alert.addAction(cancelButton)
+            present(alert, animated: true, completion: nil)
+
         default:
             break;
         }
+        
+
     }
     
     

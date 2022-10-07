@@ -453,7 +453,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 extension HomeViewController: CollectionTableViewCellDelegate{
     func didTapCell(film: Film, tableCellNumber: Int) {
         let vc = FilmDetailPopUpViewController()
-        vc.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .overFullScreen
         var choosefilm = film
         
         if tableCellNumber == 3 || tableCellNumber == 5 {

@@ -31,6 +31,9 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         bindData()
+
+  
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -80,7 +83,10 @@ class LoginViewController: UIViewController {
     
     private func setupUI(){
         loginLabel.text = ""
-        animateLogin(text: "Đăng nhập")
+
+        let loginLabel = NSLocalizedString("Login_Label", comment: "")
+        
+        animateLogin(text: loginLabel)
         usernameTextfiled.layer.cornerRadius  = 5
         
         passwordTextfield.layer.cornerRadius = 5
@@ -100,6 +106,12 @@ class LoginViewController: UIViewController {
         passwordView.layer.cornerRadius = 12
     }
     
+    @IBAction func changlangue(_ sender: UIButton) {
+        loginLabel.text = ""
+        let loginLabel = LocalizationSystem.sharedInstance.localizedStringForKey(key: "Login_Label", comment: "")
+        animateLogin(text: loginLabel)
+
+    }
     func bindData(){
         usernameTextfiled.becomeFirstResponder()
         usernameTextfiled.rx.text.map({$0 ?? ""})

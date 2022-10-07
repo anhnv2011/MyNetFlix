@@ -252,6 +252,7 @@ class FilmDetailPopUpViewController: UIViewController {
                         switch result {
                         case .success():
                             NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+                            strongSelf.makeAlert(title: "Status", messaage: "Downloading")
                         case .failure(let error):
                             strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
                         }
@@ -492,7 +493,10 @@ extension FilmDetailPopUpViewController{
             case .success(let response):
                 strongSelf.makeAlert(title: "Succes", messaage: response.status_message!)
                 strongSelf.yourRate = rating
-                strongSelf.isRated.toggle()
+                if strongSelf.isRated == false {
+                    strongSelf.isRated.toggle()
+
+                }
             case .failure(let error):
                 strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
             }

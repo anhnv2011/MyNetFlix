@@ -28,6 +28,7 @@
 		04345A3A28E5A3600071E481 /* GenresResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04345A3928E5A3600071E481 /* GenresResponse.swift */; };
 		043B35F628E7048000340D1D /* UIImageView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B35F528E7048000340D1D /* UIImageView-Extension.swift */; };
 		0448793128E823CB0073CA12 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448793028E823CB0073CA12 /* CompositionalLayout.swift */; };
+		044A9F2628F0942400761933 /* LocalizationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044A9F2528F0942400761933 /* LocalizationSystem.swift */; };
 		04546ADE28D1E9D2002F894B /* DetailFilmButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04546ADD28D1E9D2002F894B /* DetailFilmButton.swift */; };
 		0457F01C28D21E4800DDE8B9 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457F01B28D21E4800DDE8B9 /* DataManager.swift */; };
 		045A3ADA286779DB000F84DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3AD9286779DB000F84DE /* AppDelegate.swift */; };
@@ -90,6 +91,7 @@
 		04D789E828677F8D007030DE /* DownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D789E628677F8D007030DE /* DownloadViewController.xib */; };
 		04D789F02867808F007030DE /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D789EF2867808F007030DE /* APICaller.swift */; };
 		04EF691C28DDFAF9005D5C0A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF691B28DDFAF9005D5C0A /* LoginViewModel.swift */; };
+		04F7160328F085C6002DB4C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04F7160528F085C6002DB4C3 /* Localizable.strings */; };
 		04F8470B28D9DDB100CA99F3 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F8470928D9DDB100CA99F3 /* PreviewViewController.swift */; };
 		04F8470C28D9DDB100CA99F3 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F8470A28D9DDB100CA99F3 /* PreviewViewController.xib */; };
 		04FA057528EAD7CD008628F1 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FA057428EAD7CD008628F1 /* PopupViewController.swift */; };
@@ -147,6 +149,7 @@
 		04345A3928E5A3600071E481 /* GenresResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresResponse.swift; sourceTree = "<group>"; };
 		043B35F528E7048000340D1D /* UIImageView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView-Extension.swift"; sourceTree = "<group>"; };
 		0448793028E823CB0073CA12 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
+		044A9F2528F0942400761933 /* LocalizationSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationSystem.swift; sourceTree = "<group>"; };
 		04546ADD28D1E9D2002F894B /* DetailFilmButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilmButton.swift; sourceTree = "<group>"; };
 		0457F01B28D21E4800DDE8B9 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		045A3AD6286779DB000F84DE /* NetFlix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetFlix.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +218,8 @@
 		04D789E628677F8D007030DE /* DownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadViewController.xib; sourceTree = "<group>"; };
 		04D789EF2867808F007030DE /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		04EF691B28DDFAF9005D5C0A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		04F7160428F085C6002DB4C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		04F7160928F08612002DB4C3 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04F8470928D9DDB100CA99F3 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		04F8470A28D9DDB100CA99F3 /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
 		04FA057428EAD7CD008628F1 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
@@ -367,6 +372,7 @@
 		045A3AD8286779DB000F84DE /* NetFlix */ = {
 			isa = PBXGroup;
 			children = (
+				04F7160528F085C6002DB4C3 /* Localizable.strings */,
 				0492EECE28EDE73100EF8191 /* Test */,
 				046A8C5728EB2A4B0052666E /* Animation */,
 				04248A7328D1919000CD0876 /* Extension */,
@@ -378,6 +384,7 @@
 				045A3AE2286779DF000F84DE /* Assets.xcassets */,
 				045A3AE4286779DF000F84DE /* LaunchScreen.storyboard */,
 				049AC3C128ECB34B00A00027 /* Film.xcdatamodeld */,
+				044A9F2528F0942400761933 /* LocalizationSystem.swift */,
 			);
 			path = NetFlix;
 			sourceTree = "<group>";
@@ -805,6 +812,7 @@
 			knownRegions = (
 				en,
 				Base,
+				vi,
 			);
 			mainGroup = 045A3ACD286779DB000F84DE;
 			productRefGroup = 045A3AD7286779DB000F84DE /* Products */;
@@ -848,6 +856,7 @@
 				04BFEB7128EEE63700F1173D /* ShowMoreInforViewController.xib in Resources */,
 				04D789DD28677EF1007030DE /* SearchViewController.xib in Resources */,
 				04A5BCCE28D4D27600B6C3DF /* TvShowLibraryViewController.xib in Resources */,
+				04F7160328F085C6002DB4C3 /* Localizable.strings in Resources */,
 				0492EEDA28EDE7AB00EF8191 /* RepeatTableViewCell.xib in Resources */,
 				04F8470C28D9DDB100CA99F3 /* PreviewViewController.xib in Resources */,
 				0464F3EF28694CC9008F6015 /* CollectionViewCell.xib in Resources */,
@@ -931,6 +940,7 @@
 				04040AAC28E2FA5C00ABBF06 /* ImageName.swift in Sources */,
 				049AC3C828ECB68200A00027 /* DataPersistenceManager.swift in Sources */,
 				0423F2DE2869B4B00075903B /* UpCommingTableViewCell.swift in Sources */,
+				044A9F2628F0942400761933 /* LocalizationSystem.swift in Sources */,
 				04754F9328D03AC2002C5C72 /* DiscoveryButton.swift in Sources */,
 				040A24BF2869AC7400F92978 /* UpComing.swift in Sources */,
 				046A8C5928EB2A760052666E /* Animator.swift in Sources */,
@@ -1028,6 +1038,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		04F7160528F085C6002DB4C3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04F7160428F085C6002DB4C3 /* en */,
+				04F7160928F08612002DB4C3 /* vi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1035,6 +1054,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1096,6 +1116,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

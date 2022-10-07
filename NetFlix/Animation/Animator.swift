@@ -53,7 +53,10 @@ class Animator: NSObject, UIViewControllerAnimatedTransitioning {
         guard let toView = transitionContext.view(forKey: .to) else { return }
         let container = transitionContext.containerView
         if presenting {
+            toView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+
             container.addSubview(toView)
+            
             toView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
             toView.alpha = 0
         } else {
