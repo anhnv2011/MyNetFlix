@@ -8,3 +8,14 @@
 
 "Login_Label" = "Login";
 "Login_Button" = "Login";
+"No_Label" = "No";
+"Have_Label" = "Have";
+"Items" = "Items in";
+"WatchList" = "WatchList";
+"Favorite" = "Favorite";
+"Bookmark" = "Bookmark";
+"Rate" = "Rate";
+"Download" = "DownLoad";
+"Create" = "Create";
+
+

@@ -55,8 +55,9 @@ class ProfileViewController: UIViewController {
     var delegate : LanguageSelectionDelegate?
 
 
-    var transitionDelegate: UIViewControllerTransitioningDelegate!
-
+//    var transitionDelegate: UIViewControllerTransitioningDelegate!
+    var transitionDelegate = TransitionDelegate()
+    let simpleOver = SimpleOver()
     var profileSetting = [ProfileSetting]()
     var profileData: Profile?
     {
@@ -157,6 +158,17 @@ class ProfileViewController: UIViewController {
 
     }
 
+    
+    //MARK:- TableViewAction
+    private func selectedLanguages(selectedLanguage: String){
+        DataManager.shared.saveLanguage(code: selectedLanguage)
+        NotificationCenter.default.post(name: Notification.Name("ChangeLanguage"), object: nil)
+    }
+    private func showYourList(){
+        let vc = WatchListViewController()
+        vc.transitioningDelegate = transitionDelegate
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 //MARK:- Tableview Extension
@@ -222,13 +234,31 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
 //
 //        }
         switch indexPath.section {
+        
+        //Favorite
+        case 0:
+        print("Favorite")
+        
+        //Bookmark
+        case 1:
+        print("")
+        
+        // Your List
+        case 2:
+            showYourList()
+            
+        //Rating
+        case 3:
+        print("")
+        
+        //Language
         case 4:
             let selectedLanguage = self.languages[indexPath.row].languageCode
 //            print(selectedLanguage)
 //            delegate?.settingsViewController(self, didSelectLanguage: selectedLanguage)
         
-            DataManager.shared.saveLanguage(code: selectedLanguage)
-            NotificationCenter.default.post(name: Notification.Name("ChangeLanguage"), object: nil)
+            selectedLanguages(selectedLanguage: selectedLanguage)
+           
         default:
             break
         }
@@ -238,4 +268,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         
     }
     
+}
+extension ProfileViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+    func navigationController(
+           _ navigationController: UINavigationController,
+        animationControllerFor operation: UINavigationController.Operation,
+           from fromVC: UIViewController,
+           to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+           
+           simpleOver.popStyle = (operation == .pop)
+           return simpleOver
+       }
 }

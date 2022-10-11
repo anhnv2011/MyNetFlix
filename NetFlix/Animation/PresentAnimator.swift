@@ -10,12 +10,13 @@ import UIKit
 class TransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return Animator(presenting: true)
+        return PresentAnimator(presenting: true)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return Animator(presenting: false)
+        return PresentAnimator(presenting: false)
     }
+    
 }
 
 //extension UIViewController: UIViewControllerTransitioningDelegate {
@@ -37,7 +38,7 @@ class TransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
 //    //       }
 //}
 
-class Animator: NSObject, UIViewControllerAnimatedTransitioning {
+class PresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private let presenting: Bool
     init(presenting: Bool) {
         self.presenting = presenting

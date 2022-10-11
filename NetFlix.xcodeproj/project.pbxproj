@@ -25,6 +25,13 @@
 		04248A7E28D1D52500CD0876 /* FilmDetailPopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04248A7C28D1D52500CD0876 /* FilmDetailPopUpViewController.xib */; };
 		042F893D28D3426C00C2F1D4 /* FilmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F893C28D3426C00C2F1D4 /* FilmType.swift */; };
 		042F894528D3434800C2F1D4 /* TimeWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F894428D3434800C2F1D4 /* TimeWindow.swift */; };
+		043300F128F54E41005C061A /* SimpleOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043300F028F54E41005C061A /* SimpleOver.swift */; };
+		043300FB28F56475005C061A /* WatchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043300F928F56475005C061A /* WatchListViewController.swift */; };
+		043300FC28F56475005C061A /* WatchListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043300FA28F56475005C061A /* WatchListViewController.xib */; };
+		0433010628F5656F005C061A /* WatchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433010428F5656F005C061A /* WatchListTableViewCell.swift */; };
+		0433010728F5656F005C061A /* WatchListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0433010528F5656F005C061A /* WatchListTableViewCell.xib */; };
+		0433010E28F58C16005C061A /* DetailWatchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433010C28F58C16005C061A /* DetailWatchListViewController.swift */; };
+		0433010F28F58C16005C061A /* DetailWatchListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0433010D28F58C16005C061A /* DetailWatchListViewController.xib */; };
 		04345A3A28E5A3600071E481 /* GenresResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04345A3928E5A3600071E481 /* GenresResponse.swift */; };
 		043B35F628E7048000340D1D /* UIImageView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B35F528E7048000340D1D /* UIImageView-Extension.swift */; };
 		0448793128E823CB0073CA12 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448793028E823CB0073CA12 /* CompositionalLayout.swift */; };
@@ -47,7 +54,7 @@
 		0464F3FA2869513C008F6015 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F3F92869513C008F6015 /* HeaderView.swift */; };
 		0464F40328695CEB008F6015 /* Trending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F40228695CEB008F6015 /* Trending.swift */; };
 		0464F410286963FE008F6015 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F40F286963FE008F6015 /* Film.swift */; };
-		046A8C5928EB2A760052666E /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A8C5828EB2A760052666E /* Animator.swift */; };
+		046A8C5928EB2A760052666E /* PresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A8C5828EB2A760052666E /* PresentAnimator.swift */; };
 		04754F8B28D0308C002C5C72 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04754F8A28D0308C002C5C72 /* HomeSection.swift */; };
 		04754F9328D03AC2002C5C72 /* DiscoveryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04754F9228D03AC2002C5C72 /* DiscoveryButton.swift */; };
 		047ED7B728E014950006F6B3 /* String-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047ED7B628E014950006F6B3 /* String-Extension.swift */; };
@@ -149,6 +156,13 @@
 		04248A7C28D1D52500CD0876 /* FilmDetailPopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilmDetailPopUpViewController.xib; sourceTree = "<group>"; };
 		042F893C28D3426C00C2F1D4 /* FilmType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmType.swift; sourceTree = "<group>"; };
 		042F894428D3434800C2F1D4 /* TimeWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeWindow.swift; sourceTree = "<group>"; };
+		043300F028F54E41005C061A /* SimpleOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleOver.swift; sourceTree = "<group>"; };
+		043300F928F56475005C061A /* WatchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListViewController.swift; sourceTree = "<group>"; };
+		043300FA28F56475005C061A /* WatchListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WatchListViewController.xib; sourceTree = "<group>"; };
+		0433010428F5656F005C061A /* WatchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListTableViewCell.swift; sourceTree = "<group>"; };
+		0433010528F5656F005C061A /* WatchListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WatchListTableViewCell.xib; sourceTree = "<group>"; };
+		0433010C28F58C16005C061A /* DetailWatchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWatchListViewController.swift; sourceTree = "<group>"; };
+		0433010D28F58C16005C061A /* DetailWatchListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailWatchListViewController.xib; sourceTree = "<group>"; };
 		04345A3928E5A3600071E481 /* GenresResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresResponse.swift; sourceTree = "<group>"; };
 		043B35F528E7048000340D1D /* UIImageView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView-Extension.swift"; sourceTree = "<group>"; };
 		0448793028E823CB0073CA12 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
@@ -177,7 +191,7 @@
 		0464F3F92869513C008F6015 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		0464F40228695CEB008F6015 /* Trending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trending.swift; sourceTree = "<group>"; };
 		0464F40F286963FE008F6015 /* Film.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
-		046A8C5828EB2A760052666E /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		046A8C5828EB2A760052666E /* PresentAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentAnimator.swift; sourceTree = "<group>"; };
 		04754F8A28D0308C002C5C72 /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
 		04754F9228D03AC2002C5C72 /* DiscoveryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryButton.swift; sourceTree = "<group>"; };
 		047ED7B628E014950006F6B3 /* String-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Extension.swift"; sourceTree = "<group>"; };
@@ -351,6 +365,35 @@
 			path = enum;
 			sourceTree = "<group>";
 		};
+		043300F828F5633E005C061A /* WatchList */ = {
+			isa = PBXGroup;
+			children = (
+				0433010B28F58BE8005C061A /* DetailWatchList */,
+				0433010028F56493005C061A /* Cell */,
+				043300F928F56475005C061A /* WatchListViewController.swift */,
+				043300FA28F56475005C061A /* WatchListViewController.xib */,
+			);
+			path = WatchList;
+			sourceTree = "<group>";
+		};
+		0433010028F56493005C061A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0433010428F5656F005C061A /* WatchListTableViewCell.swift */,
+				0433010528F5656F005C061A /* WatchListTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		0433010B28F58BE8005C061A /* DetailWatchList */ = {
+			isa = PBXGroup;
+			children = (
+				0433010C28F58C16005C061A /* DetailWatchListViewController.swift */,
+				0433010D28F58C16005C061A /* DetailWatchListViewController.xib */,
+			);
+			path = DetailWatchList;
+			sourceTree = "<group>";
+		};
 		044C985328F42DBD00D09CBE /* Language */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,7 +546,8 @@
 		046A8C5728EB2A4B0052666E /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				046A8C5828EB2A760052666E /* Animator.swift */,
+				046A8C5828EB2A760052666E /* PresentAnimator.swift */,
+				043300F028F54E41005C061A /* SimpleOver.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -561,6 +605,7 @@
 		04A5BCB528D4CF6400B6C3DF /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				043300F828F5633E005C061A /* WatchList */,
 				04A5BCB828D4D03800B6C3DF /* MovieLibrary */,
 				04A5BCB728D4D03500B6C3DF /* TvShowLibrary */,
 				04A5BCBA28D4D06B00B6C3DF /* LibraryViewController.swift */,
@@ -849,6 +894,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0484EB2A28D34FB90007A268 /* ProfileViewController.xib in Resources */,
+				0433010728F5656F005C061A /* WatchListTableViewCell.xib in Resources */,
 				0464F3E828694C95008F6015 /* CollectionTableViewCell.xib in Resources */,
 				04877D5028AFD1F00025517B /* ChooseProfileViewController.xib in Resources */,
 				04A5BCC728D4D25D00B6C3DF /* MovieLibraryViewController.xib in Resources */,
@@ -857,8 +903,10 @@
 				045A3AE6286779DF000F84DE /* LaunchScreen.storyboard in Resources */,
 				04FEB079288E55B000A88F5A /* LoginViewController.xib in Resources */,
 				045A3AE3286779DF000F84DE /* Assets.xcassets in Resources */,
+				0433010F28F58C16005C061A /* DetailWatchListViewController.xib in Resources */,
 				048809A428E8095500B49099 /* SeeAllViewController.xib in Resources */,
 				04D789E828677F8D007030DE /* DownloadViewController.xib in Resources */,
+				043300FC28F56475005C061A /* WatchListViewController.xib in Resources */,
 				04D789D528677ED7007030DE /* UpcommingViewController.xib in Resources */,
 				04FA059828EB1107008628F1 /* AddNewListViewController.xib in Resources */,
 				0492EED228EDE78200EF8191 /* RepeatViewController.xib in Resources */,
@@ -954,13 +1002,14 @@
 				04FA059728EB1107008628F1 /* AddNewListViewController.swift in Sources */,
 				0448793128E823CB0073CA12 /* CompositionalLayout.swift in Sources */,
 				04FF71D728EC315E005A9A11 /* ListTableViewCell.swift in Sources */,
+				043300FB28F56475005C061A /* WatchListViewController.swift in Sources */,
 				04040AAC28E2FA5C00ABBF06 /* ImageName.swift in Sources */,
 				049AC3C828ECB68200A00027 /* DataPersistenceManager.swift in Sources */,
 				0423F2DE2869B4B00075903B /* UpCommingTableViewCell.swift in Sources */,
 				044A9F2628F0942400761933 /* LocalizationSystem.swift in Sources */,
 				04754F9328D03AC2002C5C72 /* DiscoveryButton.swift in Sources */,
 				040A24BF2869AC7400F92978 /* UpComing.swift in Sources */,
-				046A8C5928EB2A760052666E /* Animator.swift in Sources */,
+				046A8C5928EB2A760052666E /* PresentAnimator.swift in Sources */,
 				04040AC828E3008600ABBF06 /* Profile.swift in Sources */,
 				04EF691C28DDFAF9005D5C0A /* LoginViewModel.swift in Sources */,
 				0464F40328695CEB008F6015 /* Trending.swift in Sources */,
@@ -978,6 +1027,7 @@
 				04B805E528E44ABC00CE0FF5 /* UiviewController-Extension.swift in Sources */,
 				04FA057F28EAD9CD008628F1 /* ListViewController.swift in Sources */,
 				04CCF2E728E831210010CAD7 /* SeeAllCollectionViewCell.swift in Sources */,
+				0433010628F5656F005C061A /* WatchListTableViewCell.swift in Sources */,
 				0464F3FA2869513C008F6015 /* HeaderView.swift in Sources */,
 				04546ADE28D1E9D2002F894B /* DetailFilmButton.swift in Sources */,
 				0492EED928EDE7AB00EF8191 /* RepeatTableViewCell.swift in Sources */,
@@ -1003,9 +1053,11 @@
 				0419E4E828ED3119002E657C /* YoutubeSearchResponse.swift in Sources */,
 				0481B8F028E07C440039BD7B /* CreatLabelView.swift in Sources */,
 				04FEB078288E55B000A88F5A /* LoginViewController.swift in Sources */,
+				0433010E28F58C16005C061A /* DetailWatchListViewController.swift in Sources */,
 				044C985D28F42E7000D09CBE /* Languages.swift in Sources */,
 				04D789E728677F8D007030DE /* DownloadViewController.swift in Sources */,
 				044C986328F4353F00D09CBE /* RKLocalization.swift in Sources */,
+				043300F128F54E41005C061A /* SimpleOver.swift in Sources */,
 				04754F8B28D0308C002C5C72 /* HomeSection.swift in Sources */,
 				04D789C928677EA5007030DE /* HomeViewController.swift in Sources */,
 				0481B8F628E0A3CA0039BD7B /* SearchResultCollectionViewCell.swift in Sources */,

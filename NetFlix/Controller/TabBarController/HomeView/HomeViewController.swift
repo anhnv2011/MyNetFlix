@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     let transitionDelegate = TransitionDelegate()
-
+    let simpleOver = SimpleOver()
     var homeSection = [HomeSection]()
     {
         didSet {
@@ -72,6 +72,9 @@ class HomeViewController: UIViewController {
         fetchData()
 //        setupTopView()
 //        self.transitioningDelegate = transitionDelegate
+        
+        navigationController?.delegate = self
+
         
     }
     //MARK:- UI
@@ -164,10 +167,12 @@ class HomeViewController: UIViewController {
     @objc func didtapProfileButton(){
         let vc = ProfileViewController()
 
-        vc.transitioningDelegate = transitionDelegate
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-//        navigationController?.pushViewController(vc, animated: true)
+//        vc.transitioningDelegate = transitionDelegate
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true, completion: nil)
+//        navigationController?.delegate = self
+        vc.transitionDelegate = transitionDelegate
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func discoveryFilm(){
@@ -481,4 +486,16 @@ extension HomeViewController: CollectionTableViewCellDelegate{
     
  
 
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+    func navigationController(
+           _ navigationController: UINavigationController,
+        animationControllerFor operation: UINavigationController.Operation,
+           from fromVC: UIViewController,
+           to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+           
+           simpleOver.popStyle = (operation == .pop)
+           return simpleOver
+       }
 }

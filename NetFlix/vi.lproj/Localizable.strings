@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   NetFlix
 
@@ -7,4 +7,13 @@
 */
 
 "Login_Label" = "Đăng nhập";
-"Login_Label" = "Đăng nhập";
+"Login_Button" = "Đăng nhập";
+"No_Label" = "Không";
+"Have_Label" = "Có";
+"Items" = "phim trong";
+"WatchList" = "Danh sách";
+"Favorite" = "Yêu thích";
+"Bookmark" = "Đánh dấu";
+"Rate" = "Chấm điểm";
+"Download" = "Tải về";
+"Create" = "Tạo";

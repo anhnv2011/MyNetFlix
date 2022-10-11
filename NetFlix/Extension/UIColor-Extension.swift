@@ -17,6 +17,9 @@ extension UIColor {
     class func popupBackground() -> UIColor {
         return UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 0.5)
     }
+    class func backgroundColor() -> UIColor {
+        return UIColor.black
+    }
     class func tabbarBackground() -> UIColor {
         return UIColor(red: 12/255, green: 12/255, blue: 12/255, alpha: 1.00)
     }
@@ -31,5 +34,7 @@ extension UIColor {
         return UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00)
     }
     
-    
+    class func labelColor() -> UIColor {
+        return UIColor.white
+    }
 }

@@ -86,6 +86,8 @@ class ListViewController: UIViewController {
     func creatNewList(){
         let vc = AddNewListViewController()
         let popVc = PopupViewController(contentController: vc, popupWidth: 200, popupHeight: 200)
+        popVc.transitioningDelegate = transitioningDelegate
+        popVc.modalPresentationStyle = .fullScreen
         present(popVc, animated: true, completion: nil)
     }
     

@@ -34,7 +34,7 @@ class FilmDetailPopUpViewController: UIViewController {
     var film:Film!
     var mediaType = ""
     var mediaId = 0
-    var yourRate: Double?
+    
     var youtubeLink : String?
     
     let transitionDelegate = TransitionDelegate()
@@ -68,6 +68,14 @@ class FilmDetailPopUpViewController: UIViewController {
         }
     }
     var isRated:Bool = false
+    {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self!.setupRateLabel()
+            }
+        }
+    }
+    var yourRate: Double?
     {
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -283,7 +291,8 @@ class FilmDetailPopUpViewController: UIViewController {
         let vc = ListViewController()
         vc.film = self.film
         let popVC = PopupViewController(contentController: vc, popupWidth: 300, popupHeight: 300)
-        
+        popVC.transitioningDelegate = transitionDelegate
+        popVC.modalPresentationStyle = .fullScreen
         present(popVC, animated: true, completion: nil)
     }
     

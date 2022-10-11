@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct ActionLabelViewViewModel {
+struct ActionLabelViewModel {
     let text: String
     let actionTitle: String
 }
@@ -18,6 +18,7 @@ class CreatLabelView: UIView {
 
     private let label: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .secondaryLabel
@@ -26,7 +27,10 @@ class CreatLabelView: UIView {
 
     private let button: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.link, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.labelColor(), for: .normal)
+        button.backgroundColor = UIColor.buttonBackground()
+        button.layer.cornerRadius = 12
         return button
     }()
 
@@ -51,13 +55,18 @@ class CreatLabelView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        button.frame = CGRect(x: 0, y: height-40, width: width, height: 40)
-        label.frame = CGRect(x: 0, y: 0, width: width, height: height-45)
+//        button.frame = CGRect(x: 100 , y: 100, width: 100, height: 100)
+
+//        label.frame = CGRect(x: 0, y: 0, width: width, height: height-45)
+//        button.frame = CGRect(x: 0, y: 200, width: 100, height: 100)
+        label.anchor(centerY: centerYAnchor, centerX: centerXAnchor, width: 200, height: 32)
+        button.anchor(top: label.bottomAnchor, centerX: centerXAnchor, width: 200, height: 32, topPadding: 22)
+
     }
 
-    func configure(with viewModel: ActionLabelViewViewModel) {
-        label.text = viewModel.text
-        button.setTitle(viewModel.actionTitle, for: .normal)
+    func configure(with model: ActionLabelViewModel) {
+        label.text = model.text
+        button.setTitle(model.actionTitle, for: .normal)
     }
 }
 
