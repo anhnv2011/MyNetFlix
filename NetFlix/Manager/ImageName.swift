@@ -15,4 +15,8 @@ struct ImageName {
     let dismissButton = "xmark"
     let rateButton = "star.fill"
     let xmark = "xmark"
+    let language = "keyboard"
+    
+        
+   
 }

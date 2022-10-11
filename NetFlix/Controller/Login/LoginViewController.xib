@@ -203,7 +203,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button"/>
                     <connections>
-                        <action selector="changlangue:" destination="-1" eventType="touchUpInside" id="VJj-ca-A7K"/>
+                        <action selector="testlanguage:" destination="-1" eventType="touchUpInside" id="857-8A-4oG"/>
                     </connections>
                 </button>
             </subviews>

@@ -14,6 +14,7 @@ struct DataManager {
     //key
     let SessionId = "SessionId"
     let ProfileId = "ProfileId"
+    let CustomLanguage = "CustomLanguage"
     func saveSessionId (id: String) {
         UserDefaults.standard.setValue(id, forKey: "\(SessionId)")
         UserDefaults.standard.synchronize()
@@ -29,6 +30,14 @@ struct DataManager {
     }
     func getProfileId() -> String {
         let string = UserDefaults.standard.string(forKey: "\(ProfileId)") ?? ""
+        return string
+    }
+    func saveLanguage (code: String) {
+        UserDefaults.standard.setValue(code, forKey: "\(CustomLanguage)")
+        UserDefaults.standard.synchronize()
+    }
+    func getLanguage() -> String {
+        let string = UserDefaults.standard.string(forKey: "\(CustomLanguage)") ?? "en"
         return string
     }
     

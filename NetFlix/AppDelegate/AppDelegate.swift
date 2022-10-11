@@ -18,7 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        window?.rootViewController = LoginViewController()
 //        window?.rootViewController = MainTabBarViewController()
 //        window?.rootViewController = LibraryViewController()
-        window?.rootViewController = LoginViewController()
+//        window?.rootViewController = LoginViewController()
+        window?.rootViewController = UINavigationController(rootViewController: LoginViewController()
+)
+
 //        if UserDefaults.standard.string(forKey: "SessionId") == nil  {
 //            window?.rootViewController = LoginViewController()
 //

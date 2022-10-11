@@ -31,8 +31,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         bindData()
-
-  
+        NotificationCenter.default.addObserver(self, selector: #selector(changeLanguage), name: Notification.Name("ChangeLanguage"), object: nil)
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +51,10 @@ class LoginViewController: UIViewController {
         }
     }
     
+    
+    @objc func changeLanguage(){
+        setupUI()
+    }
     //MARK:- Action
     @IBAction func buttonAction(_ sender: UIButton) {
         
@@ -69,7 +72,7 @@ class LoginViewController: UIViewController {
     }
     
     private func animateLogin(text: String){
-        
+        loginLabel.text = ""
         var charIndex = 0
         for character in text {
             charIndex += 1
@@ -83,9 +86,14 @@ class LoginViewController: UIViewController {
     
     private func setupUI(){
         loginLabel.text = ""
+//        let loginLabel =  RKLocalizedString(key: "Login_Label", comment: "")
+//        let customLang = CustomLanguage() //declare at top
+//        let bundleLanguage = customLang.createBundlePath()
 
-        let loginLabel = NSLocalizedString("Login_Label", comment: "")
+//        let loginLabel = NSLocalizedString("Login_Label", tableName: nil, bundle: bundleLanguage, value: "", comment: "")
+//        let loginLabel = NSLocalizedString("Login_Label", comment: "")
         
+        let loginLabel = "Login_Label".localized()
         animateLogin(text: loginLabel)
         usernameTextfiled.layer.cornerRadius  = 5
         
@@ -106,11 +114,20 @@ class LoginViewController: UIViewController {
         passwordView.layer.cornerRadius = 12
     }
     
-    @IBAction func changlangue(_ sender: UIButton) {
-        loginLabel.text = ""
-        let loginLabel = LocalizationSystem.sharedInstance.localizedStringForKey(key: "Login_Label", comment: "")
-        animateLogin(text: loginLabel)
 
+    @IBAction func testlanguage(_ sender: UIButton) {
+//        RKLocalization.shared.setLanguage(language: "en")
+//
+////        let loginLabel =  RKLocalizedString(key: "Login_Label", comment: "")
+////        print(loginLabel)
+////        animateLogin(text: loginLabel)
+//        setupUI()
+////        let vc = ProfileViewController()
+////        vc.delegate = self
+////        navigationController?.pushViewController(vc, animated: true)
+        
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     func bindData(){
         usernameTextfiled.becomeFirstResponder()
@@ -279,3 +296,27 @@ extension LoginViewController: UITextFieldDelegate{
 
 
 
+extension LoginViewController : LanguageSelectionDelegate{
+    
+    func settingsViewController(_ settingsViewController: ProfileViewController, didSelectLanguage language: Language) {
+
+        print("LoginViewController")
+//  Set selected language to application language
+        RKLocalization.shared.setLanguage(language: language.languageCode)
+        
+////  Reload application bundle as new selected language
+//        DispatchQueue.main.async(execute: {
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            appDelegate.initRootView()
+//        })
+    }
+}
+
+//struct CustomLanguage {
+//
+//    func createBundlePath () -> Bundle {
+//        let selectedLanguage = "v"
+//        let path = Bundle.main.path(forResource: selectedLanguage, ofType: "lproj")
+//        return Bundle(path: path!)!
+//    }
+//}

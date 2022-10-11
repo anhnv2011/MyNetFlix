@@ -14,6 +14,18 @@ import SDWebImage
 //    case rating = "Ratings"
 //    case watchList = "Watch list"
 //}
+protocol LanguageSelectionDelegate {
+    
+   
+    // Comunicate delegates that a country has been selected
+    //
+    //   - Parameters:
+    //   - settingsViewController: settingsViewController
+    //   - language: selected language
+    func settingsViewController(_ settingsViewController: ProfileViewController, didSelectLanguage language: Language)
+   
+}
+
 
 class ProfileSetting{
     let title: String
@@ -39,7 +51,10 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
     
-    
+    let languages = Languages.languages
+    var delegate : LanguageSelectionDelegate?
+
+
     var transitionDelegate: UIViewControllerTransitioningDelegate!
 
     var profileSetting = [ProfileSetting]()
@@ -56,6 +71,7 @@ class ProfileViewController: UIViewController {
         setupUI()
         fetchData()
 //        self.transitioningDelegate = self
+
         self.transitioningDelegate = transitioningDelegate
 
     }
@@ -89,7 +105,8 @@ class ProfileViewController: UIViewController {
             ProfileSetting(title: "Favarite", option: ["Movie", "Tv"], image: ImageName.shared.favoriteButton, isopen: false),
             ProfileSetting(title: "Book mark", option: ["Movie", "Tv"], image: ImageName.shared.bookmarkButton, isopen: false),
             ProfileSetting(title: "Your list", option: ["List"], image: ImageName.shared.listButton, isopen: false),
-            ProfileSetting(title: "Ratings", option: ["Movie", "Tv"], image: ImageName.shared.rateButton, isopen: false)
+            ProfileSetting(title: "Ratings", option: ["Movie", "Tv"], image: ImageName.shared.rateButton, isopen: false),
+            ProfileSetting(title: "Language", option: languages.map({$0.language}), image: ImageName.shared.language, isopen: false)
         ]
     }
     
@@ -193,16 +210,27 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-        let vc = LibraryViewController()
-        if indexPath.row == 0 {
-            vc.state = .movie
-            navigationController?.pushViewController(vc, animated: true)
-
-        } else {
-            vc.state = .tv
-            navigationController?.pushViewController(vc, animated: true)
-
+//
+//        let vc = LibraryViewController()
+//        if indexPath.row == 0 {
+//            vc.state = .movie
+//            navigationController?.pushViewController(vc, animated: true)
+//
+//        } else {
+//            vc.state = .tv
+//            navigationController?.pushViewController(vc, animated: true)
+//
+//        }
+        switch indexPath.section {
+        case 4:
+            let selectedLanguage = self.languages[indexPath.row].languageCode
+//            print(selectedLanguage)
+//            delegate?.settingsViewController(self, didSelectLanguage: selectedLanguage)
+        
+            DataManager.shared.saveLanguage(code: selectedLanguage)
+            NotificationCenter.default.post(name: Notification.Name("ChangeLanguage"), object: nil)
+        default:
+            break
         }
         
     }

@@ -11,3 +11,12 @@ extension String {
         return self.prefix(1).uppercased() + self.lowercased().dropFirst()
     }
 }
+extension String {
+func localized() ->String {
+    let lang = DataManager.shared.getLanguage()
+    print(lang)
+    let path = Bundle.main.path(forResource: lang, ofType: "lproj")
+    let bundle = Bundle(path: path!)
+
+    return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
+}}
