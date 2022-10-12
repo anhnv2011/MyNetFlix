@@ -18,7 +18,7 @@ struct CompositionalLayout {
                            spacing: CGFloat
     ) -> NSCollectionLayoutItem {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: width,
-                                heightDimension: height))
+                                                                             heightDimension: height))
         item.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
         return item
         
@@ -45,7 +45,7 @@ struct CompositionalLayout {
     -> NSCollectionLayoutGroup {
         switch alignment {
         case .vertical:
-            return NSCollectionLayoutGroup.vertical(layoutSize:NSCollectionLayoutSize(widthDimension: width,                                                                              heightDimension: height),                                         subitem: item,
+            return NSCollectionLayoutGroup.vertical(layoutSize:NSCollectionLayoutSize(widthDimension: width,                                                                              heightDimension: height),subitem: item,
                                                     count: count)
             
         case .horizontal:

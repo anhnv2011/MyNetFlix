@@ -16,6 +16,7 @@ class ListViewController: UIViewController {
     @IBOutlet weak var dismissButton: UIButton!
     var film:Film!
     var lists = [Lists]()
+    var transitionDelegate = TransitionDelegate()
     var tempList = [Lists]()
     {
         didSet {
@@ -86,7 +87,7 @@ class ListViewController: UIViewController {
     func creatNewList(){
         let vc = AddNewListViewController()
         let popVc = PopupViewController(contentController: vc, popupWidth: 200, popupHeight: 200)
-        popVc.transitioningDelegate = transitioningDelegate
+        popVc.transitioningDelegate = self.transitionDelegate
         popVc.modalPresentationStyle = .fullScreen
         present(popVc, animated: true, completion: nil)
     }

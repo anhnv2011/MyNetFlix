@@ -15,12 +15,20 @@ class WatchListViewController: UIViewController {
     var lists = [Lists]()
     private let noWatchList = CreatLabelView()
 
+    
+    //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLableView()
         getLists()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        navigationController?.hidesBarsOnSwipe = false
+//        navigationController?.navigationBar.prefersLargeTitles = true
+        
+    }
 
     func setupTableView(){
         

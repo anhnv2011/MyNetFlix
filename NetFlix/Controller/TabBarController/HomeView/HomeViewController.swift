@@ -11,7 +11,7 @@ enum DiscoveryState{
     case close
     case expanse
 }
-
+//MARK:- HomeSection
 enum HomeSection {
     case trendingAll(model: [Film])
     case trendingMovie(model: [Film])
@@ -43,10 +43,18 @@ enum HomeSection {
 }
 
 class HomeViewController: UIViewController {
+    //MARK:- Outlet
     @IBOutlet weak var tableView: UITableView!
 
+    
+    //MARK:- Property
+    
+    //custom present
     let transitionDelegate = TransitionDelegate()
-    let simpleOver = SimpleOver()
+//    let simpleOver = SimpleOver()
+
+    //custom push view
+    let navDelegate = CustomNavigationController()
     var homeSection = [HomeSection]()
     {
         didSet {
@@ -56,14 +64,20 @@ class HomeViewController: UIViewController {
         }
     }
     
+    //VelocityY
     var lastVelocityYSign = 0
+    
     let discoveryButton = DiscoveryButton()
     var discoveryState: DiscoveryState = . close
     
-    
-   
-
+    //header
     var headerView: HeaderView?
+    
+    var loadingTextView = LoadingTextView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+//    var loadingTextView = LoadingTextView()
+
+    
+    //MARK:- Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,14 +87,23 @@ class HomeViewController: UIViewController {
 //        setupTopView()
 //        self.transitioningDelegate = transitionDelegate
         
-        navigationController?.delegate = self
-
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+//        navigationController?.navigationBar.prefersLargeTitles = false
         
     }
     //MARK:- UI
     
     private func setupUI(){
 //        view.backgroundColor = UIColor.viewBackground()
+        view.addSubview(loadingTextView)
+//        loadingTextView.anchor(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, topPadding: 0, bottomPadding: 0, leftPadding: 0, rightPadding: 0)
+        view.layoutIfNeeded()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.loadingTextView.removeFromSuperview()
+        }
         setupTableView()
         setupHeader()
         setupNavbar()
@@ -128,7 +151,9 @@ class HomeViewController: UIViewController {
     
     private func setupNavbar() {
         title  = "Home"
-
+        navigationController?.delegate = navDelegate
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.hidesBarsOnSwipe = true
         var image = UIImage(named: "netflixLogo")
         image = image?.withRenderingMode(.alwaysOriginal)
@@ -171,7 +196,8 @@ class HomeViewController: UIViewController {
 //        vc.modalPresentationStyle = .fullScreen
 //        present(vc, animated: true, completion: nil)
 //        navigationController?.delegate = self
-        vc.transitionDelegate = transitionDelegate
+//        vc.transitionDelegate = transitionDelegate
+//        vc.navigationController?.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -203,6 +229,7 @@ class HomeViewController: UIViewController {
     
     //MARK:- Fetch data
     func fetchData(){
+        
         let group = DispatchGroup()
         group.enter()
         APICaller.share.getTrending(mediaType: .all, time: .day) { [weak self] result in
@@ -302,10 +329,12 @@ class HomeViewController: UIViewController {
             switch result {
             case .success(let tv):
                 self?.homeSection.append(.topRateTV(model: tv))
+               
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+        
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
@@ -488,14 +517,14 @@ extension HomeViewController: CollectionTableViewCellDelegate{
 
 }
 
-extension HomeViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
-    func navigationController(
-           _ navigationController: UINavigationController,
-        animationControllerFor operation: UINavigationController.Operation,
-           from fromVC: UIViewController,
-           to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-           
-           simpleOver.popStyle = (operation == .pop)
-           return simpleOver
-       }
-}
+//extension HomeViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+//    func navigationController(
+//           _ navigationController: UINavigationController,
+//        animationControllerFor operation: UINavigationController.Operation,
+//           from fromVC: UIViewController,
+//           to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//
+//           simpleOver.popStyle = (operation == .pop)
+//           return simpleOver
+//       }
+//}

@@ -27,6 +27,7 @@ protocol LanguageSelectionDelegate {
 }
 
 
+//MARK:- Model
 class ProfileSetting{
     let title: String
     let option : [String]
@@ -42,7 +43,8 @@ class ProfileSetting{
 
 class ProfileViewController: UIViewController {
     
-   
+   //MARK:- Outlet
+    @IBOutlet weak var accountLabel: UILabel!
     @IBOutlet weak var accountView: UIView!
     @IBOutlet weak var avartarImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -57,7 +59,7 @@ class ProfileViewController: UIViewController {
 
 //    var transitionDelegate: UIViewControllerTransitioningDelegate!
     var transitionDelegate = TransitionDelegate()
-    let simpleOver = SimpleOver()
+//    let simpleOver = SimpleOver()
     var profileSetting = [ProfileSetting]()
     var profileData: Profile?
     {
@@ -66,6 +68,13 @@ class ProfileViewController: UIViewController {
                 self.setupUI()
             }
         }
+    }
+    
+    //MARK:- Life Cycle
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +91,8 @@ class ProfileViewController: UIViewController {
     @IBAction func buttonAction(_ sender: UIButton) {
         switch sender {
         case dismissButton:
-            dismiss(animated: true, completion: nil)
+//            dismiss(animated: true, completion: nil)
+            navigationController?.popViewController(animated: true)
         case logOutButton:
             logOutControl()
             
@@ -96,23 +106,22 @@ class ProfileViewController: UIViewController {
     
     //MARK:- Fetch Data
     private func fetchData(){
-        settingProfile()
 
         self.profileData = DataManager.shared.profileData
         
     }
     private func settingProfile(){
         profileSetting = [
-            ProfileSetting(title: "Favarite", option: ["Movie", "Tv"], image: ImageName.shared.favoriteButton, isopen: false),
-            ProfileSetting(title: "Book mark", option: ["Movie", "Tv"], image: ImageName.shared.bookmarkButton, isopen: false),
-            ProfileSetting(title: "Your list", option: ["List"], image: ImageName.shared.listButton, isopen: false),
-            ProfileSetting(title: "Ratings", option: ["Movie", "Tv"], image: ImageName.shared.rateButton, isopen: false),
-            ProfileSetting(title: "Language", option: languages.map({$0.language}), image: ImageName.shared.language, isopen: false)
+            ProfileSetting(title: "Favorite".localized(), option: ["Movie", "Tv"], image: ImageName.shared.favoriteButton, isopen: false),
+            ProfileSetting(title: "Bookmark".localized(), option: ["Movie", "Tv"], image: ImageName.shared.bookmarkButton, isopen: false),
+            ProfileSetting(title: "WatchList".localized(), option: ["List"], image: ImageName.shared.listButton, isopen: false),
+            ProfileSetting(title: "Rate".localized(), option: ["Movie", "Tv"], image: ImageName.shared.rateButton, isopen: false),
+            ProfileSetting(title: "Language".localized(), option: languages.map({$0.language}), image: ImageName.shared.language, isopen: false)
         ]
     }
     
     private func logOutControl(){
-        let logOutAleart = UIAlertController(title: "Log out", message: "Are you sure", preferredStyle: .alert)
+        let logOutAleart = UIAlertController(title: "LogOut".localized(), message: "Are you sure", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self](_) in
             guard let strongSelf = self else {return}
             strongSelf.logOutAction()
@@ -131,19 +140,29 @@ class ProfileViewController: UIViewController {
     //MARK:- UI
     private func setupUI(){
         setupTableView()
+        settingProfile()
 
+        accountLabel.text = "Account".localized()
+        accountLabel.textColor = UIColor.labelColor()
+        
 //        view.backgroundColor = UIColor.popupBackground()
         accountView.backgroundColor = UIColor.sectionBackground()
+        
+        logOutButton.setTitle("LogOut".localized(), for: .normal)
         logOutButton.backgroundColor = UIColor.buttonBackground()
         
-        avartarImageView.layer.cornerRadius = avartarImageView.frame.size.height / 2 
-        
+        avartarImageView.layer.cornerRadius = avartarImageView.frame.size.height / 2
         let url = URL(string: "\(Constanst.ImageBaseUrl)\(profileData?.avatar?.tmdb?.avatarPath ?? "")")
         
         avartarImageView.sd_setImage(with: url, completed: nil)
-        usernameLabel.text = profileData?.username ?? ""
-        nameLabel.text = profileData?.name ?? ""
         
+        usernameLabel.text = profileData?.username ?? ""
+        usernameLabel.textColor = UIColor.labelColor()
+        
+        nameLabel.text = profileData?.name ?? ""
+        nameLabel.textColor = UIColor.labelColor()
+        
+        tableView.reloadData()
         
         
     }
@@ -163,15 +182,49 @@ class ProfileViewController: UIViewController {
     private func selectedLanguages(selectedLanguage: String){
         DataManager.shared.saveLanguage(code: selectedLanguage)
         NotificationCenter.default.post(name: Notification.Name("ChangeLanguage"), object: nil)
+        DispatchQueue.main.async {
+            self.setupUI()
+            
+        }
+
+        
+    }
+    
+    private func showCheckmarkLanguage(cell: UITableViewCell,indexPath: IndexPath){
+        let language = DataManager.shared.getLanguage()
+        if profileSetting[indexPath.section].isOpen == true {
+            switch language {
+            case "en":
+                
+                if indexPath.row == 0 {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .none
+                }
+            case "vi":
+                if indexPath.row == 1 {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .none
+                }
+            default:
+                break
+            }
+        } else {
+            cell.accessoryType = .none
+        }
+        
     }
     private func showYourList(){
         let vc = WatchListViewController()
         vc.transitioningDelegate = transitionDelegate
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
 }
 
-//MARK:- Tableview Extension
+//MARK:- Tableview Delegate, Datasource
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, ExpenableHeaderViewDelegate {
     func toggleSection(header: ExpenableHeaderView, section: Int) {
         profileSetting[section].isOpen = !profileSetting[section].isOpen
@@ -210,12 +263,19 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         header.customInit(title: profileSetting[section].title, image: profileSetting[section].image, section: section, delegate: self)
         return header
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.backgroundColor = UIColor.viewBackground()
         cell.textLabel?.text = profileSetting[indexPath.section].option[indexPath.row]
         cell.textLabel?.textColor = .white
+        
+        //language
+        if indexPath.section == 4 {
+           showCheckmarkLanguage(cell: cell, indexPath: indexPath)
+        } else {
+            cell.accessoryType = .none
+        }
         return cell
         
     }
@@ -253,11 +313,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         
         //Language
         case 4:
-            let selectedLanguage = self.languages[indexPath.row].languageCode
-//            print(selectedLanguage)
-//            delegate?.settingsViewController(self, didSelectLanguage: selectedLanguage)
-        
+            let selectedLanguage = self.languages[indexPath.row].languageCode        
             selectedLanguages(selectedLanguage: selectedLanguage)
+            
            
         default:
             break
@@ -269,14 +327,14 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
     }
     
 }
-extension ProfileViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
-    func navigationController(
-           _ navigationController: UINavigationController,
-        animationControllerFor operation: UINavigationController.Operation,
-           from fromVC: UIViewController,
-           to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-           
-           simpleOver.popStyle = (operation == .pop)
-           return simpleOver
-       }
-}
+//extension ProfileViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+//    func navigationController(
+//           _ navigationController: UINavigationController,
+//        animationControllerFor operation: UINavigationController.Operation,
+//           from fromVC: UIViewController,
+//           to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//           
+//           simpleOver.popStyle = (operation == .pop)
+//           return simpleOver
+//       }
+//}

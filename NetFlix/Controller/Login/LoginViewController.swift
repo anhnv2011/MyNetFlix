@@ -302,7 +302,7 @@ extension LoginViewController : LanguageSelectionDelegate{
 
         print("LoginViewController")
 //  Set selected language to application language
-        RKLocalization.shared.setLanguage(language: language.languageCode)
+//        RKLocalization.shared.setLanguage(language: language.languageCode)
         
 ////  Reload application bundle as new selected language
 //        DispatchQueue.main.async(execute: {

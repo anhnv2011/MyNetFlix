@@ -62,7 +62,7 @@ class HeaderView: UIView {
 //        imageView.frame = bounds
 //    }
     func configHeader(posterPath: String) {
-       let url =  "https://image.tmdb.org/t/p/w500/\(posterPath)"
+        let url =  "https://image.tmdb.org/t/p/w500/\(posterPath)"
         imageView.loadImageUsingCache(url)
     }
     

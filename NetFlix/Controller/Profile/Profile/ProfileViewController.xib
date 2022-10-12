@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
+                <outlet property="accountLabel" destination="WNC-Ok-vNU" id="BUj-QG-XY3"/>
                 <outlet property="accountView" destination="oDC-vQ-Vml" id="hll-ts-HSb"/>
                 <outlet property="avartarImageView" destination="KCZ-Ut-6Vg" id="keX-Uv-bcB"/>
                 <outlet property="dismissButton" destination="BPu-6T-qHL" id="8UZ-8n-kdO"/>

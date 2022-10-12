@@ -17,12 +17,7 @@ class Language: NSObject {
         
     }
     
-    
-    
-//     Constructor to initialize a country
-//
-//     - Parameters:
-//     - countryCode: the country code
+
     public init(languageCode: String, language: String) {
         
         self.languageCode = languageCode

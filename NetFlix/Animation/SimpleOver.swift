@@ -7,9 +7,26 @@
 
 import Foundation
 import UIKit
+
+class CustomNavigationController: NSObject, UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if operation == .push {
+            return SimpleOver(popStyle: true)
+        } else {
+            return SimpleOver(popStyle: false)
+        }
+    }
+    
+}
+
 class SimpleOver: NSObject, UIViewControllerAnimatedTransitioning {
     
     var popStyle: Bool = false
+    init(popStyle: Bool) {
+        self.popStyle = popStyle
+        print(popStyle)
+    }
     
     func transitionDuration(
         using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {

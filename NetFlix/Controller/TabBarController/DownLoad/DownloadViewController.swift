@@ -57,6 +57,7 @@ class DownloadViewController: UIViewController {
         }
     }
     func setupUI(){
+        view.backgroundColor = UIColor.backgroundColor()
         setupTableView()
         setupTabbar()
         setupNav()
@@ -66,17 +67,23 @@ class DownloadViewController: UIViewController {
         downloadTableView.dataSource = self
         downloadTableView.delegate = self
         downloadTableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: UpCommingTableViewCell.identifier)
+        downloadTableView.tableFooterView = UIView()
     }
     func setupNav(){
-        title = "Downloads"
 //        navigationController?.navigationBar.prefersLargeTitles = true
 //        navigationController?.navigationItem.largeTitleDisplayMode = .always
 //        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationItem.largeTitleDisplayMode = .always
+//        navigationController?.navigationBar.tintColor = .white
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.naviBackground()]
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.naviBackground()]
+        navigationController?.navigationBar.tintColor = UIColor.labelColor()
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+        title = "Download".localized()
 
 
     }
