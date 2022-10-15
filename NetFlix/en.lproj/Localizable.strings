@@ -20,5 +20,14 @@
 "Language" = "Language";
 "LogOut" = "Log Out";
 "Account" = "Account";
+"Username" = "Username";
+"Password" = "Password";
+"Don't have an account ?" = "Don't have an account ?";
+"Sign Up" = "Sign Up";
 "Search for a Movie or a Tv show" = "Search for a Movie or a Tv show";
 "Loading" = "Loading";
+"From: " = "From: ";
+"  to " = "  to ";
+"Home" = "Home";
+"Upcomming" = "Upcomming";
+"Search" = "Search";

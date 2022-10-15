@@ -44,8 +44,6 @@ class LoadingTextView:UIView {
         addSubview(shimmerTextLabel)
         backgroundColor = .black
         
-        //        textLabel.frame = CGRect(x: 0, y: center.y - 100, width: frame.width, height: 100)
-        //        shimmerTextLabel.frame = CGRect(x: 0, y: center.y - 100, width: frame.width, height: 100)
         textLabel.anchor(left: leftAnchor, right: rightAnchor, centerY: centerYAnchor, leftPadding: 16, rightPadding: 16)
         shimmerTextLabel.anchor(left: leftAnchor, right: rightAnchor, centerY: centerYAnchor, leftPadding: 16, rightPadding: 16)
         layoutIfNeeded()
@@ -62,8 +60,7 @@ class LoadingTextView:UIView {
                            UIColor.clear.cgColor,
                            UIColor.clear.cgColor]
         gradient.locations = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
-        //        gradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-        //        gradient.locations = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+        
         let angle = -45 * CGFloat.pi / 180
         print(angle)
         gradient.transform = CATransform3DMakeRotation(angle, 0, 0, 1)

@@ -16,12 +16,6 @@ import SDWebImage
 //}
 protocol LanguageSelectionDelegate {
     
-   
-    // Comunicate delegates that a country has been selected
-    //
-    //   - Parameters:
-    //   - settingsViewController: settingsViewController
-    //   - language: selected language
     func settingsViewController(_ settingsViewController: ProfileViewController, didSelectLanguage language: Language)
    
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftKeychainWrapper
 struct DataManager {
     static var shared = DataManager()
     
@@ -16,12 +17,15 @@ struct DataManager {
     let ProfileId = "ProfileId"
     let CustomLanguage = "CustomLanguage"
     func saveSessionId (id: String) {
-        UserDefaults.standard.setValue(id, forKey: "\(SessionId)")
-        UserDefaults.standard.synchronize()
+//        UserDefaults.standard.setValue(id, forKey: "\(SessionId)")
+//        UserDefaults.standard.synchronize()
+        KeychainWrapper.standard.set(id, forKey: "SessionId")
+
     }
     func getSaveSessionId() -> String {
-        let string = UserDefaults.standard.string(forKey: "\(SessionId)") ?? ""
-        return string
+        let retrievedString: String = KeychainWrapper.standard.string(forKey: "SessionId") ?? ""
+
+        return retrievedString
     }
     
     func saveProfileId (id: String) {

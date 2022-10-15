@@ -27,7 +27,7 @@ class UpcommingViewController: UIViewController {
         setupNav()
     }
     func setupNav(){
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
     }
     func fetchData(){
         APICaller.share.getUpcomming(mediaType: "movie") { (result) in
@@ -35,7 +35,7 @@ class UpcommingViewController: UIViewController {
             case.success(let model):
                 
                 self.movie = model.results
-                let dateTitle = "From: " + model.dates.minimum + "  to " + model.dates.maximum
+                let dateTitle = "From: ".localized() + model.dates.minimum + "  to ".localized() + model.dates.maximum
                 DispatchQueue.main.async {
                     self.navigationItem.title = dateTitle
                     self.upCommingTableView.reloadData()

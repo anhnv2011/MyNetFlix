@@ -9,15 +9,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
+                <outlet property="dontHaveAccLabel" destination="YOr-A9-ptQ" id="rIo-J4-y07"/>
                 <outlet property="emailLeadingConstrains" destination="fHR-t1-Ir5" id="Tx9-9R-8Op"/>
                 <outlet property="loginButton" destination="xLE-39-tvz" id="FEH-FQ-Uq9"/>
                 <outlet property="loginLabel" destination="bur-gc-bpU" id="0XN-ko-IU7"/>
+                <outlet property="loginLeftConstrains" destination="qAJ-NC-TMu" id="ppg-dI-2Cv"/>
+                <outlet property="loginRightConstrains" destination="gXw-dJ-d6A" id="vce-VJ-jFh"/>
+                <outlet property="passwordLabel" destination="Gql-gb-rlK" id="6or-DO-k2O"/>
                 <outlet property="passwordLeadingConstrains" destination="4z9-Y3-4p6" id="B0T-wi-f8c"/>
                 <outlet property="passwordTextfield" destination="Kx9-ff-QNs" id="vld-qb-z3w"/>
                 <outlet property="passwordView" destination="cfx-1m-AhN" id="BJe-kH-h8R"/>
                 <outlet property="showPasswordButton" destination="y7X-Ao-Ia5" id="zx1-9v-pNP"/>
                 <outlet property="signUpButton" destination="D6F-K6-Gvg" id="ewE-t3-ivW"/>
                 <outlet property="userView" destination="RXC-f7-iSj" id="PDE-WQ-BNJ"/>
+                <outlet property="usernameLabel" destination="PkP-Ic-6SC" id="QFN-AK-cFF"/>
                 <outlet property="usernameTextfiled" destination="4Pa-lM-Qhb" id="vsG-ev-M2Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -198,12 +203,12 @@
                         <constraint firstAttribute="bottom" secondItem="YOr-A9-ptQ" secondAttribute="bottom" id="oaP-Sp-wQ0"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgK-4H-3Te">
-                    <rect key="frame" x="199" y="478" width="46" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzr-A2-iwY">
+                    <rect key="frame" x="154" y="528" width="46" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button"/>
                     <connections>
-                        <action selector="testlanguage:" destination="-1" eventType="touchUpInside" id="857-8A-4oG"/>
+                        <action selector="testAlert:" destination="-1" eventType="touchUpInside" id="0bO-rG-dbM"/>
                     </connections>
                 </button>
             </subviews>

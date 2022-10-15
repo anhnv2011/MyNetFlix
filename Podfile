@@ -11,4 +11,6 @@ pod 'RxAlamofire'
 pod 'Cosmos'
 pod 'SwiftyJSON'
 pod 'youtube-ios-player-helper'
+pod 'SwiftKeychainWrapper'
+
 end

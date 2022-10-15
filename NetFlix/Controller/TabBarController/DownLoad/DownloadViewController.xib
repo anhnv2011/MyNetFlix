@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DownloadViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
+                <outlet property="changViewModeButton" destination="NZH-uJ-dhp" id="4hV-3s-K5S"/>
+                <outlet property="collectionView" destination="1HX-KT-G49" id="3Y1-Jw-TxZ"/>
                 <outlet property="downloadTableView" destination="gp0-du-bxi" id="cN1-Gp-8du"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,19 +22,55 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gp0-du-bxi">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="74" width="414" height="788"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="1HX-KT-G49">
+                    <rect key="frame" x="0.0" y="74" width="414" height="788"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZzN-L4-73b">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QEV-un-goI" userLabel="ButtonView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="30"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZH-uJ-dhp">
+                            <rect key="frame" x="322" y="0.0" width="76" height="30"/>
+                            <state key="normal" title="View Mode"/>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="4JC-DZ-13a"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="NZH-uJ-dhp" secondAttribute="trailing" constant="16" id="0Xn-18-ugj"/>
+                        <constraint firstItem="NZH-uJ-dhp" firstAttribute="top" secondItem="QEV-un-goI" secondAttribute="top" id="3bq-Gx-Xqb"/>
+                        <constraint firstAttribute="bottom" secondItem="NZH-uJ-dhp" secondAttribute="bottom" id="EhG-vW-fCm"/>
+                        <constraint firstAttribute="height" constant="30" id="bAS-FU-u8O"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gp0-du-bxi" secondAttribute="bottom" id="0Qw-zx-dsS"/>
-                <constraint firstItem="gp0-du-bxi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0Ur-DY-Jli"/>
-                <constraint firstItem="gp0-du-bxi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LzD-pc-pb4"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gp0-du-bxi" secondAttribute="trailing" id="YXJ-y2-K9v"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1HX-KT-G49" secondAttribute="bottom" id="1dj-jF-1fU"/>
+                <constraint firstItem="gp0-du-bxi" firstAttribute="top" secondItem="QEV-un-goI" secondAttribute="bottom" id="3cj-EX-jzT"/>
+                <constraint firstItem="1HX-KT-G49" firstAttribute="top" secondItem="QEV-un-goI" secondAttribute="bottom" id="GJn-n2-Nbd"/>
+                <constraint firstItem="1HX-KT-G49" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="LXO-WI-83o"/>
+                <constraint firstItem="gp0-du-bxi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="MxL-JX-VZu"/>
+                <constraint firstItem="gp0-du-bxi" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="UKH-Mk-WNU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gp0-du-bxi" secondAttribute="bottom" id="b9v-EO-h6Z"/>
+                <constraint firstItem="QEV-un-goI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dyP-cb-i9a"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QEV-un-goI" secondAttribute="trailing" id="f8L-wV-Osf"/>
+                <constraint firstItem="QEV-un-goI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ogt-Q1-jqe"/>
+                <constraint firstItem="1HX-KT-G49" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="x6D-RB-rMp"/>
             </constraints>
-            <point key="canvasLocation" x="138" y="75"/>
+            <point key="canvasLocation" x="0.0" y="-25.446428571428569"/>
         </view>
     </objects>
     <resources>

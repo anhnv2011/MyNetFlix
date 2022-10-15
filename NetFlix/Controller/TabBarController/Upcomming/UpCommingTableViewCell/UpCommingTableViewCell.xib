@@ -68,6 +68,7 @@
                 <outlet property="detailImageView" destination="t6E-7j-DoB" id="ABJ-ki-wTt"/>
                 <outlet property="nameLabel" destination="ycC-SU-zB4" id="qi3-oP-y8h"/>
                 <outlet property="playButton" destination="rBi-mM-dXB" id="1Qo-VZ-Gbf"/>
+                <outlet property="view" destination="iqN-OI-hKe" id="3Ji-Kc-oFx"/>
             </connections>
             <point key="canvasLocation" x="128.98550724637681" y="87.053571428571431"/>
         </tableViewCell>

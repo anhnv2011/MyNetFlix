@@ -20,6 +20,7 @@ class DiscoveryButton:UIButton {
         label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.semibold(ofSize: 20)
+        label.sizeToFit()
         return label
     }()
      let imageButton:UIImageView = {
@@ -39,6 +40,7 @@ class DiscoveryButton:UIButton {
         clipsToBounds = true
         layer.cornerRadius = 8
         layer.borderWidth = 1
+        layer.borderColor = UIColor.borderColor().cgColor
     }
     
     required init?(coder: NSCoder) {

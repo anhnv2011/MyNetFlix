@@ -26,17 +26,17 @@ class MainTabBarViewController: UITabBarController {
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().barTintColor = UIColor.naviBackground()
 
-        vc1.title = "Home"
-        vc2.title = "Upcomming"
-        vc3.title = "Search"
-        vc4.title = "Download"
+        vc1.title = "Home".localized()
+        vc2.title = "Upcomming".localized()
+        vc3.title = "Search".localized()
+        vc4.title = "Download".localized()
         
         vc1.tabBarItem.image = UIImage(systemName: "house")
         vc2.tabBarItem.image = UIImage(systemName: "play.circle")
         vc3.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         vc4.tabBarItem.image = UIImage(systemName: "square.and.arrow.down")
         
-        self.tabBarController?.tabBar.backgroundColor = .black
+        self.tabBarController?.tabBar.backgroundColor = UIColor.tabbarBackground()
         self.tabBar.barTintColor = UIColor.tabbarBackground()
         self.tabBar.tintColor = .blue
         setViewControllers([vc1,vc2, vc3, vc4], animated: true)

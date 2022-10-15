@@ -9,14 +9,26 @@ import UIKit
 
 class DownloadViewController: UIViewController {
     
-    
+ 
+    //MARK:- Outlet
+
+    @IBOutlet weak var changViewModeButton: UIButton!
     @IBOutlet weak var downloadTableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var filmItems = [FilmItem]()
+    var viewMode: ViewMode = .TableView
+    {
+        didSet {
+            self.setupUI()
+        }
+    }
+    
+    //MARK:- LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
         setupNotification()
         fetchLocalStorageForDownload()
     }
@@ -26,10 +38,10 @@ class DownloadViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         for view in self.navigationController?.navigationBar.subviews ?? [] {
-             let subviews = view.subviews
-             if subviews.count > 0, let label = subviews[0] as? UILabel {
+            let subviews = view.subviews
+            if subviews.count > 0, let label = subviews[0] as? UILabel {
                 label.textColor = .white
-             }
+            }
         }
     }
     
@@ -39,7 +51,7 @@ class DownloadViewController: UIViewController {
         }
     }
     private func fetchLocalStorageForDownload() {
-
+        
         
         DataPersistenceManager.shared.fetchingFilmsFromDataBase { [weak self] result in
             
@@ -56,36 +68,44 @@ class DownloadViewController: UIViewController {
             }
         }
     }
-    func setupUI(){
+    
+    
+    //MARK:- UI
+    private func setupUI(){
         view.backgroundColor = UIColor.backgroundColor()
+        if viewMode == .TableView {
+            downloadTableView.isHidden = false
+            collectionView.isHidden = true
+        } else {
+            downloadTableView.isHidden = true
+            collectionView.isHidden = false
+        }
         setupTableView()
+        setupCollectionView()
         setupTabbar()
         setupNav()
     }
     
-    func setupTableView(){
+    private func setupCollectionView(){
+       
+    }
+    
+    private func setupTableView(){
         downloadTableView.dataSource = self
         downloadTableView.delegate = self
         downloadTableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: UpCommingTableViewCell.identifier)
         downloadTableView.tableFooterView = UIView()
     }
     func setupNav(){
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationController?.navigationItem.largeTitleDisplayMode = .always
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationController?.navigationItem.largeTitleDisplayMode = .always
-//        navigationController?.navigationBar.tintColor = .white
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.naviBackground()]
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.tintColor = UIColor.labelColor()
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
         title = "Download".localized()
-
-
+        
+        
     }
     func setupTabbar(){
         if let tabItems = tabBarController?.tabBar.items {
@@ -95,6 +115,31 @@ class DownloadViewController: UIViewController {
         }
     }
     
+    
+    //MARK:- Action
+    @IBAction func buttonAction(_ sender: UIButton) {
+        switch sender {
+        case changViewModeButton:
+            changeViewMode()
+        default:
+            break
+        }
+    }
+    
+    private func changeViewMode(){
+        let vc = ViewModeViewController()
+        vc.completionHanderler = { [weak self] viewmode in
+            guard let strongSelf = self else {return}
+            strongSelf.viewMode = viewmode
+        }
+        let value:CGFloat = 120
+        let y = changViewModeButton.frame.size.height + 10
+        let x = changViewModeButton.frame.size.width - value
+        let popvc = PopupViewController(contentController: vc, position: .offsetFromView(CGPoint(x: x, y: y), changViewModeButton), popupWidth: value, popupHeight: value)
+        popvc.modalPresentationStyle = .overFullScreen
+//
+        present(popvc, animated: false, completion: nil)
+    }
     
     func deleteData(index: Int){
         DataPersistenceManager.shared.deleteFilm(model: filmItems[index]) { [weak self] result in
@@ -111,6 +156,8 @@ class DownloadViewController: UIViewController {
     }
 }
 
+
+    //MARK:- Table View delegate
 extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filmItems.count
@@ -145,12 +192,12 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
             alert.addAction(deleteButton)
             alert.addAction(cancelButton)
             present(alert, animated: true, completion: nil)
-
+            
         default:
             break;
         }
         
-
+        
     }
     
     

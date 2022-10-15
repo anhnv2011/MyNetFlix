@@ -12,27 +12,38 @@ import SafariServices
 
 class LoginViewController: UIViewController {
     
-  
+    //MARK:- Outlet
     @IBOutlet weak var passwordLeadingConstrains: NSLayoutConstraint!
     @IBOutlet weak var emailLeadingConstrains: NSLayoutConstraint!
+    @IBOutlet weak var loginLeftConstrains: NSLayoutConstraint!
+    @IBOutlet weak var loginRightConstrains: NSLayoutConstraint!
+    
     @IBOutlet weak var passwordView: UIView!
     @IBOutlet weak var userView: UIView!
+    
     @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
+    @IBOutlet weak var dontHaveAccLabel: UILabel!
+    
+    
     @IBOutlet weak var usernameTextfiled: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
+    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var showPasswordButton: UIButton!
     private let loginViewModel = LoginViewModel()
     let disposeBag = DisposeBag()
+    
+    var transitionDelegate = TransitionDelegate()
    
     //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         bindData()
-        NotificationCenter.default.addObserver(self, selector: #selector(changeLanguage), name: Notification.Name("ChangeLanguage"), object: nil)
-        
+        notificationCenter()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -40,6 +51,26 @@ class LoginViewController: UIViewController {
         passwordLeadingConstrains.constant = -400
         
     }
+    @IBAction func testAlert(_ sender: Any) {
+        let cancelAction = ActionAlert(with: "Cancel", style: .normal) {[weak self] in
+            print("Cancel pressed")
+            self?.dismiss(animated: true, completion: nil)
+        }
+        let deleteAction = ActionAlert(with: "Delete", style: .destructive) {[weak self] in
+            print("Delete pressed")
+            self?.dismiss(animated: true, completion: nil)
+        }
+        let alertVC = createAlertWithActionsDark(actions: [cancelAction, deleteAction])
+        alertVC.modalPresentationStyle = .overCurrentContext
+        alertVC.modalTransitionStyle = .crossDissolve
+        present(alertVC, animated: true, completion: nil)
+    }
+    private func createAlertWithActionsDark(actions:[ActionAlert]) -> CustomAlertViewController{
+        let alertVC = CustomAlertViewController(withTitle: "Do you wish to delete?", message: "This will delete every data you have.", actions: actions, axis: .horizontal, style: .dark)
+        return alertVC
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         UIView.animate(withDuration: 1) { [weak self] in
@@ -51,84 +82,66 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
+    private func notificationCenter(){
+        NotificationCenter.default.addObserver(self, selector: #selector(changeLanguage), name: Notification.Name("ChangeLanguage"), object: nil)
+    }
     @objc func changeLanguage(){
         setupUI()
     }
-    //MARK:- Action
-    @IBAction func buttonAction(_ sender: UIButton) {
-        
-        switch sender {
-        case loginButton:
-            login()
-        case signUpButton:
-            signup()
-        case showPasswordButton:
-            showPassword()
-        default:
-            print("")
-        }
-        
-    }
     
-    private func animateLogin(text: String){
-        loginLabel.text = ""
-        var charIndex = 0
-        for character in text {
-            charIndex += 1
-            Timer.scheduledTimer(withTimeInterval: 0.3 * Double(charIndex), repeats: false) { [weak self](_) in
-                guard let strongSelf = self else { return }
-                strongSelf.loginLabel.text?.append(character)
-            }
-        }
-       
-    }
-    
+    //MARK:- UI
     private func setupUI(){
-        loginLabel.text = ""
-//        let loginLabel =  RKLocalizedString(key: "Login_Label", comment: "")
-//        let customLang = CustomLanguage() //declare at top
-//        let bundleLanguage = customLang.createBundlePath()
-
-//        let loginLabel = NSLocalizedString("Login_Label", tableName: nil, bundle: bundleLanguage, value: "", comment: "")
-//        let loginLabel = NSLocalizedString("Login_Label", comment: "")
-        
-        let loginLabel = "Login_Label".localized()
-        animateLogin(text: loginLabel)
-        usernameTextfiled.layer.cornerRadius  = 5
-        
-        passwordTextfield.layer.cornerRadius = 5
-        passwordTextfield.isSecureTextEntry = true
-        passwordTextfield.delegate = self
-        
-        loginButton.layer.cornerRadius = 12
-        
-        showPasswordButton.isHidden = true
+       
+        setupLabel()
+        setupButton()
+        setupView()
+        setupTextfield()
+    }
     
+    private func setupLabel(){
+        loginLabel.text = ""
+        loginLabel.textColor = UIColor.labelColor()
+        let loginLabel = "Login_Label".localized()
+        animateLoginLabel(text: loginLabel)
+        
+        usernameLabel.text = "Username".localized()
+        usernameLabel.textColor = UIColor.labelColor()
+        
+        passwordLabel.text = "Password".localized()
+        passwordLabel.textColor = UIColor.labelColor()
+        
+        dontHaveAccLabel.text = "Don't have an account ?".localized()
+        dontHaveAccLabel.textColor = UIColor.labelColor()
+    }
+    
+    private func setupButton(){
+        loginButton.layer.cornerRadius = 12
+        loginButton.setTitle("Login_Button".localized(), for: .normal)
+        signUpButton.setTitle("Sign Up".localized(), for: .normal)
+        showPasswordButton.isHidden = true
+    }
+    
+    private func setupView(){
+        view.backgroundColor = UIColor.backgroundColor()
         userView.layer.borderWidth = 1
         userView.layer.borderColor = UIColor.borderColor().cgColor
+        userView.backgroundColor = UIColor.viewBackground()
         userView.layer.cornerRadius = 12
         
         passwordView.layer.borderWidth = 1
         passwordView.layer.borderColor = UIColor.borderColor().cgColor
+        passwordView.backgroundColor = UIColor.viewBackground()
         passwordView.layer.cornerRadius = 12
     }
     
-
-    @IBAction func testlanguage(_ sender: UIButton) {
-//        RKLocalization.shared.setLanguage(language: "en")
-//
-////        let loginLabel =  RKLocalizedString(key: "Login_Label", comment: "")
-////        print(loginLabel)
-////        animateLogin(text: loginLabel)
-//        setupUI()
-////        let vc = ProfileViewController()
-////        vc.delegate = self
-////        navigationController?.pushViewController(vc, animated: true)
-        
-        let vc = ProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    private func setupTextfield(){
+        usernameTextfiled.layer.cornerRadius = 5
+        passwordTextfield.layer.cornerRadius = 5
+        passwordTextfield.isSecureTextEntry = true
+        passwordTextfield.delegate = self
     }
+    
+    
     func bindData(){
         usernameTextfiled.becomeFirstResponder()
         usernameTextfiled.rx.text.map({$0 ?? ""})
@@ -157,22 +170,69 @@ class LoginViewController: UIViewController {
 ////        }
 //
 //    }
+    //MARK:- Action
+    @IBAction func buttonAction(_ sender: UIButton) {
+        
+        switch sender {
+        case loginButton:
+            loginAnimation(sender: sender)
+//            login(sender: sender)
+        case signUpButton:
+            signup()
+        case showPasswordButton:
+            showPassword()
+        default:
+            print("")
+        }
+        
+    }
+    
+    private func animateLoginLabel(text: String){
+        loginLabel.text = ""
+        var charIndex = 0
+        for character in text {
+            charIndex += 1
+            Timer.scheduledTimer(withTimeInterval: 0.3 * Double(charIndex), repeats: false) { [weak self](_) in
+                guard let strongSelf = self else { return }
+                strongSelf.loginLabel.text?.append(character)
+            }
+        }
+       
+    }
     
    
-    private func login(){
+    private func loginAnimation(sender: UIButton){
+        
+        let height = sender.frame.size.height
+        let value = (view.frame.width - height)/2
+        sender.setTitle("", for: .normal)
+        sender.clipsToBounds = true
+        CircleButton.customAnimation(sender: sender, leftConstrain: loginLeftConstrains, rightConstrain: loginRightConstrains, height: value, vc: self) {
+            
+            let vc = MainTabBarViewController()
+            vc.modalPresentationStyle = .fullScreen
+            vc.transitioningDelegate = self.transitionDelegate
+            self.present(vc, animated: true, completion: nil)
+        }
+
+    }
+    private func login(sender: UIButton){
         guard let username = self.usernameTextfiled.text, !username.isEmpty,
               let password = self.passwordTextfield.text, !password.isEmpty else {
             print("nhap user, pass")
             return
         }
-        APICaller.share.getRequestToken { (result) in
+        APICaller.share.getRequestToken { [weak self] (result) in
+            guard let strongSelf = self else {return}
+
             switch result {
             
             case .success(let auth):
                 let requestToken = auth.request_token
              
                 
-                APICaller.share.creatSessionWithLogin(username: username, password: password, requestToken: requestToken) { result in
+                APICaller.share.creatSessionWithLogin(username: username, password: password, requestToken: requestToken) { [weak self]result in
+                    guard let strongSelf = self else {return}
                     switch result{
                     case .success(let loginresult):
                         
@@ -180,15 +240,15 @@ class LoginViewController: UIViewController {
                             .success
                         if success == true {
                             print("ssssssssssssssssssssss")
-                            APICaller.share.getSessionId(requesToken: requestToken) { (result) in
+                            APICaller.share.getSessionId(requesToken: requestToken) { [weak self] result in
+                                guard let strongSelf = self else {return}
                                 switch result{
                                 case .success(let sessionID):
                                     print("aaa")
                                     DispatchQueue.main.async {
                                         DataManager.shared.saveSessionId(id: sessionID)
-                                        let vc = MainTabBarViewController()
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true, completion: nil)
+                                        strongSelf.loginAnimation(sender: sender)
+
                                     }
                                    
                                 case .failure(let error):
@@ -198,22 +258,23 @@ class LoginViewController: UIViewController {
                             }
                             
                         } else {
-                            print(loginresult.status_message ?? "fail")
                             
+                            strongSelf.makeAlert(title: "Error", messaage: loginresult.status_message ?? "fail")
                             DispatchQueue.main.async {
+                                ShakeButton.shake(sender: sender)
                                 let aleart = UIAlertController(title: "Error", message: loginresult.status_message ?? "fail", preferredStyle: .alert)
                                 aleart.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                                self.present(aleart, animated: true, completion: nil)
+                                strongSelf.present(aleart, animated: true, completion: nil)
                             }
                             
                         }
                     case .failure(let error):
-                        print(error.localizedDescription)
+                        strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
                     }
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
@@ -226,64 +287,7 @@ class LoginViewController: UIViewController {
         passwordTextfield.isSecureTextEntry.toggle()
         passwordTextfield.isSecureTextEntry ? showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal   ) : showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
     }
-//    @IBAction func actionLogin(_ sender: Any) {
-//        guard let username = self.usernameTextfiled.text, !username.isEmpty,
-//              let password = self.passwordTextfield.text, !password.isEmpty else {
-//            print("nhap user, pass")
-//            return
-//        }
-//        APICaller.share.getRequestToken { (result) in
-//            switch result {
-//
-//            case .success(let auth):
-//                let requestToken = auth.request_token
-//
-//
-//                APICaller.share.creatSessionWithLogin(username: username, password: password, requestToken: requestToken) { result in
-//                    switch result{
-//                    case .success(let loginresult):
-//
-//                        let success = loginresult
-//                            .success
-//                        if success == true {
-//                            print("ssssssssssssssssssssss")
-//                            APICaller.share.getSessionId(requesToken: requestToken) { (result) in
-//                                switch result{
-//                                case .success(let sessionID):
-//                                    print("aaa")
-//                                    DispatchQueue.main.async {
-//                                        DataManager.shared.saveSessionId(id: sessionID)
-//                                        let vc = MainTabBarViewController()
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true, completion: nil)
-//                                    }
-//
-//                                case .failure(let error):
-//                                    print(error.localizedDescription)
-//
-//                                }
-//                            }
-//
-//                        } else {
-//                            print(loginresult.status_message ?? "fail")
-//
-//                            DispatchQueue.main.async {
-//                                let aleart = UIAlertController(title: "Error", message: loginresult.status_message ?? "fail", preferredStyle: .alert)
-//                                aleart.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-//                                self.present(aleart, animated: true, completion: nil)
-//                            }
-//
-//                        }
-//                    case .failure(let error):
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
+
 }
 
 

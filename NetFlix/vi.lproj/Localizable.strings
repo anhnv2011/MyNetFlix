@@ -20,5 +20,14 @@
 "Language" = "Ngôn ngữ";
 "LogOut" = "Đăng xuất";
 "Account" = "Tài khoản";
+"Username" = "Tên";
+"Password" = "Mật khẩu";
+"Don't have an account ?" = "Bạn có 1 tài khoản không";
+"Sign Up" = "Đăng ký";
 "Search for a Movie or a Tv show" = "Tìm kiếm phim lẻ hoặc truyền hình";
 "Loading" = "Đang tải";
+"From: " = "Từ: ";
+"  to " = "  đến ";
+"Home" = "Trang chủ";
+"Upcomming" = "Sắp chiếu";
+"Search" = "Tìm kiếm";

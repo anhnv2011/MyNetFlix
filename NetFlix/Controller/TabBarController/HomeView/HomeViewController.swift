@@ -7,6 +7,7 @@
 
 import UIKit
 import youtube_ios_player_helper
+import SwiftKeychainWrapper
 enum DiscoveryState{
     case close
     case expanse
@@ -54,7 +55,7 @@ class HomeViewController: UIViewController {
 //    let simpleOver = SimpleOver()
 
     //custom push view
-    let navDelegate = CustomNavigationController()
+    let navDelegate = NavigationDelegate()
     var homeSection = [HomeSection]()
     {
         didSet {
@@ -85,8 +86,6 @@ class HomeViewController: UIViewController {
         setupUI()
         fetchData()
 //        setupTopView()
-//        self.transitioningDelegate = transitionDelegate
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {

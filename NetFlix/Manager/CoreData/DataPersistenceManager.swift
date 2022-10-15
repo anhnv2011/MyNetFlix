@@ -27,7 +27,7 @@ class DataPersistenceManager {
         
         let item = FilmItem(context: context)
         
-        item.adult = model.adult!
+        item.adult = model.adult ?? false
         item.id = Int64(model.id)
         item.media_type = model.media_type
         item.original_language = model.original_language

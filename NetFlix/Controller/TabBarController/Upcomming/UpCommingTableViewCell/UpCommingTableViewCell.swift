@@ -10,6 +10,7 @@ import SDWebImage
 class UpCommingTableViewCell: UITableViewCell {
     static let identifier = "UpCommingTableViewCell"
     
+    @IBOutlet weak var view: UIView!
     var film: Film?{
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -28,9 +29,14 @@ class UpCommingTableViewCell: UITableViewCell {
     @IBOutlet weak var playButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        setupUI()
     }
 
+    func setupUI(){
+        view.backgroundColor = UIColor.cellBackground()
+        nameLabel.textColor = UIColor.labelColor()
+        playButton.tintColor = UIColor.labelColor()
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

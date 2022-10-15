@@ -15,6 +15,7 @@ PODS:
   - SDWebImage (5.12.5):
     - SDWebImage/Core (= 5.12.5)
   - SDWebImage/Core (5.12.5)
+  - SwiftKeychainWrapper (4.0.1)
   - SwiftyJSON (5.0.1)
   - youtube-ios-player-helper (1.0.4)
 
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - RxCocoa
   - RxSwift
   - SDWebImage
+  - SwiftKeychainWrapper
   - SwiftyJSON
   - youtube-ios-player-helper
 
@@ -36,6 +38,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SDWebImage
+    - SwiftKeychainWrapper
     - SwiftyJSON
     - youtube-ios-player-helper
 
@@ -47,9 +50,10 @@ SPEC CHECKSUMS:
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
+  SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 7c184bf7025bb4a56dff16dee4aa383af9dd1ea3
+PODFILE CHECKSUM: 04011ad3e4654f39e0bb342ed70618c67e9449e7
 
 COCOAPODS: 1.11.3
