@@ -12,6 +12,7 @@ extension String {
     }
 }
 extension String {
+    /// Language localized
 func localized() ->String {
     let lang = DataManager.shared.getLanguage()
     let path = Bundle.main.path(forResource: lang, ofType: "lproj")

@@ -10,12 +10,13 @@ import UIKit
 
 public class SimpleTransform: NSObject, UIViewControllerAnimatedTransitioning {
     private let presenting: Bool
+    var duration:TimeInterval = 0.75
     init(presenting: Bool) {
         self.presenting = presenting
         print(presenting)
     }
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 1
+        return 0.75
     }
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {

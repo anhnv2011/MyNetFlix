@@ -13,6 +13,7 @@ class DisplayTableCell {
         cell.alpha = 0
         if indexPath.row % 2 == 0 {
             let transform = CATransform3DTranslate(CATransform3DIdentity, -500, 200, 100)
+            
             cell.layer.transform = transform
             
         } else {
@@ -20,8 +21,8 @@ class DisplayTableCell {
             cell.layer.transform = transform
             
         }
-        let value = Double(indexPath.row) / 10
-        let delay = min(1, value)
+//        let value = Double(indexPath.row) / 10
+        let delay = 0.07 * Double(indexPath.row)
         print(delay)
         UIView.animate(withDuration: 1,
                        delay: TimeInterval(delay),

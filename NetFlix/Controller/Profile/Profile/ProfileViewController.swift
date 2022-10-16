@@ -80,12 +80,26 @@ class ProfileViewController: UIViewController {
 
     }
 
+    //MARK:- Fetch Data
+    private func fetchData(){
+
+        self.profileData = DataManager.shared.profileData
+    }
+    private func settingProfile(){
+        profileSetting = [
+            ProfileSetting(title: "Favorite".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.favoriteButton, isopen: false),
+            ProfileSetting(title: "Bookmark".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.bookmarkButton, isopen: false),
+            ProfileSetting(title: "WatchList".localized(), option: ["WatchList".localized()], image: ImageName.shared.listButton, isopen: false),
+            ProfileSetting(title: "Rate".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.rateButton, isopen: false),
+            ProfileSetting(title: "Language".localized(), option: languages.map({$0.language}), image: ImageName.shared.language, isopen: false),
+            ProfileSetting(title: "Display".localized(), option: ["Dark Mode", "Light Mode"], image: ImageName.shared.rateButton, isopen: false),
+        ]
+    }
     
-    //MARK:- button Action
+    //MARK:- Button Action
     @IBAction func buttonAction(_ sender: UIButton) {
         switch sender {
         case dismissButton:
-//            dismiss(animated: true, completion: nil)
             navigationController?.popViewController(animated: true)
         case logOutButton:
             logOutControl()
@@ -98,21 +112,7 @@ class ProfileViewController: UIViewController {
     
   
     
-    //MARK:- Fetch Data
-    private func fetchData(){
-
-        self.profileData = DataManager.shared.profileData
-        
-    }
-    private func settingProfile(){
-        profileSetting = [
-            ProfileSetting(title: "Favorite".localized(), option: ["Movie", "Tv"], image: ImageName.shared.favoriteButton, isopen: false),
-            ProfileSetting(title: "Bookmark".localized(), option: ["Movie", "Tv"], image: ImageName.shared.bookmarkButton, isopen: false),
-            ProfileSetting(title: "WatchList".localized(), option: ["List"], image: ImageName.shared.listButton, isopen: false),
-            ProfileSetting(title: "Rate".localized(), option: ["Movie", "Tv"], image: ImageName.shared.rateButton, isopen: false),
-            ProfileSetting(title: "Language".localized(), option: languages.map({$0.language}), image: ImageName.shared.language, isopen: false)
-        ]
-    }
+   
     
     private func logOutControl(){
         let logOutAleart = UIAlertController(title: "LogOut".localized(), message: "Are you sure", preferredStyle: .alert)
@@ -215,6 +215,22 @@ class ProfileViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    private func showLibrary(title: String, indexPath: IndexPath){
+        let vc = LibraryViewController()
+        vc.title = title
+        vc.transitioningDelegate = transitionDelegate
+        
+        if indexPath.row == 0 {
+            vc.state = .movie
+            navigationController?.pushViewController(vc, animated: true)
+            
+        } else {
+            vc.state = .tv
+            navigationController?.pushViewController(vc, animated: true)
+            
+        }
+        
+    }
     
 }
 
@@ -277,33 +293,24 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 //
-//        let vc = LibraryViewController()
-//        if indexPath.row == 0 {
-//            vc.state = .movie
-//            navigationController?.pushViewController(vc, animated: true)
-//
-//        } else {
-//            vc.state = .tv
-//            navigationController?.pushViewController(vc, animated: true)
-//
-//        }
+
         switch indexPath.section {
         
         //Favorite
         case 0:
-        print("Favorite")
+            showLibrary(title: "Favorite".localized(), indexPath: indexPath)
         
         //Bookmark
         case 1:
         print("")
-        
+            showLibrary(title: "Bookmark".localized(), indexPath: indexPath)
         // Your List
         case 2:
             showYourList()
             
         //Rating
         case 3:
-        print("")
+            showLibrary(title: "Rate".localized(), indexPath: indexPath)
         
         //Language
         case 4:

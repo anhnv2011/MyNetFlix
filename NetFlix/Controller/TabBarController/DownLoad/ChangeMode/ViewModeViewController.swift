@@ -37,7 +37,7 @@ class ViewModeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        UIView.animate(withDuration: 1) {
+        UIView.animate(withDuration: 0.2) {
             self.view.transform = .identity
             self.view.layoutIfNeeded()
         }

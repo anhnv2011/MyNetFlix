@@ -53,6 +53,8 @@
 		045A3AF1286779DF000F84DE /* NetFlixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3AF0286779DF000F84DE /* NetFlixTests.swift */; };
 		045A3AFC286779DF000F84DE /* NetFlixUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3AFB286779DF000F84DE /* NetFlixUITests.swift */; };
 		045A3B1F28677BFD000F84DE /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3B1E28677BFD000F84DE /* MainTabBarViewController.swift */; };
+		045F646A28FB191C001B266E /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F646828FB191B001B266E /* CarouselCollectionViewCell.swift */; };
+		045F646B28FB191C001B266E /* CarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045F646928FB191B001B266E /* CarouselCollectionViewCell.xib */; };
 		0464F3E728694C95008F6015 /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F3E528694C95008F6015 /* CollectionTableViewCell.swift */; };
 		0464F3E828694C95008F6015 /* CollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0464F3E628694C95008F6015 /* CollectionTableViewCell.xib */; };
 		0464F3EE28694CC9008F6015 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F3EC28694CC9008F6015 /* CollectionViewCell.swift */; };
@@ -201,6 +203,8 @@
 		045A3AFB286779DF000F84DE /* NetFlixUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetFlixUITests.swift; sourceTree = "<group>"; };
 		045A3AFD286779DF000F84DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		045A3B1E28677BFD000F84DE /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		045F646828FB191B001B266E /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
+		045F646928FB191B001B266E /* CarouselCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselCollectionViewCell.xib; sourceTree = "<group>"; };
 		0464F3E528694C95008F6015 /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
 		0464F3E628694C95008F6015 /* CollectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionTableViewCell.xib; sourceTree = "<group>"; };
 		0464F3EC28694CC9008F6015 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -527,6 +531,15 @@
 			path = TabBarController;
 			sourceTree = "<group>";
 		};
+		045F646728FB18E8001B266E /* Carousel cell */ = {
+			isa = PBXGroup;
+			children = (
+				045F646828FB191B001B266E /* CarouselCollectionViewCell.swift */,
+				045F646928FB191B001B266E /* CarouselCollectionViewCell.xib */,
+			);
+			path = "Carousel cell";
+			sourceTree = "<group>";
+		};
 		0464F3D128693F32008F6015 /* CollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -749,6 +762,7 @@
 		04D789E428677EF7007030DE /* DownLoad */ = {
 			isa = PBXGroup;
 			children = (
+				045F646728FB18E8001B266E /* Carousel cell */,
 				0496E31628FAC4D300E1FACC /* ChangeMode */,
 				04D789E528677F8D007030DE /* DownloadViewController.swift */,
 				04D789E628677F8D007030DE /* DownloadViewController.xib */,
@@ -994,6 +1008,7 @@
 				045A3AE3286779DF000F84DE /* Assets.xcassets in Resources */,
 				0433010F28F58C16005C061A /* DetailWatchListViewController.xib in Resources */,
 				048809A428E8095500B49099 /* SeeAllViewController.xib in Resources */,
+				045F646B28FB191C001B266E /* CarouselCollectionViewCell.xib in Resources */,
 				04D789E828677F8D007030DE /* DownloadViewController.xib in Resources */,
 				043300FC28F56475005C061A /* WatchListViewController.xib in Resources */,
 				04D789D528677ED7007030DE /* UpcommingViewController.xib in Resources */,
@@ -1122,6 +1137,7 @@
 				04FA057F28EAD9CD008628F1 /* ListViewController.swift in Sources */,
 				04CCF2E728E831210010CAD7 /* SeeAllCollectionViewCell.swift in Sources */,
 				0433010628F5656F005C061A /* WatchListTableViewCell.swift in Sources */,
+				045F646A28FB191C001B266E /* CarouselCollectionViewCell.swift in Sources */,
 				0464F3FA2869513C008F6015 /* HeaderView.swift in Sources */,
 				04546ADE28D1E9D2002F894B /* DetailFilmButton.swift in Sources */,
 				0492EED928EDE7AB00EF8191 /* RepeatTableViewCell.swift in Sources */,

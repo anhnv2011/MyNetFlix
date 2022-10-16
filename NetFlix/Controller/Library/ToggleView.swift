@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-enum ToggleState {
-    case movie
-    case tv
+enum ToggleState: String, CaseIterable {
+    case movie = "Movie"
+    case tv = "Tv"
 }
 
 class ToggleView:UIView{

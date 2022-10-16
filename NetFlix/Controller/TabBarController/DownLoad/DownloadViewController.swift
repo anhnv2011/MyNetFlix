@@ -9,9 +9,10 @@ import UIKit
 
 class DownloadViewController: UIViewController {
     
- 
+    
     //MARK:- Outlet
-
+    
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var changViewModeButton: UIButton!
     @IBOutlet weak var downloadTableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -25,7 +26,7 @@ class DownloadViewController: UIViewController {
     }
     
     //MARK:- LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -72,6 +73,9 @@ class DownloadViewController: UIViewController {
     
     //MARK:- UI
     private func setupUI(){
+        topView.backgroundColor = UIColor.viewBackground()
+        changViewModeButton.backgroundColor = UIColor.buttonBackground()
+        changViewModeButton.setTitleColor(UIColor.labelColor(), for: .normal)
         view.backgroundColor = UIColor.backgroundColor()
         if viewMode == .TableView {
             downloadTableView.isHidden = false
@@ -86,9 +90,6 @@ class DownloadViewController: UIViewController {
         setupNav()
     }
     
-    private func setupCollectionView(){
-       
-    }
     
     private func setupTableView(){
         downloadTableView.dataSource = self
@@ -137,7 +138,7 @@ class DownloadViewController: UIViewController {
         let x = changViewModeButton.frame.size.width - value
         let popvc = PopupViewController(contentController: vc, position: .offsetFromView(CGPoint(x: x, y: y), changViewModeButton), popupWidth: value, popupHeight: value)
         popvc.modalPresentationStyle = .overFullScreen
-//
+        //
         present(popvc, animated: false, completion: nil)
     }
     
@@ -157,7 +158,7 @@ class DownloadViewController: UIViewController {
 }
 
 
-    //MARK:- Table View delegate
+//MARK:- Table View delegate
 extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filmItems.count
@@ -206,4 +207,85 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
         
         
     }
+}
+
+//MARK:- collection
+extension DownloadViewController {
+    func degreeToRadian(deg: CGFloat) -> CGFloat {
+        return (deg * CGFloat.pi) / 180
+    }
+    
+    private func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(UINib(nibName: "CarouselCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: CarouselCollectionViewCell.identifier)
+        let width = collectionView.frame.width
+        let height = collectionView.frame.height
+        //2
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        layout.itemSize = CGSize(width: width, height: height)
+        layout.minimumInteritemSpacing = 5
+        layout.minimumLineSpacing = 5
+        layout.scrollDirection = .horizontal
+        //3
+        collectionView!.collectionViewLayout = layout
+    }
+    
+}
+
+extension DownloadViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        filmItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCollectionViewCell.identifier, for: indexPath) as! CarouselCollectionViewCell
+        cell.film = filmItems[indexPath.row]
+//        cell.layer.transform = animateCell(cellFrame: cell.frame)
+        return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let collectionView = scrollView as? UICollectionView {
+            for cell in collectionView.visibleCells as! [CarouselCollectionViewCell] {
+                let indexPath = collectionView.indexPath(for: cell)!
+                let attributes = collectionView.layoutAttributesForItem(at: indexPath)!
+//                print("attributes: ", attributes)
+                let cellFrame = collectionView.convert(attributes.frame, to: view)
+                print("cellFrame at \(indexPath): ", cellFrame)
+                
+                let translationX = cellFrame.origin.x / 5
+                cell.posterImageView.transform = CGAffineTransform(translationX: translationX, y: 0)
+                
+                cell.layer.transform = animateCell(cellFrame: cellFrame)
+            }
+        }
+    }
+    
+     func animateCell(cellFrame: CGRect) -> CATransform3D {
+        let angleFromX = Double((-cellFrame.origin.x) / 10)
+        let angle = CGFloat((angleFromX * Double.pi) / 180.0)
+        var transform = CATransform3DIdentity
+        transform.m34 = -1.0/500 // khoang cach den mat phang chieu
+        let rotation = CATransform3DRotate(transform, angle, 0, 1, 0)
+        return rotation
+        
+//        var scaleFromX = (1000 - (cellFrame.origin.x - 200)) / 1000
+//        let scaleMax: CGFloat = 1.0
+//        let scaleMin: CGFloat = 0.5
+//        if scaleFromX > scaleMax {
+//            scaleFromX = scaleMax
+//        }
+//        if scaleFromX < scaleMin {
+//            scaleFromX = scaleMin
+//        }
+//        let scale = CATransform3DScale(CATransform3DIdentity, scaleFromX, scaleFromX, 1)
+//
+//        return CATransform3DConcat(rotation, scale)
+        
+        
+                
+    }
+
 }

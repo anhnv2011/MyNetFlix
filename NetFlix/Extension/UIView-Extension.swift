@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 extension UIView {
     
+    /// auto layout
     func anchor(
         top: NSLayoutYAxisAnchor? = nil,
         bottom: NSLayoutYAxisAnchor? = nil,

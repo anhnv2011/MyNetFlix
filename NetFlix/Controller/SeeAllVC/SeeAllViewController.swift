@@ -8,11 +8,15 @@
 import UIKit
 
 class SeeAllViewController: UIViewController {
-    var cellAimationFlag = [Int]()
-    
+    //MARK:- Outlet
     @IBOutlet weak var seeAllCollectionView: UICollectionView!
+   
+    
+    //MARK:- Property
+    var cellAimationFlag = [Int]()
     var films = [Film]()
 
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,7 +47,16 @@ class SeeAllViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)
     }
+    
+    private func showFilmPopupDetail(film: Film){
+        let vc = FilmDetailPopUpViewController()
+        vc.film = film
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true, completion: nil)
+    }
 }
+
+//MARK:- CollectionView
 extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         films.count
@@ -54,6 +67,11 @@ extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.film = films[indexPath.row]
         return cell
         
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let film = films[indexPath.row]
+        showFilmPopupDetail(film: film)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

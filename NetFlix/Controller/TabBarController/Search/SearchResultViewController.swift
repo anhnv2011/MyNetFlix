@@ -26,7 +26,7 @@ class SearchResultViewController: UISearchController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor.backgroundColor()
         setupCollectionView()
     }
 

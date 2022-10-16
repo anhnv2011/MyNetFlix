@@ -13,6 +13,7 @@
                 <outlet property="changViewModeButton" destination="NZH-uJ-dhp" id="4hV-3s-K5S"/>
                 <outlet property="collectionView" destination="1HX-KT-G49" id="3Y1-Jw-TxZ"/>
                 <outlet property="downloadTableView" destination="gp0-du-bxi" id="cN1-Gp-8du"/>
+                <outlet property="topView" destination="QEV-un-goI" id="3l3-xZ-0gr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,7 +26,7 @@
                     <rect key="frame" x="0.0" y="74" width="414" height="788"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="1HX-KT-G49">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="1HX-KT-G49">
                     <rect key="frame" x="0.0" y="74" width="414" height="788"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZzN-L4-73b">
