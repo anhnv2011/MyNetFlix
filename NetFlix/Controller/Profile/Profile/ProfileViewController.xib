@@ -14,7 +14,6 @@
                 <outlet property="accountView" destination="oDC-vQ-Vml" id="hll-ts-HSb"/>
                 <outlet property="avartarImageView" destination="KCZ-Ut-6Vg" id="keX-Uv-bcB"/>
                 <outlet property="dismissButton" destination="BPu-6T-qHL" id="8UZ-8n-kdO"/>
-                <outlet property="logOutButton" destination="tp6-9X-QQh" id="PdZ-FE-iVP"/>
                 <outlet property="nameLabel" destination="jOh-6e-v2F" id="CDQ-TY-n1Y"/>
                 <outlet property="tableView" destination="5FR-DU-eKy" id="t9S-Xf-fC1"/>
                 <outlet property="usernameLabel" destination="ugQ-qM-0f0" id="noM-mZ-NNI"/>
@@ -83,32 +82,20 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5FR-DU-eKy">
-                    <rect key="frame" x="0.0" y="257.5" width="414" height="557.5"/>
+                    <rect key="frame" x="0.0" y="249.5" width="414" height="612.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tp6-9X-QQh">
-                    <rect key="frame" x="0.0" y="815" width="414" height="39"/>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                    <state key="normal" title="Log Out"/>
-                    <connections>
-                        <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="IUh-Zc-R6d"/>
-                    </connections>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="tp6-9X-QQh" firstAttribute="top" secondItem="5FR-DU-eKy" secondAttribute="bottom" id="5YW-fI-oGr"/>
                 <constraint firstItem="oDC-vQ-Vml" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="766-sP-Shd"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tp6-9X-QQh" secondAttribute="bottom" constant="8" id="7MS-td-Qgq"/>
-                <constraint firstItem="tp6-9X-QQh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7bQ-Ip-hEy"/>
-                <constraint firstItem="5FR-DU-eKy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Cf1-hS-X4E"/>
-                <constraint firstItem="5FR-DU-eKy" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="P7d-25-33K"/>
                 <constraint firstItem="oDC-vQ-Vml" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="SgL-1r-7y1"/>
-                <constraint firstItem="5FR-DU-eKy" firstAttribute="top" secondItem="oDC-vQ-Vml" secondAttribute="bottom" constant="8" id="WPs-Ly-hdz"/>
                 <constraint firstItem="oDC-vQ-Vml" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="ZGM-cL-gXH"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tp6-9X-QQh" secondAttribute="trailing" id="fc7-E2-Oru"/>
+                <constraint firstItem="5FR-DU-eKy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="byb-yZ-MkF"/>
+                <constraint firstItem="5FR-DU-eKy" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="eb9-YW-WeO"/>
+                <constraint firstItem="5FR-DU-eKy" firstAttribute="top" secondItem="oDC-vQ-Vml" secondAttribute="bottom" id="opJ-d8-jhO"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="5FR-DU-eKy" secondAttribute="bottom" id="sZQ-pK-kEq"/>
             </constraints>
             <point key="canvasLocation" x="89.855072463768124" y="53.571428571428569"/>
         </view>

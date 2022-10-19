@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+
 class HeaderView: UIView {
     public let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -16,12 +17,22 @@ class HeaderView: UIView {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    
+    public let inforButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "info.circle"), for: .normal)
+        button.setImage(UIImage(systemName: "info.circle"), for: .highlighted)
+        button.tintColor = .white
+        return button
+    }()
     private var imageViewHeight = NSLayoutConstraint()
     private var imageViewBottom = NSLayoutConstraint()
     private var containerView = UIView()
     private var containerViewHeight = NSLayoutConstraint()
-    
+
+    var film:Film!
+  
+    var completion: (() -> Void)?
     override init(frame: CGRect) {
         super.init(frame: frame)
         createView()
@@ -40,6 +51,7 @@ class HeaderView: UIView {
     func createView(){
         addSubview(containerView)
         containerView.addSubview(imageView)
+        containerView.addSubview(inforButton)
     }
     func setViewConstraints(){
         NSLayoutConstraint.activate([
@@ -57,6 +69,13 @@ class HeaderView: UIView {
         imageViewBottom.isActive = true
         imageViewHeight = imageView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
         imageViewHeight.isActive = true
+        
+        inforButton.anchor(bottom: containerView.bottomAnchor, right: containerView.rightAnchor, width: 56, height: 56, bottomPadding: 24, rightPadding: 24)
+        inforButton.addTarget(self, action: #selector(getInfor), for: .touchUpInside)
+    }
+    
+    @objc func getInfor(){
+        completion!()
     }
 //    override func layoutSubviews() {
 //        imageView.frame = bounds
@@ -70,12 +89,12 @@ class HeaderView: UIView {
     
     /// Notify view of scroll change from container
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        containerViewHeight.constant = scrollView.contentInset.top
+//        containerViewHeight.constant = scrollView.contentInset.top
 //        print(scrollView.contentOffset.y)
 //        print(scrollView.contentInset.top)
         let offsetY = -(scrollView.contentOffset.y + scrollView.contentInset.top)
         containerView.clipsToBounds = offsetY <= 0
-        imageViewBottom.constant = offsetY >= 0 ? 0 : offsetY / 2
+//        imageViewBottom.constant = offsetY >= 0 ? 0 : offsetY / 2
         imageViewHeight.constant = max(offsetY + scrollView.contentInset.top, scrollView.contentInset.top)
     }
 }

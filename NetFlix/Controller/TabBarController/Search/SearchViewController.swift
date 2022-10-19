@@ -36,6 +36,7 @@ class SearchViewController: UIViewController {
     func setupNavigation(){
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.hidesBarsOnSwipe = false
         navigationController?.navigationBar.tintColor = UIColor.labelColor()
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
@@ -48,7 +49,7 @@ class SearchViewController: UIViewController {
     func setupTableView(){
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: "UpCommingTableViewCell")
+        tableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: UpCommingTableViewCell.identifier)
     }
     
     func setupSearchBar(){
@@ -116,6 +117,17 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UpCommingTableViewCell", for: indexPath) as! UpCommingTableViewCell
+        cell.completionHandler = { [weak self] in
+            guard let strongSelf = self else {return}
+            let transiton = TransitionDelegate()
+            let film = strongSelf.films[indexPath.row]
+            let vc = PlayerViewController(film: film)
+//            vc.film = strongSelf.films[indexPath.row]
+            
+            vc.transitioningDelegate = transiton
+            vc.modalPresentationStyle = .fullScreen
+            strongSelf.present(vc, animated: true, completion: nil)
+        }
         let film = films[indexPath.row]
         cell.configDetailMovieTableCell(posterPath: film.poster_path , name: film.original_name ?? film.original_title ?? "Unknown name" )
         

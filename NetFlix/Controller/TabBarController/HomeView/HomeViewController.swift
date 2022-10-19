@@ -8,10 +8,23 @@
 import UIKit
 import youtube_ios_player_helper
 import SwiftKeychainWrapper
+
+    //MARK:- Enum
 enum DiscoveryState{
     case close
     case expanse
 }
+enum MediaType: String {
+    case all = "all"
+    case movie = "movie"
+    case tv = "tv"
+    case person = "person"
+}
+enum TimeWindow: String{
+    case day = "day"
+    case week = "week"
+}
+
 //MARK:- HomeSection
 enum HomeSection {
     case trendingAll(model: [Film])
@@ -52,7 +65,6 @@ class HomeViewController: UIViewController {
     
     //custom present
     let transitionDelegate = TransitionDelegate()
-//    let simpleOver = SimpleOver()
 
     //custom push view
     let navDelegate = NavigationDelegate()
@@ -60,7 +72,8 @@ class HomeViewController: UIViewController {
     {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
+                guard let strongSelf = self else {return}
+                strongSelf.tableView.reloadData()
             }
         }
     }
@@ -96,13 +109,11 @@ class HomeViewController: UIViewController {
     //MARK:- UI
     
     private func setupUI(){
-//        view.backgroundColor = UIColor.viewBackground()
         view.addSubview(loadingTextView)
-//        loadingTextView.anchor(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, topPadding: 0, bottomPadding: 0, leftPadding: 0, rightPadding: 0)
+//
         view.layoutIfNeeded()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.loadingTextView.removeFromSuperview()
-        }
+        view.backgroundColor = UIColor.backgroundColor()
+        tableView.backgroundColor = .black
         setupTableView()
         setupHeader()
         setupNavbar()
@@ -135,15 +146,26 @@ class HomeViewController: UIViewController {
     
    
     func setupHeader(){
-        APICaller.share.getTrending(mediaType: .movie, time: .day) { (result) in
+        APICaller.share.getTrending(mediaType: .movie, time: .day) { [weak self] (result) in
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let movie):
                 let random = movie.randomElement()
-                DispatchQueue.main.async {
-                    self.headerView?.configHeader(posterPath: random?.poster_path ?? "")
+                DispatchQueue.main.async { [weak self] in
+                    guard let strongSelf = self else {return}
+                    strongSelf.headerView?.configHeader(posterPath: random?.poster_path ?? "")
+                    strongSelf.headerView?.film = random
+                    strongSelf.headerView?.completion = { [weak self] in
+                        let vc = FilmDetailPopUpViewController()
+                        vc.film = random
+                        vc.mediaType = "movie"
+                        vc.modalPresentationStyle = .overFullScreen
+                        self!.present(vc, animated: true, completion: nil)
+                            
+                    }
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
             }
         }
     }
@@ -157,13 +179,29 @@ class HomeViewController: UIViewController {
         var image = UIImage(named: "netflixLogo")
         image = image?.withRenderingMode(.alwaysOriginal)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
-        
         let profileButton =   UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: #selector(didtapProfileButton))
-        let playButton = UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
-        navigationItem.rightBarButtonItems = [profileButton,playButton]
+        
+        let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done, target: self, action: #selector(didtapSearchButton))
+        navigationItem.rightBarButtonItems = [profileButton,searchButton]
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
 
+    }
+    
+    private func getAvatar() {
+//        let profiledata = DataManager.shared.profileData
+//        let urlString =  "\(Constanst.ImageBaseUrl)\(profiledata?.avatar?.tmdb?.avatarPath ?? "")"
+//        guard let url = URL(string: urlString) else {return}
+//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//            if let error = error {
+//                print(error)
+//            }
+//            if let data = data {
+//                let downloadImage = UIImage(data: data)
+//            }
+//        }
+//        task.resume()
+        
     }
     func updateDiscoveryButton(){
        
@@ -187,24 +225,19 @@ class HomeViewController: UIViewController {
        
     }
     
-    //MARK:- Button action
+    //MARK:- Action
     @objc func didtapProfileButton(){
         let vc = ProfileViewController()
 
-//        vc.transitioningDelegate = transitionDelegate
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true, completion: nil)
-//        navigationController?.delegate = self
-//        vc.transitionDelegate = transitionDelegate
-//        vc.navigationController?.delegate = self
+
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    @objc func discoveryFilm(){
-       
-      
-       
+    @objc func didtapSearchButton(){
+        let vc = SearchViewController()
+
+        navigationController?.pushViewController(vc, animated: true)
     }
+   
     
     var widthConstraint1: NSLayoutConstraint?
    
@@ -224,11 +257,35 @@ class HomeViewController: UIViewController {
         
     }
     
-   
+    @objc func discoveryFilm(){
+        print("dissco")
+        APICaller.share.getTrending(mediaType: .movie, time: .week) { [weak self] (result) in
+           
+            guard let strongSelf = self else {return}
+            switch result {
+            case .success(let movie):
+                let random = movie.randomElement()
+                DispatchQueue.main.async {
+                    let vc = FilmDetailPopUpViewController()
+                    vc.modalPresentationStyle = .overFullScreen
+                    
+                    vc.film = random
+                    vc.mediaType = "movie"
+                    print("sdfsdfsdfdsfsdf")
+//
+                    strongSelf.present(vc, animated: true, completion: nil)
+                  
+                }
+            case .failure(let error):
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
+            }
+        }
+        
+    }
     
     //MARK:- Fetch data
     func fetchData(){
-        
+        getAvatar()
         let group = DispatchGroup()
         group.enter()
         APICaller.share.getTrending(mediaType: .all, time: .day) { [weak self] result in
@@ -236,9 +293,10 @@ class HomeViewController: UIViewController {
             defer {
                 group.leave()
             }
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let movie):
-                self?.homeSection.append(.trendingAll(model: movie))
+                strongSelf.homeSection.append(.trendingAll(model: movie))
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -250,11 +308,12 @@ class HomeViewController: UIViewController {
             defer {
                 group.leave()
             }
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let movie):
-                self?.homeSection.append(.trendingMovie(model: movie))
+                strongSelf.homeSection.append(.trendingMovie(model: movie))
             case .failure(let error):
-                print(error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
             }
             
         }
@@ -264,11 +323,12 @@ class HomeViewController: UIViewController {
             defer {
                 group.leave()
             }
-            
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let tv):
-                self?.homeSection.append(.trendingTv(model: tv))
+                strongSelf.homeSection.append(.trendingTv(model: tv))
             case .failure(let error):
+//                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
                 print(error.localizedDescription)
             }
             
@@ -280,11 +340,12 @@ class HomeViewController: UIViewController {
             defer {
                 group.leave()
             }
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let movie):
-                self?.homeSection.append(.popularMovie(model: movie))
+                strongSelf.homeSection.append(.popularMovie(model: movie))
             case .failure(let error):
-                print(error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
             }
         }
         
@@ -294,12 +355,12 @@ class HomeViewController: UIViewController {
             defer {
                 group.leave()
             }
-            
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let tv):
-                self?.homeSection.append(.popularTv(model: tv))
+                strongSelf.homeSection.append(.popularTv(model: tv))
             case .failure(let error):
-                print(error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
             }
         }
         
@@ -309,12 +370,13 @@ class HomeViewController: UIViewController {
             defer {
                 group.leave()
             }
-            
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let movie):
-                self?.homeSection.append(.topRateMovie(model: movie))
+                strongSelf.homeSection.append(.topRateMovie(model: movie))
             case .failure(let error):
-                print(error.localizedDescription)
+                
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
             }
         }
         
@@ -324,18 +386,22 @@ class HomeViewController: UIViewController {
             defer {
                 group.leave()
             }
-            
+            guard let strongSelf = self else {return}
             switch result {
             case .success(let tv):
-                self?.homeSection.append(.topRateTV(model: tv))
+                strongSelf.homeSection.append(.topRateTV(model: tv))
                
             case .failure(let error):
-                print(error.localizedDescription)
+               
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
             }
         }
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.loadingTextView.removeFromSuperview()
+        }
         DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
+            guard let strongSelf = self else {return}
+            strongSelf.tableView.reloadData()
         }
        
     }
@@ -353,6 +419,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CollectionTableViewCell", for: indexPath) as! CollectionTableViewCell
+        cell.sectionInTable = indexPath.section
+        cell.previewCompletion = { [weak self] indexpath, sectionInTable in
+            guard let strongSelf = self else {return}
+            strongSelf.showPlayer(indexPath: indexpath, sectionInTable: sectionInTable)
+        }
         cell.delegate = self
         
         let type = homeSection[indexPath.section]
@@ -393,7 +464,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 //        let offset = scrollView.contentOffset.y + defaultOffset
 ////        print(scrollView.contentOffset.y)
 //        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
-//
+
         headerView?.scrollViewDidScroll(scrollView: tableView)
       
         
@@ -415,40 +486,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        35
-//    }
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        20
-//    }
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-////        return HomeSection.allCases[section].title
-//        return homeSection[section].title
-//    }
-//
-//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        guard let header = view as? UITableViewHeaderFooterView else {return}
-//        header.textLabel?.font = UIFont.semibold(ofSize: 18)
-//        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
-//        header.textLabel?.textColor = .white
-//        header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
-//        header.backgroundColor = .red
-//    }
-//
-//    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-//        guard let footer = view as? UITableViewHeaderFooterView else {return}
-//        footer.backgroundColor = .red
-//    }
-//
-//
+
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerSection = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableSectionHeader.identifier) as! TableSectionHeader
         let title = homeSection[section].title
-        headerSection.completion = {
+        headerSection.completion = { [weak self] in
+            guard let strongSelf = self else {return}
             let vc = SeeAllViewController()
-            let type = self.homeSection[section]
+            let type = strongSelf.homeSection[section]
             switch type {
             case .trendingAll(model: let model):
                 vc.films = model
@@ -465,7 +511,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             case .topRateTV(model: let model):
                 vc.films = model
             }
-            self.present(vc, animated: true, completion: nil)
+            strongSelf.present(vc, animated: true, completion: nil)
         }
         headerSection.configureLabel(text: title)
         return headerSection
@@ -481,6 +527,33 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         2
     }
+    
+    
+    private func showPlayer(indexPath: IndexPath, sectionInTable: Int){
+        let film:Film?
+        let type = homeSection[indexPath.section]
+        switch type {
+        case .trendingAll(model: let films):
+            film = films[indexPath.row]
+        case .trendingMovie(model: let films):
+            film = films[indexPath.row]
+        case .trendingTv(model: let films):
+            film = films[indexPath.row]
+        case .popularMovie(model: let films):
+            film = films[indexPath.row]
+        case .popularTv(model: let films):
+            film = films[indexPath.row]
+        case .topRateMovie(model: let films):
+            film = films[indexPath.row]
+        case .topRateTV(model: let films):
+            film = films[indexPath.row]
+        }
+        
+        let vc = PlayerViewController(film: film!)
+        vc.transitioningDelegate = transitionDelegate
+        present(vc, animated: true, completion: nil)
+        
+    }
 }
 
 extension HomeViewController: CollectionTableViewCellDelegate{
@@ -489,10 +562,11 @@ extension HomeViewController: CollectionTableViewCellDelegate{
         vc.modalPresentationStyle = .overFullScreen
         var choosefilm = film
         
-        if tableCellNumber == 3 || tableCellNumber == 5 {
+        //Vài kết quả có kiểu media là nil nên cần chắc chắn
+        if tableCellNumber == 3 || tableCellNumber == 5 || tableCellNumber == 1 {
             choosefilm.media_type = "movie"
         }
-        if tableCellNumber == 4 || tableCellNumber == 6 {
+        if tableCellNumber == 4 || tableCellNumber == 6 || tableCellNumber == 2 {
             choosefilm.media_type = "tv"
         }
                 
@@ -508,7 +582,6 @@ extension HomeViewController: CollectionTableViewCellDelegate{
                 tabItem.badgeValue = "New"
             }
         }
-        
         present(vc, animated: true, completion: nil)
     }
     
@@ -516,14 +589,3 @@ extension HomeViewController: CollectionTableViewCellDelegate{
 
 }
 
-//extension HomeViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
-//    func navigationController(
-//           _ navigationController: UINavigationController,
-//        animationControllerFor operation: UINavigationController.Operation,
-//           from fromVC: UIViewController,
-//           to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//
-//           simpleOver.popStyle = (operation == .pop)
-//           return simpleOver
-//       }
-//}

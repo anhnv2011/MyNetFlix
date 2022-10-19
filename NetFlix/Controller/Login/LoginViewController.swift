@@ -51,24 +51,7 @@ class LoginViewController: UIViewController {
         passwordLeadingConstrains.constant = -400
         
     }
-    @IBAction func testAlert(_ sender: Any) {
-        let cancelAction = ActionAlert(with: "Cancel", style: .normal) {[weak self] in
-            print("Cancel pressed")
-            self?.dismiss(animated: true, completion: nil)
-        }
-        let deleteAction = ActionAlert(with: "Delete", style: .destructive) {[weak self] in
-            print("Delete pressed")
-            self?.dismiss(animated: true, completion: nil)
-        }
-        let alertVC = createAlertWithActionsDark(actions: [cancelAction, deleteAction])
-        alertVC.modalPresentationStyle = .overCurrentContext
-        alertVC.modalTransitionStyle = .crossDissolve
-        present(alertVC, animated: true, completion: nil)
-    }
-    private func createAlertWithActionsDark(actions:[ActionAlert]) -> CustomAlertViewController{
-        let alertVC = CustomAlertViewController(withTitle: "Do you wish to delete?", message: "This will delete every data you have.", actions: actions, axis: .horizontal, style: .dark)
-        return alertVC
-    }
+    
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -175,8 +158,8 @@ class LoginViewController: UIViewController {
         
         switch sender {
         case loginButton:
-            loginAnimation(sender: sender)
-//            login(sender: sender)
+//            loginAnimation(sender: sender)
+            login(sender: sender)
         case signUpButton:
             signup()
         case showPasswordButton:
@@ -230,6 +213,7 @@ class LoginViewController: UIViewController {
             case .success(let auth):
                 let requestToken = auth.request_token
              
+                print(requestToken)
                 
                 APICaller.share.creatSessionWithLogin(username: username, password: password, requestToken: requestToken) { [weak self]result in
                     guard let strongSelf = self else {return}
@@ -259,7 +243,7 @@ class LoginViewController: UIViewController {
                             
                         } else {
                             
-                            strongSelf.makeAlert(title: "Error", messaage: loginresult.status_message ?? "fail")
+                            strongSelf.makeBasicCustomAlert(title: "Error", messaage: loginresult.status_message ?? "fail")
                             DispatchQueue.main.async {
                                 ShakeButton.shake(sender: sender)
                                 let aleart = UIAlertController(title: "Error", message: loginresult.status_message ?? "fail", preferredStyle: .alert)
@@ -269,12 +253,12 @@ class LoginViewController: UIViewController {
                             
                         }
                     case .failure(let error):
-                        strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                        strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
                     }
                 }
                 
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }

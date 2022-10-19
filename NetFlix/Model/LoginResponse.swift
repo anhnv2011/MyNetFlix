@@ -1,12 +1,12 @@
 //
-//  test.swift
+//  LoginResponse.swift
 //  NetFlix
 //
-//  Created by MAC on 7/25/22.
+//  Created by MAC on 10/18/22.
 //
 
 import Foundation
-struct TestAPi:Codable {
+struct LoginResponse:Codable {
     let success: Bool
     let request_token: String?
     let status_code: Int?

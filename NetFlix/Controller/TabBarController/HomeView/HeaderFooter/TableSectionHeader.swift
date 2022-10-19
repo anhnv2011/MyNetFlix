@@ -22,7 +22,7 @@ class TableSectionHeader: UITableViewHeaderFooterView {
     private let seeAllButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("See all", for: .normal)
+        button.setTitle("See all".localized(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.medium(ofSize: 20)
         button.contentHorizontalAlignment = .right

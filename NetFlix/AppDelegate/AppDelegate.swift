@@ -21,12 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        window?.rootViewController = LoginViewController()
 //        window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
 //
-//        if DataManager.shared.getSaveSessionId() == ""  {
-//            window?.rootViewController = LoginViewController()
+        if DataManager.shared.getSaveSessionId() == ""  {
+            window?.rootViewController = LoginViewController()
 
-//        } else {
+        } else {
             window?.rootViewController = MainTabBarViewController()
-//        }
+        }
         window?.makeKeyAndVisible()
         return true
     }

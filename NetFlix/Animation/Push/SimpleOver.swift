@@ -23,7 +23,7 @@ class CustomNavigationController: NSObject, UINavigationControllerDelegate {
 class SimpleOver: NSObject, UIViewControllerAnimatedTransitioning {
     
     var popStyle: Bool = false
-    let duration:TimeInterval = 0.75
+    let duration:TimeInterval = 0.5
     init(popStyle: Bool) {
         self.popStyle = popStyle
         print(popStyle)

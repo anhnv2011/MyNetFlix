@@ -87,9 +87,6 @@ class FilmDetailPopUpViewController: UIViewController {
     //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        setupRateStar()
         setupUI()
         fetchData()
        
@@ -126,12 +123,14 @@ class FilmDetailPopUpViewController: UIViewController {
                 strongSelf.filmItems = filmItems
                 strongSelf.fetchData()
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
     //MARK:- UI
     func setupUI(){
+        setupRateStar()
+
 //        view.alpha = 0.5
         view.backgroundColor = UIColor.popupBackground()
 //        view.backgroundColor = .clear
@@ -215,6 +214,8 @@ class FilmDetailPopUpViewController: UIViewController {
         case playButton:
             openPlayVC()
         case favoriteButton:
+            print(mediaType)
+            print(mediaId)
             markFavarite(mediaType: mediaType, mediaId: mediaId, type: !isFavorited)
             isFavorited = !isFavorited
         case watchListButton:
@@ -234,11 +235,10 @@ class FilmDetailPopUpViewController: UIViewController {
     }
     
     func openPlayVC(){
-        let vc = PlayerViewController()
+        let vc = PlayerViewController(film: film)
 //        vc.transitioningDelegate = self
-        vc.transitioningDelegate = transitionDelegate
+//        vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .fullScreen
-        vc.youtubeLink = self.youtubeLink
         present(vc, animated: true, completion: nil)
     }
     
@@ -253,22 +253,22 @@ class FilmDetailPopUpViewController: UIViewController {
             case .success(let filmItems):
                 strongSelf.filmItems = filmItems
                 if filmItems.map({Int($0.id)}).contains(strongSelf.film.id) {
-                    strongSelf.makeAlert(title: "Error", messaage: "Already download")
+                    strongSelf.makeBasicCustomAlert(title: "Error", messaage: "Already download")
                 } else {
                     DataPersistenceManager.shared.downloadFilm(model: strongSelf.film, url: youtubeLink) {[weak self] (result) in
                         guard let strongSelf = self else {return}
                         switch result {
                         case .success():
                             NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
-                            strongSelf.makeAlert(title: "Status", messaage: "Downloading")
+                            strongSelf.makeBasicCustomAlert(title: "Status", messaage: "Downloading")
                         case .failure(let error):
-                            strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                            strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
                         }
                     }
                 }
                 
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
         
@@ -319,9 +319,9 @@ extension FilmDetailPopUpViewController{
             guard let strongSelf = self else {return}
             switch result {
             case .success(let response):
-                strongSelf.makeAlert(title: String(response.status_code ?? 0) , messaage: response.status_message ?? "unknow")
+                strongSelf.makeBasicCustomAlert(title: String(response.status_code ?? 0) , messaage: response.status_message ?? "unknow")
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
@@ -346,7 +346,7 @@ extension FilmDetailPopUpViewController{
                     strongSelf.isFavorited = isFav
                 }
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
@@ -389,9 +389,9 @@ extension FilmDetailPopUpViewController {
             guard let strongSelf = self else {return}
             switch result {
             case .success(let response):
-                strongSelf.makeAlert(title: String(response.status_code ?? 0) , messaage: response.status_message ?? "unknow")
+                strongSelf.makeBasicCustomAlert(title: String(response.status_code ?? 0) , messaage: response.status_message ?? "unknow")
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
@@ -474,7 +474,7 @@ extension FilmDetailPopUpViewController{
                     }
                 }
             case .failure(let error):
-                self!.makeAlert(title: "Error", messaage: error.localizedDescription)
+                self!.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
@@ -500,14 +500,14 @@ extension FilmDetailPopUpViewController{
             guard let strongSelf = self else {return}
             switch result {
             case .success(let response):
-                strongSelf.makeAlert(title: "Succes", messaage: response.status_message!)
+                strongSelf.makeBasicCustomAlert(title: "Succes", messaage: response.status_message!)
                 strongSelf.yourRate = rating
                 if strongSelf.isRated == false {
                     strongSelf.isRated.toggle()
 
                 }
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
@@ -523,7 +523,7 @@ extension FilmDetailPopUpViewController{
             guard let strongSelf = self else {return}
             switch result {
             case .success(let video):
-                print(video)
+                
                 strongSelf.youtubeLink = video.id.videoId
             case .failure(let error):
                 print(error.localizedDescription)

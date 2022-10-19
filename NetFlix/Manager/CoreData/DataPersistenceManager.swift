@@ -23,10 +23,7 @@ class DataPersistenceManager {
     
     func downloadFilm(model: Film, url: String, completion: @escaping (Result<Void, Error>) -> Void) {
         
-        
-        
         let item = FilmItem(context: context)
-        
         item.adult = model.adult ?? false
         item.id = Int64(model.id)
         item.media_type = model.media_type
@@ -59,9 +56,7 @@ class DataPersistenceManager {
         }
         
         let context = appDelegate.persistentContainer.viewContext
-        
         let request: NSFetchRequest<FilmItem>
-        
         request = FilmItem.fetchRequest()
         
         do {

@@ -12,10 +12,7 @@ struct DataManager {
     static var shared = DataManager()
     
     //MARK:- User defaultValue
-    //key
-    let SessionId = "SessionId"
-    let ProfileId = "ProfileId"
-    let CustomLanguage = "CustomLanguage"
+    
     func saveSessionId (id: String) {
 //        UserDefaults.standard.setValue(id, forKey: "\(SessionId)")
 //        UserDefaults.standard.synchronize()
@@ -24,32 +21,41 @@ struct DataManager {
     }
     func getSaveSessionId() -> String {
         let retrievedString: String = KeychainWrapper.standard.string(forKey: "SessionId") ?? ""
-
         return retrievedString
     }
     
+    func removeSessionId(){
+        
+    }
+    
     func saveProfileId (id: String) {
-        UserDefaults.standard.setValue(id, forKey: "\(ProfileId)")
+        UserDefaults.standard.setValue(id, forKey: "ProfileId")
         UserDefaults.standard.synchronize()
     }
     func getProfileId() -> String {
-        let string = UserDefaults.standard.string(forKey: "\(ProfileId)") ?? ""
+        let string = UserDefaults.standard.string(forKey: "ProfileId") ?? ""
         return string
     }
     func saveLanguage (code: String) {
-        UserDefaults.standard.setValue(code, forKey: "\(CustomLanguage)")
+        UserDefaults.standard.setValue(code, forKey: "CustomLanguage")
         UserDefaults.standard.synchronize()
     }
     func getLanguage() -> String {
-        let string = UserDefaults.standard.string(forKey: "\(CustomLanguage)") ?? "en"
+        let string = UserDefaults.standard.string(forKey: "CustomLanguage") ?? "en"
+        return string
+    }
+    func saveViewMode (mode: String) {
+        
+        UserDefaults.standard.setValue(mode, forKey: "ViewMode")
+        UserDefaults.standard.synchronize()
+    }
+    func getViewMode() -> String {
+        let string = UserDefaults.standard.string(forKey: "ViewMode") ?? ViewMode.darkMode.rawValue
+        
         return string
     }
     
-    
     var profileData:Profile?
-    var favoriteMovie:[Film]?
-    var favoriteTv:[Film]?
-    var watchListMovie:[Film]?
-    var watchListTv:[Film]?
+   
     
 }

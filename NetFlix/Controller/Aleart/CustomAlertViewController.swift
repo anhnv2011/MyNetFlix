@@ -34,39 +34,67 @@ class CustomAlertViewController: UIViewController {
     private var message: String! // Message
     private var axis: NSLayoutConstraint.Axis = .horizontal
     private var actions = [ActionAlert]()
-    private var alertStyle = AlertViewStyle.light
-    private lazy var backdropView: UIView = {
-        let view = createASimpleView(with: UIColor.black.withAlphaComponent(0.0))
+    private var alertStyle = AlertViewStyle.dark
+    private var backgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        view.layer.cornerRadius = 0.0
         return view
     }()
     
     private lazy var titleLabel: UILabel = {
-        let label = createSimpleUILabelWith(textColor: alertStyle.textColor, font: UIFont.boldSystemFont(ofSize: 17.0))
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = alertStyle.textColor
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 17.0)
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var messageLabel: UILabel = {
-        let label = createSimpleUILabelWith(textColor: alertStyle.textColor, font: UIFont.systemFont(ofSize: 15.0))
+      
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = alertStyle.textColor
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15.0)
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var titleStackView: UIStackView = {
-        let stackView = createSimpleStackViewWith(axis: .vertical, spacing: 5.0)
-        // For title we want to take the intrinsic content size
-        stackView.distribution = .fillProportionally
+
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
         return stackView
     }()
     
     private lazy var actionsStackView: UIStackView = {
-        let stackView = createSimpleStackViewWith(axis: self.axis, spacing: 10.0)
+        
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = self.axis
+        stackView.spacing = 10
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        // For title we want to take the intrinsic content size
         return stackView
+       
     }()
     
     private lazy var containerView: UIView = {
-        let view = createASimpleView(with: alertStyle.backgroundColor)
-        view.layer.cornerRadius = 10.0
+       
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = alertStyle.backgroundColor
+        view.layer.cornerRadius = 0.0
+        view.layer.cornerRadius = 12.0
         return view
     }()
     
@@ -74,19 +102,14 @@ class CustomAlertViewController: UIViewController {
         super.viewDidLoad()
         setUpUI()
         containerView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+
         animateAlert()
     }
-    /// Initialize  the alert view
-    /// - Parameters:
-    ///   - title: Title of  the pop up
-    ///   - message: Message
-    ///   - actions: Actions to be done
-    ///   - axis: Orientation of buttons, whether to be arranged vertically or horizontally
-    ///   - style: alertStyle default is normal
-    init(withTitle title: String?, message: String?, actions: [ActionAlert], axis: NSLayoutConstraint.Axis, style: AlertViewStyle = .light) {
+    
+    init(withTitle alertTitle: String?, message: String?, actions: [ActionAlert], axis: NSLayoutConstraint.Axis, style: AlertViewStyle = .dark) {
         super.init(nibName: nil, bundle: nil)
         self.actions = actions
-        self.alertTitle = title
+        self.alertTitle = alertTitle
         self.message = message
         self.axis = axis
         self.alertStyle = style
@@ -97,24 +120,21 @@ class CustomAlertViewController: UIViewController {
     }
     
     @objc private func animateAlert() {
-        backdropView.alpha = 0.0
+        backgroundView.alpha = 0.0
         UIView.animate(withDuration: 0.1, animations: {
-            self.backdropView.alpha = 1.0
-            self.backdropView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            self.backgroundView.alpha = 1.0
+            self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
             self.containerView.transform = .identity
         })
     }
     
     private func setUpUI() {
-        view.addSubview(backdropView)
+        view.addSubview(backgroundView)
         view.addSubview(containerView)
         containerView.addSubview(titleStackView)
         containerView.addSubview(actionsStackView)
-        var containerWidthMultiplier: CGFloat = 0.8
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            containerWidthMultiplier = 0.4
-        }
-        
+        let containerWidthMultiplier: CGFloat = 0.8
+     
         NSLayoutConstraint.activate([
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -124,10 +144,10 @@ class CustomAlertViewController: UIViewController {
             titleStackView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 24.0),
             titleStackView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -24.0),
             
-            backdropView.topAnchor.constraint(equalTo: view.topAnchor),
-            backdropView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            backdropView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            backdropView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             actionsStackView.topAnchor.constraint(equalTo: titleStackView.bottomAnchor, constant: 8.0),
             actionsStackView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 24.0),
@@ -154,33 +174,6 @@ class CustomAlertViewController: UIViewController {
         messageLabel.isHidden = message != nil ? false : true
     }
 
-    // MARK: Convenience functions
-    private func createSimpleStackViewWith(axis: NSLayoutConstraint.Axis, spacing: CGFloat = 1) -> UIStackView {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = axis
-        stackView.spacing = spacing
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        return stackView
-    }
-    
-    private func createSimpleUILabelWith(textColor: UIColor, font: UIFont) -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = textColor
-        label.textAlignment = .center
-        label.font = font
-        return label
-    }
-    
-    private func createASimpleView(with backgroundColor: UIColor = UIColor.white, cornerRadius: CGFloat = 0.0) -> UIView {
-        let newView = UIView()
-        newView.translatesAutoresizingMaskIntoConstraints = false
-        newView.backgroundColor = backgroundColor
-        newView.layer.cornerRadius = cornerRadius
-        return newView
-    }
     
 
 }

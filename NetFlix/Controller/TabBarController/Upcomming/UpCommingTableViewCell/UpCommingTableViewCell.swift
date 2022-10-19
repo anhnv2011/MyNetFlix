@@ -10,7 +10,16 @@ import SDWebImage
 class UpCommingTableViewCell: UITableViewCell {
     static let identifier = "UpCommingTableViewCell"
     
+    //MARK:- Outlet
+    
     @IBOutlet weak var view: UIView!
+    @IBOutlet weak var detailImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var playButton: UIButton!
+    
+
+    //MARK:- Property
+    var completionHandler : (() -> Void)?
     var film: Film?{
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -24,9 +33,7 @@ class UpCommingTableViewCell: UITableViewCell {
         }
     }
     
-    @IBOutlet weak var detailImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var playButton: UIButton!
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -43,6 +50,22 @@ class UpCommingTableViewCell: UITableViewCell {
        
     }
     
+    @IBAction func buttonAction(_ sender: UIButton) {
+        switch sender {
+        case playButton:
+            playVideo()
+        default:
+            break
+        
+        }
+        
+    }
+    
+    
+    private func playVideo(){
+        
+        completionHandler!()
+    }
     func configDetailMovieTableCell (posterPath: String, name: String){
         let url = "\(Constanst.ImageBaseUrl)\(posterPath)"
         detailImageView.loadImageUsingCache(url)

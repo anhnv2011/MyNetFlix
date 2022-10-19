@@ -40,6 +40,9 @@
                                 <state key="normal" image="play" catalog="system">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ll2-lo-EYe"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -67,7 +70,7 @@
             <connections>
                 <outlet property="detailImageView" destination="t6E-7j-DoB" id="ABJ-ki-wTt"/>
                 <outlet property="nameLabel" destination="ycC-SU-zB4" id="qi3-oP-y8h"/>
-                <outlet property="playButton" destination="rBi-mM-dXB" id="1Qo-VZ-Gbf"/>
+                <outlet property="playButton" destination="rBi-mM-dXB" id="BBb-b6-Z7m"/>
                 <outlet property="view" destination="iqN-OI-hKe" id="3Ji-Kc-oFx"/>
             </connections>
             <point key="canvasLocation" x="128.98550724637681" y="87.053571428571431"/>

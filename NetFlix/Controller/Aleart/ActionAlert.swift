@@ -24,7 +24,6 @@ enum ActionAlertStyle {
     case destructive
   
     
-    // Handle the themes
     var titleColor: UIColor {
         switch self {
         case .destructive:
@@ -33,7 +32,6 @@ enum ActionAlertStyle {
             return UIColor.labelColor()
         }
     }
-    // Background color of actionbutton
     var backgroundColor: UIColor {
         switch self {
         case .normal:

@@ -49,11 +49,11 @@ class AddNewListViewController: UIViewController {
             guard let strongSelf = self else {return}
             switch result {
             case .success(let response):
-                strongSelf.makeAlert(title: "Success", messaage: response.status_message ?? "Success")
+                strongSelf.makeBasicCustomAlert(title: "Success", messaage: response.status_message ?? "Success")
                 strongSelf.notificationCenter()
 //                strongSelf.dismiss(animated: true, completion: nil)
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }

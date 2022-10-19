@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ViewMode: CaseIterable {
+enum DataViewMode: CaseIterable {
     case TableView
     case Carousel
     
@@ -23,7 +23,7 @@ enum ViewMode: CaseIterable {
 
 class ViewModeViewController: UIViewController {
 
-    var completionHanderler: ((ViewMode) -> ())?
+    var completionHanderler: ((DataViewMode) -> ())?
     @IBOutlet weak var tableView: UITableView!
     //MARK:- Life Cycle
     override func viewDidLoad() {
@@ -63,14 +63,14 @@ class ViewModeViewController: UIViewController {
     //MARK:- TableView Delegate
 extension ViewModeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ViewMode.allCases.count
+        return DataViewMode.allCases.count
     }
     
 
 //
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {return UITableViewCell()}
-        let text = ViewMode.allCases[indexPath.row].title
+        let text = DataViewMode.allCases[indexPath.row].title
         cell.textLabel?.text = text
         cell.textLabel?.textColor = UIColor.labelColor()
         cell.textLabel?.textAlignment = .right
@@ -80,7 +80,7 @@ extension ViewModeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        completionHanderler!(ViewMode.allCases[indexPath.row])
+        completionHanderler!(DataViewMode.allCases[indexPath.row])
         dismiss(animated: true, completion: nil)
     }
     

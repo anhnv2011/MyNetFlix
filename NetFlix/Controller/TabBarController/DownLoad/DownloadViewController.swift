@@ -18,7 +18,7 @@ class DownloadViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var filmItems = [FilmItem]()
-    var viewMode: ViewMode = .TableView
+    var viewMode: DataViewMode = .TableView
     {
         didSet {
             self.setupUI()
@@ -111,7 +111,7 @@ class DownloadViewController: UIViewController {
     func setupTabbar(){
         if let tabItems = tabBarController?.tabBar.items {
             // modify the badge number of the third tab:
-            let tabItem = tabItems[3]
+            let tabItem = tabItems[2]
             tabItem.badgeValue = nil
         }
     }
@@ -147,10 +147,10 @@ class DownloadViewController: UIViewController {
             guard let strongSelf = self else {return}
             switch result {
             case .success():
-                strongSelf.makeAlert(title: "Success", messaage: "Deleted")
+                strongSelf.makeBasicCustomAlert(title: "Success", messaage: "Deleted")
                 
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
             self?.filmItems.remove(at: index)
         }
@@ -261,6 +261,8 @@ extension DownloadViewController: UICollectionViewDataSource, UICollectionViewDe
                 cell.layer.transform = animateCell(cellFrame: cellFrame)
             }
         }
+        
+
     }
     
      func animateCell(cellFrame: CGRect) -> CATransform3D {

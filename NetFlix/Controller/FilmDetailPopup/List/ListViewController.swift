@@ -108,7 +108,7 @@ extension ListViewController {
                 self.tempList = lists
                 
             case .failure(let error):
-                self.makeAlert(title: "error", messaage: error.localizedDescription)
+                self.makeBasicCustomAlert(title: "error", messaage: error.localizedDescription)
             }
         }
     }
@@ -119,14 +119,14 @@ extension ListViewController {
             guard let strongSelf = self else {return}
             switch reponse {
             case .success(let response):
-                strongSelf.makeAlert(title: "\(response.status_code ?? 0)", messaage: "\(response.status_message ?? "Succses")")
+                strongSelf.makeBasicCustomAlert(title: "\(response.status_code ?? 0)", messaage: "\(response.status_message ?? "Succses")")
                 strongSelf.getLists()
                 DispatchQueue.main.async {
                     strongSelf.tableView.reloadData()
                 }
                 
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
@@ -144,10 +144,10 @@ extension ListViewController {
             switch reslut {
             case .success( _):
                 
-                strongSelf.makeAlert(title: "Succes", messaage: "Delete list")
+                strongSelf.makeBasicCustomAlert(title: "Succes", messaage: "Delete list")
                 strongSelf.getLists()
             case .failure(let error):
-                strongSelf.makeAlert(title: "Error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }

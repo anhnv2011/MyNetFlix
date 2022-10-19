@@ -10,10 +10,14 @@ import UIKit
 
 class UpcommingViewController: UIViewController {
     
+    //MARK:- Outlet
+    @IBOutlet weak var upCommingTableView: UITableView!
+    
+    //MARK:- Property
     var movie = [Film]()
     var cellAimationFlag = [Int]()
     
-    @IBOutlet weak var upCommingTableView: UITableView!
+    //MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -22,6 +26,7 @@ class UpcommingViewController: UIViewController {
         
     }
     
+    //MARK:- UI
     func setupUI(){
         setupTableView()
         setupNav()
@@ -59,6 +64,8 @@ class UpcommingViewController: UIViewController {
     
 }
 
+
+    //MARK:- TableView Delegate
 extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -74,6 +81,14 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
 //        let name = (currentmovie.original_name ?? currentmovie.original_title) ?? "unknow"
 //        cell.configDetailMovieTableCell(posterPath: path, name: name)
         cell.film = currentmovie
+        cell.completionHandler = { [weak self]  in
+            let transiton = TransitionDelegate()
+            let vc = PlayerViewController(film: currentmovie)
+
+            vc.transitioningDelegate = transiton
+            vc.modalPresentationStyle = .fullScreen
+            self!.present(vc, animated: true, completion: nil)
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,16 +96,7 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        //        // initia state
-        //        let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
-        //        let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
-        //        cell.layer.transform = rotationTransform
-        //
-        //        //defind final state after animation
-        //        UIView.animate(withDuration: 1) {
-        //            cell.layer.transform = CATransform3DIdentity
-        //        }
-        
+       
         if cellAimationFlag.contains(indexPath.row) == false {
             // initia state
             DisplayTableCell.displayTableCell(cell: cell, indexPath: indexPath)

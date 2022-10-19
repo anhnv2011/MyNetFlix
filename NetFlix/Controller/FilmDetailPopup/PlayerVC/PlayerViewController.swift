@@ -12,29 +12,61 @@ class PlayerViewController: UIViewController {
 
     @IBOutlet weak var playerView: YTPlayerView!
     @IBOutlet weak var dismissButton: UIButton!
-    var youtubeLink: String!
+    var film:Film
+    var youtubeLink: String?
+    {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self!.setupPlayer()
+                self!.setupUI()
+            }
+           
+        }
+    }
+    
+    
+    init(film:Film){
+//        super.init(nibName: nil, bundle: nil)
+        self.film = film
+        super.init(nibName: "PlayerViewController", bundle: nil)
+
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("player view")
-       
-        setupPlayer()
+    
         setupUI()
+        setupPlayer()
+        fetchData()
         
     }
     
-    private func setupUI(){
-        view.backgroundColor = .black
-        
-//        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-//            UIDevice.current.setValue(value, forKey: "orientation")
+    
+    private func fetchData(){
+        guard let name = film.original_name != nil ? film.original_name : film.original_title else {return}
+        let key = name + "Trailer"
+        getYoutubeLink(filmname: key)
     }
-//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .landscapeLeft
-//    }
-//
-//    override var shouldAutorotate: Bool {
-//        return true
-//    }
+    
+    private func setupUI(){
+        addPanGesture()
+        view.backgroundColor = .black
+        dismissButton.isHidden = true
+    }
+    private func addPanGesture(){
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(gestureAction))
+        playerView.addGestureRecognizer(panGesture)
+    }
+    
+    @objc func gestureAction(){
+        dismiss(animated: true, completion: nil)
+    }
+    
+
     @IBAction func buttonAction(_ sender: UIButton) {
         switch sender {
         case dismissButton:
@@ -45,14 +77,36 @@ class PlayerViewController: UIViewController {
     }
     func setupPlayer(){
 //        playerView.load(withVideoId: "bsM1qdGAVbU")
-        playerView.delegate = self
-        playerView.load(withVideoId: youtubeLink, playerVars: ["playsinline": 1])
+        if let link = youtubeLink {
+            playerView.delegate = self
+
+            playerView!.load(withVideoId: link, playerVars: ["playsinline": 1])
+        } else {
+            print("not found")
+        }
+       
     }
     
 }
 
 extension PlayerViewController: YTPlayerViewDelegate {
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+        playerView.delegate = self
         playerView.playVideo()
+    }
+}
+extension PlayerViewController{
+    func getYoutubeLink(filmname: String) {
+        APICaller.share.getFilmLink(with: filmname) {[weak self] (result) in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .success(let video):
+                print(video)
+                strongSelf.youtubeLink = video.id.videoId
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
 }

@@ -6,6 +6,52 @@
 //
 
 import UIKit
+enum CompositionalLayoutGroupAlignment {
+    case vertical
+    case horizontal
+}
+struct CompositionalLayout {
+    static func createItem(width: NSCollectionLayoutDimension,
+                           height: NSCollectionLayoutDimension,
+                           spacing: CGFloat
+    ) -> NSCollectionLayoutItem {
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: width,
+                                                                             heightDimension: height))
+        item.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
+        return item
+        
+    }
+    
+    static func createGroup (alignment: CompositionalLayoutGroupAlignment,
+                             width: NSCollectionLayoutDimension,
+                             height: NSCollectionLayoutDimension,
+                             items: [NSCollectionLayoutItem])
+    -> NSCollectionLayoutGroup {
+        switch alignment {
+        case .vertical:
+            return NSCollectionLayoutGroup.vertical(layoutSize:NSCollectionLayoutSize(widthDimension: width,                                                                              heightDimension: height),                                         subitems: items)
+            
+        case .horizontal:
+            return NSCollectionLayoutGroup.horizontal(layoutSize:NSCollectionLayoutSize(widthDimension: width,                                                                              heightDimension: height),                                         subitems: items)
+        }
+    }
+    static func createGroup (alignment: CompositionalLayoutGroupAlignment,
+                             width: NSCollectionLayoutDimension,
+                             height: NSCollectionLayoutDimension,
+                             item: NSCollectionLayoutItem,
+                             count: Int)
+    -> NSCollectionLayoutGroup {
+        switch alignment {
+        case .vertical:
+            return NSCollectionLayoutGroup.vertical(layoutSize:NSCollectionLayoutSize(widthDimension: width,                                                                              heightDimension: height),subitem: item,
+                                                    count: count)
+            
+        case .horizontal:
+            return NSCollectionLayoutGroup.horizontal(layoutSize:NSCollectionLayoutSize(widthDimension: width,                                                                              heightDimension: height),                                         subitem: item,
+                                                      count: count)
+        }
+    }
+}
 
 class SeeAllViewController: UIViewController {
     //MARK:- Outlet
@@ -75,40 +121,6 @@ extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if cellAimationFlag.contains(indexPath.row) == false {
-//            // initia state
-//            cell.alpha = 0
-//            if indexPath.row % 2 == 0 {
-//                let transform = CATransform3DTranslate(CATransform3DIdentity, -500, 20, 0)
-//                cell.layer.transform = transform
-//
-//            } else {
-//                let transform = CATransform3DTranslate(CATransform3DIdentity, 500, -200, 0)
-//                cell.layer.transform = transform
-//
-//            }
-//            let value = Double(indexPath.row) / 10
-//            let delay = min(1, value)
-//            print(delay)
-//            UIView.animate(withDuration: 1, delay: TimeInterval(delay), options: .curveEaseIn) {
-//
-//                cell.alpha = 1
-//                cell.layer.transform = CATransform3DIdentity
-//            } completion: { (_) in
-//
-//            }
-//            cellAimationFlag.append(indexPath.row)
-//        }
-//
-//                // initia state
-//                let rotationAngleRadius = 90 * CGFloat(.pi / 180.0)
-//                let rotationTransform = CATransform3DMakeRotation(rotationAngleRadius, 0, 0, 1)
-//                cell.layer.transform = rotationTransform
-//
-//                //defind final state after animation
-//                UIView.animate(withDuration: 1) {
-//                    cell.layer.transform = CATransform3DIdentity
-//                }
         
         cell.alpha = 0
         UIView.animate(withDuration: 1) {

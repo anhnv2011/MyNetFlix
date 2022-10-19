@@ -6,20 +6,18 @@
 //
 
 import UIKit
-import SDWebImage
-//enum ProfilePage:String, CaseIterable {
-//    case favorite = "Favorite"
-//    case recommendation = "Recommendation"
-//    case list = "Your list"
-//    case rating = "Ratings"
-//    case watchList = "Watch list"
-//}
+
 protocol LanguageSelectionDelegate {
     
     func settingsViewController(_ settingsViewController: ProfileViewController, didSelectLanguage language: Language)
-   
+    
 }
 
+enum ViewMode: String, CaseIterable {
+    case darkMode = "Dark Mode"
+    case lightMode = "Light Mode"
+    
+}
 
 //MARK:- Model
 class ProfileSetting{
@@ -37,7 +35,7 @@ class ProfileSetting{
 
 class ProfileViewController: UIViewController {
     
-   //MARK:- Outlet
+    //MARK:- Outlet
     @IBOutlet weak var accountLabel: UILabel!
     @IBOutlet weak var accountView: UIView!
     @IBOutlet weak var avartarImageView: UIImageView!
@@ -45,15 +43,14 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dismissButton: UIButton!
-    @IBOutlet weak var logOutButton: UIButton!
     
     let languages = Languages.languages
     var delegate : LanguageSelectionDelegate?
-
-
-//    var transitionDelegate: UIViewControllerTransitioningDelegate!
+    
+    
+    //    var transitionDelegate: UIViewControllerTransitioningDelegate!
     var transitionDelegate = TransitionDelegate()
-//    let simpleOver = SimpleOver()
+    //    let simpleOver = SimpleOver()
     var profileSetting = [ProfileSetting]()
     var profileData: Profile?
     {
@@ -74,15 +71,16 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         fetchData()
-//        self.transitioningDelegate = self
-
+        //        self.transitioningDelegate = self
+        
         self.transitioningDelegate = transitioningDelegate
-
+        
+        
     }
-
+    
     //MARK:- Fetch Data
     private func fetchData(){
-
+        
         self.profileData = DataManager.shared.profileData
     }
     private func settingProfile(){
@@ -92,7 +90,8 @@ class ProfileViewController: UIViewController {
             ProfileSetting(title: "WatchList".localized(), option: ["WatchList".localized()], image: ImageName.shared.listButton, isopen: false),
             ProfileSetting(title: "Rate".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.rateButton, isopen: false),
             ProfileSetting(title: "Language".localized(), option: languages.map({$0.language}), image: ImageName.shared.language, isopen: false),
-            ProfileSetting(title: "Display".localized(), option: ["Dark Mode", "Light Mode"], image: ImageName.shared.rateButton, isopen: false),
+            ProfileSetting(title: "Display".localized(), option: ViewMode.allCases.map({$0.rawValue.localized()}), image: ImageName.shared.rateButton, isopen: false),
+            ProfileSetting(title: "", option: [""], image: "", isopen: true),
         ]
     }
     
@@ -101,63 +100,72 @@ class ProfileViewController: UIViewController {
         switch sender {
         case dismissButton:
             navigationController?.popViewController(animated: true)
-        case logOutButton:
-            logOutControl()
-            
         default:
             break
         }
-    
+        
     }
     
-  
     
-   
     
     private func logOutControl(){
-        let logOutAleart = UIAlertController(title: "LogOut".localized(), message: "Are you sure", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self](_) in
+        
+        let cancelAction = ActionAlert(with: "Cancel".localized(), style: .normal) {[weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.dismiss(animated: true, completion: nil)
+        }
+        let deleteAction = ActionAlert(with: "Delete".localized(), style: .destructive) {[weak self] in
             guard let strongSelf = self else {return}
             strongSelf.logOutAction()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (_) in
-            
-        }
-        logOutAleart.addAction(okAction)
-        logOutAleart.addAction(cancelAction)
-        present(logOutAleart, animated: true, completion: nil)
+        let alertVC = CustomAlertViewController(withTitle: "Are you sure?".localized(), message: "You will log out".localized(), actions: [cancelAction, deleteAction], axis: .horizontal, style: .dark)
+        
+        alertVC.modalPresentationStyle = .overCurrentContext
+        alertVC.modalTransitionStyle = .crossDissolve
+        present(alertVC, animated: true, completion: nil)
+        
     }
     
     private func logOutAction(){
-        print("")
+        let transition = TransitionDelegate()
+        self.transitionDelegate = transition
+        let vc = LoginViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+        
     }
     //MARK:- UI
     private func setupUI(){
         setupTableView()
         settingProfile()
-
-        accountLabel.text = "Account".localized()
-        accountLabel.textColor = UIColor.labelColor()
+        setupLabel()
+        setupImage()
+        setupSubView()
+        tableView.reloadData()
         
-//        view.backgroundColor = UIColor.popupBackground()
-        accountView.backgroundColor = UIColor.sectionBackground()
+    }
+    
+    private func setupSubView(){
+        accountView.backgroundColor = UIColor.viewBackground()
         
-        logOutButton.setTitle("LogOut".localized(), for: .normal)
-        logOutButton.backgroundColor = UIColor.buttonBackground()
+    }
+    private func setupImage(){
         
         avartarImageView.layer.cornerRadius = avartarImageView.frame.size.height / 2
-        let url = URL(string: "\(Constanst.ImageBaseUrl)\(profileData?.avatar?.tmdb?.avatarPath ?? "")")
+        let url =  "\(Constanst.ImageBaseUrl)\(profileData?.avatar?.tmdb?.avatarPath ?? "")"
         
-        avartarImageView.sd_setImage(with: url, completed: nil)
+        avartarImageView.loadImageUsingCache(url)
+    }
+    
+    private func setupLabel(){
+        accountLabel.text = "Account".localized()
+        accountLabel.textColor = UIColor.labelColor()
         
         usernameLabel.text = profileData?.username ?? ""
         usernameLabel.textColor = UIColor.labelColor()
         
         nameLabel.text = profileData?.name ?? ""
         nameLabel.textColor = UIColor.labelColor()
-        
-        tableView.reloadData()
-        
         
     }
     
@@ -166,11 +174,12 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(UINib(nibName: "ExpenableHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: ExpenableHeaderView.identifier)
+        tableView.register(UINib(nibName: "LogoutTableViewCell", bundle: nil), forCellReuseIdentifier: LogoutTableViewCell.identifier)
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor.sectionBackground()
-
+        tableView.backgroundColor = UIColor.backgroundColor()
+        
     }
-
+    
     
     //MARK:- TableViewAction
     private func selectedLanguages(selectedLanguage: String){
@@ -180,9 +189,10 @@ class ProfileViewController: UIViewController {
             self.setupUI()
             
         }
-
+        
         
     }
+    
     
     private func showCheckmarkLanguage(cell: UITableViewCell,indexPath: IndexPath){
         let language = DataManager.shared.getLanguage()
@@ -209,6 +219,38 @@ class ProfileViewController: UIViewController {
         }
         
     }
+    
+    
+    private func selectedViewMode(mode: String){
+        
+        DataManager.shared.saveViewMode(mode: mode)
+        NotificationCenter.default.post(name: Notification.Name("ViewMode"), object: nil)
+        DispatchQueue.main.async {
+            self.setupUI()
+            
+        }
+        
+    }
+    
+    private func showCheckmarkViewMode(cell: UITableViewCell,indexPath: IndexPath){
+        let viewMode = DataManager.shared.getViewMode()
+        if profileSetting[indexPath.section].isOpen == true {
+            let allViewModeValue = ViewMode.allCases.map({$0.rawValue})
+            let currentViewModeIndex = allViewModeValue.firstIndex(of: viewMode)
+            if indexPath.row == currentViewModeIndex {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+            
+            
+        } else {
+            cell.accessoryType = .none
+        }
+        
+    }
+    
+    
     private func showYourList(){
         let vc = WatchListViewController()
         vc.transitioningDelegate = transitionDelegate
@@ -240,7 +282,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         profileSetting[section].isOpen = !profileSetting[section].isOpen
         tableView.beginUpdates()
         for i in 0..<profileSetting[section].option.count {
-            tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .automatic)
+            tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .left)
             
         }
         tableView.endUpdates()
@@ -250,12 +292,13 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         profileSetting.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         let section = profileSetting[section]
         return section.option.count
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        44
+        
+        return 44
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if profileSetting[indexPath.section].isOpen {
@@ -273,36 +316,52 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         header.customInit(title: profileSetting[section].title, image: profileSetting[section].image, section: section, delegate: self)
         return header
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = UIColor.viewBackground()
-        cell.textLabel?.text = profileSetting[indexPath.section].option[indexPath.row]
-        cell.textLabel?.textColor = .white
-        
-        //language
-        if indexPath.section == 4 {
-           showCheckmarkLanguage(cell: cell, indexPath: indexPath)
+        if indexPath.section == profileSetting.count - 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: LogoutTableViewCell.identifier, for: indexPath) as! LogoutTableViewCell
+            cell.completionHandler = { 
+                self.logOutControl()
+            }
+            return cell
         } else {
-            cell.accessoryType = .none
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.backgroundColor = UIColor.viewBackground()
+            cell.textLabel?.text = profileSetting[indexPath.section].option[indexPath.row]
+            cell.textLabel?.textColor = UIColor.labelColor()
+            
+            //language
+            if indexPath.section == 4 {
+                showCheckmarkLanguage(cell: cell, indexPath: indexPath)
+            } else {
+                cell.accessoryType = .none
+            }
+            
+            // view mode
+            if indexPath.section == 5 {
+                showCheckmarkViewMode(cell: cell, indexPath: indexPath)
+            } else {
+                cell.accessoryType = .none
+            }
+            return cell
         }
-        return cell
+        
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//
-
+        //
+        
         switch indexPath.section {
         
         //Favorite
         case 0:
             showLibrary(title: "Favorite".localized(), indexPath: indexPath)
-        
+            
         //Bookmark
         case 1:
-        print("")
+            print("")
             showLibrary(title: "Bookmark".localized(), indexPath: indexPath)
         // Your List
         case 2:
@@ -311,13 +370,17 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         //Rating
         case 3:
             showLibrary(title: "Rate".localized(), indexPath: indexPath)
-        
+            
         //Language
         case 4:
             let selectedLanguage = self.languages[indexPath.row].languageCode        
             selectedLanguages(selectedLanguage: selectedLanguage)
             
-           
+        // view mode
+        case 5:
+            let selectedMode = ViewMode.allCases[indexPath.row].rawValue
+            selectedViewMode(mode: selectedMode)
+            
         default:
             break
         }

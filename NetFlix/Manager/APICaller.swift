@@ -10,55 +10,23 @@ import Alamofire
 import SwiftyJSON
 import RxSwift
 
-enum ApiError: Error {
-    case forbidden              //Status code 403
-    case notFound               //Status code 404
-    case conflict               //Status code 409
-    case internalServerError    //Status code 500
-}
+
 
 struct Constanst {
     static let ApiKey = "dc7bb41154658ee8cd23ecf49d7203c2"
     static let baseUrl = "https://api.themoviedb.org/"
     static let YoutubeAPI_KEY = "AIzaSyDyHzGYOyLL5yRPjwfQafppIavwUUFrZKo"
     static let YoutubeBaseURL = "https://youtube.googleapis.com/youtube/v3/search?"
-    
     static let ImageBaseUrl = "https://image.tmdb.org/t/p/w500/"
-    struct Parameters {
-        static let userId = "userId"
-    }
-    
-    //The header fields
-    enum HttpHeaderField: String {
-        case authentication = "Authorization"
-        case contentType = "Content-Type"
-        case acceptType = "Accept"
-        case acceptEncoding = "Accept-Encoding"
-    }
-    
-    //The content type (JSON)
-    enum ContentType: String {
-        case json = "application/json"
-    }
-}
-struct Friend: Codable {
-    
-    let firstname: String
-    let id: Int
-    let lastname: String
-    let phonenumber: String
     
 }
-enum GetFriendsFailureReason: Int, Error {
-    case unAuthorized = 401
-    case notFound = 404
-}
+
 
 class APICaller {
     static let share = APICaller()
     
     
-    func creatSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (Result<TestAPi, Error>) -> Void){
+    func creatSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (Result<LoginResponse, Error>) -> Void){
         guard let url = URL(string: "\(Constanst.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constanst.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
             print("invalid url")
             return
@@ -72,12 +40,11 @@ class APICaller {
             do {
                 
                 //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                let result = try JSONDecoder().decode(TestAPi.self, from: data)
+                let result = try JSONDecoder().decode(LoginResponse.self, from: data)
                 print(result)
                 completion(.success(result))
                 
             } catch {
-                print("nhap sai user")
                 completion(.failure(error))
             }
         }
@@ -467,22 +434,7 @@ extension APICaller {
         guard let url =  URL(string: "\(Constanst.baseUrl)3/account/\(profileID)/lists?api_key=\(Constanst.ApiKey)&language=en-US&session_id=\(sessionId)&page=1") else {
             return
         }
-//        print(url)
-//        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
-//            guard let data = data,
-//                  error == nil else {return}
-//            do {
-//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                print(json)
-//                let result = try JSONDecoder().decode(ListResponse.self, from: data)
-//                print(result)
-//                completion(.success(result.results))
-//            } catch {
-//                completion(.failure(error))
-//            }
-//        }
-//        task.resume()
-        
+
         AF.request(url, method: .get, parameters: nil).responseJSON { (response) in
             
             switch response.result {
@@ -719,7 +671,7 @@ extension APICaller {
             guard let data = data,
                   error == nil else {return}
             do {
-                let result = try JSONDecoder().decode(Trending.self, from: data)
+                let result = try JSONDecoder().decode(SimilarResponse.self, from: data)
                 
                 completion(.success(result.results))
             } catch {
@@ -764,3 +716,15 @@ extension APICaller {
     //        }
     //    }
 }
+//struct Friend: Codable {
+//    
+//    let firstname: String
+//    let id: Int
+//    let lastname: String
+//    let phonenumber: String
+//    
+//}
+//enum GetFriendsFailureReason: Int, Error {
+//    case unAuthorized = 401
+//    case notFound = 404
+//}

@@ -77,7 +77,7 @@ class WatchListViewController: UIViewController {
                 print(lists)
                 
             case .failure(let error):
-                strongSelf.makeAlert(title: "error", messaage: error.localizedDescription)
+                strongSelf.makeBasicCustomAlert(title: "error", messaage: error.localizedDescription)
             }
         }
     }
