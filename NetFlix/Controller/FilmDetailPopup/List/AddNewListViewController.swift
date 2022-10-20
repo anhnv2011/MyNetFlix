@@ -51,7 +51,7 @@ class AddNewListViewController: UIViewController {
             case .success(let response):
                 strongSelf.makeBasicCustomAlert(title: "Success", messaage: response.status_message ?? "Success")
                 strongSelf.notificationCenter()
-//                strongSelf.dismiss(animated: true, completion: nil)
+                strongSelf.dismiss(animated: true, completion: nil)
             case .failure(let error):
                 strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }

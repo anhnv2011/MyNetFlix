@@ -494,8 +494,7 @@ extension FilmDetailPopUpViewController{
     }
     func takeYourRatingScore(films: [Film], mediaId: Int) -> Double {
         let film = films.filter({$0.id == mediaId})
-//        let rating = film[0].rating
-        let rating = 11
+        let rating = film[0].rating
         return Double(rating ?? 0)
     }
     

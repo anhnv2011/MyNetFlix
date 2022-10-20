@@ -52,6 +52,8 @@ struct Film: Codable {
         var voteAverage: Double?
         var voteCount: Int?
         var originCountry: [String]?
+        var rating: Int?
+
 
         private enum CodingKeys: String, CodingKey {
             case adult = "adult"
@@ -70,6 +72,7 @@ struct Film: Codable {
             case voteAverage = "vote_average"
             case voteCount = "vote_count"
             case originCountry = "origin_country"
+            case rating = "rating"
         }
 
 //        init(from decoder: Decoder) throws {
@@ -90,6 +93,7 @@ struct Film: Codable {
 //            voteAverage = try values.decodeIfPresent(Double.self, forKey: .voteAverage)
 //            voteCount = try values.decodeIfPresent(Int.self, forKey: .voteCount)
 //            originCountry = try values.decodeIfPresent([String].self, forKey: .originCountry)
+//                rating = try values.decodeIfPresent(Int.self, forKey: .rating)
 //        }
 
         func encode(to encoder: Encoder) throws {
@@ -109,6 +113,7 @@ struct Film: Codable {
             try container.encodeIfPresent(voteAverage, forKey: .voteAverage)
             try container.encodeIfPresent(voteCount, forKey: .voteCount)
             try container.encodeIfPresent(originCountry, forKey: .originCountry)
+            try container.encodeIfPresent(rating, forKey: .rating)
         }
 
     }

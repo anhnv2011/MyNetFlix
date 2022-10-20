@@ -607,7 +607,10 @@ extension APICaller {
     }
     
     func getRate(mediaType: String,profileID: String, sessionID: String, completion: @escaping (Result<[Film], Error>) -> Void ){
-        guard let url = URL(string: "\(Constanst.baseUrl)3/account/\(profileID)/rated/\(mediaType)?api_key=\(Constanst.ApiKey)&language=en-US&session_id=\(sessionID)&sort_by=created_at.asc&page=1") else {return}
+        guard let url = URL(string: "\(Constanst.baseUrl)3/account/\(profileID)/rated/\(mediaType)?api_key=\(Constanst.ApiKey)&language=en-US&session_id=\(sessionID)&sort_by=created_at.asc&page=1")
+            else {return}
+        
+        print("rate", url)
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data,
                   error == nil else {return}
