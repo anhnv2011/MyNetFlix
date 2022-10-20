@@ -153,7 +153,7 @@ class HomeViewController: UIViewController {
                 let random = movie.randomElement()
                 DispatchQueue.main.async { [weak self] in
                     guard let strongSelf = self else {return}
-                    strongSelf.headerView?.configHeader(posterPath: random?.poster_path ?? "")
+                    strongSelf.headerView?.configHeader(posterPath: random?.posterPath ?? "")
                     strongSelf.headerView?.film = random
                     strongSelf.headerView?.completion = { [weak self] in
                         let vc = FilmDetailPopUpViewController()
@@ -564,10 +564,10 @@ extension HomeViewController: CollectionTableViewCellDelegate{
         
         //Vài kết quả có kiểu media là nil nên cần chắc chắn
         if tableCellNumber == 3 || tableCellNumber == 5 || tableCellNumber == 1 {
-            choosefilm.media_type = "movie"
+            choosefilm.mediaType = "movie"
         }
         if tableCellNumber == 4 || tableCellNumber == 6 || tableCellNumber == 2 {
-            choosefilm.media_type = "tv"
+            choosefilm.mediaType = "tv"
         }
                 
 //        print(type)
@@ -578,7 +578,7 @@ extension HomeViewController: CollectionTableViewCellDelegate{
         vc.completion = {
             if let tabItems = self.tabBarController?.tabBar.items {
                 // In this case we want to modify the badge number of the third tab:
-                let tabItem = tabItems[3]
+                let tabItem = tabItems[2]
                 tabItem.badgeValue = "New"
             }
         }

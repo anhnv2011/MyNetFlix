@@ -15,7 +15,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     var film:Film?
     {
         didSet {
-            guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(film?.poster_path ?? "")") else {
+            guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(film?.posterPath ?? "")") else {
                 return
             }
             imageView.sd_setImage(with: url, completed: nil)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WatchListTableViewCell: UITableViewCell {
+class ListsTableViewCell: UITableViewCell {
     
     static let identifier = "WatchListTableViewCell"
     

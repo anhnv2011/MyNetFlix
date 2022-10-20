@@ -61,6 +61,7 @@ class DownloadViewController: UIViewController {
             case .success(let filmItems):
                 print(filmItems)
                 self?.filmItems = filmItems
+                print(filmItems)
                 DispatchQueue.main.async {
                     self?.downloadTableView.reloadData()
                 }
@@ -78,11 +79,15 @@ class DownloadViewController: UIViewController {
         changViewModeButton.setTitleColor(UIColor.labelColor(), for: .normal)
         view.backgroundColor = UIColor.backgroundColor()
         if viewMode == .TableView {
+            view.backgroundColor = UIColor.backgroundColor()
+
             downloadTableView.isHidden = false
             collectionView.isHidden = true
         } else {
+//            view.backgroundColor = UIColor.white
             downloadTableView.isHidden = true
             collectionView.isHidden = false
+            
         }
         setupTableView()
         setupCollectionView()
@@ -96,6 +101,7 @@ class DownloadViewController: UIViewController {
         downloadTableView.delegate = self
         downloadTableView.register(UINib(nibName: "UpCommingTableViewCell", bundle: nil), forCellReuseIdentifier: UpCommingTableViewCell.identifier)
         downloadTableView.tableFooterView = UIView()
+        downloadTableView.backgroundColor = UIColor.backgroundColor()
     }
     func setupNav(){
         
@@ -166,10 +172,16 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = downloadTableView.dequeueReusableCell(withIdentifier: UpCommingTableViewCell.identifier, for: indexPath) as! UpCommingTableViewCell
-        let film = filmItems[indexPath.row]
-        let poster = film.poster_path
-        let name = film.original_name != nil ? film.original_name : film.original_title
-        cell.configDetailMovieTableCell(posterPath: poster!, name: name!)
+        let filmItem = filmItems[indexPath.row]
+        let film = Film(adult: filmItem.adult, backdropPath: "", id: Int(filmItem.id), originalLanguage: filmItem.original_language, originalName: filmItem.original_name, originalTitle: filmItem.original_title, overview: filmItem.overview, posterPath: filmItem.poster_path, mediaType: filmItem.media_type, genreIds: nil, popularity: filmItem.popularity, releaseDate: filmItem.release_date, firstAirDate: nil, voteAverage: filmItem.vote_average, voteCount: filmItem.vote_count, originCountry: nil)
+        cell.film = film
+//        let film = try Film(from: filmItems as! Decoder)
+//        print(film)
+//        let film:Film = Film(
+//        let poster = film.poster_path
+//        let name = film.original_name != nil ? film.original_name : film.original_title
+        
+//        cell.configDetailMovieTableCell(posterPath: poster!, name: name)
         
         return cell
     }
@@ -183,16 +195,32 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            let alert = UIAlertController(title: "Cảnh báo", message: "Are you sure?", preferredStyle: .alert)
-            let deleteButton = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
+//            let alert = UIAlertController(title: "Cảnh báo", message: "Are you sure?", preferredStyle: .alert)
+//            let deleteButton = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
+//                guard let strongSelf = self else {return}
+//                strongSelf.deleteData(index: indexPath.row)
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//            }
+//            let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//            alert.addAction(deleteButton)
+//            alert.addAction(cancelButton)
+//            present(alert, animated: true, completion: nil)
+            
+            let cancelAction = ActionAlert(with: "Cancel".localized(), style: .normal) {[weak self] in
+                guard let strongSelf = self else {return}
+                strongSelf.dismiss(animated: true, completion: nil)
+            }
+            let deleteAction = ActionAlert(with: "Delete".localized(), style: .destructive) {[weak self] in
                 guard let strongSelf = self else {return}
                 strongSelf.deleteData(index: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                strongSelf.dismiss(animated: true, completion: nil)
             }
-            let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(deleteButton)
-            alert.addAction(cancelButton)
-            present(alert, animated: true, completion: nil)
+            let alertVC = CustomAlertViewController(withTitle: "Are you sure?".localized(), message: "You will delete item".localized(), actions: [cancelAction, deleteAction], axis: .horizontal, style: .dark)
+            
+            alertVC.modalPresentationStyle = .overCurrentContext
+            alertVC.modalTransitionStyle = .crossDissolve
+            present(alertVC, animated: true, completion: nil)
             
         default:
             break;

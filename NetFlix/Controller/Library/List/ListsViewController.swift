@@ -7,13 +7,13 @@
 
 import UIKit
 
-class WatchListViewController: UIViewController {
+class ListsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
    
     var transitionDelegate = TransitionDelegate()
     var lists = [Lists]()
-    private let noWatchList = CreatLabelView()
+    private let noListView = CreatLabelView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
 
     
     //MARK:- Life Cycle
@@ -32,7 +32,7 @@ class WatchListViewController: UIViewController {
 
     func setupTableView(){
         
-        tableView.register(UINib(nibName: "WatchListTableViewCell", bundle: nil), forCellReuseIdentifier: WatchListTableViewCell.identifier)
+        tableView.register(UINib(nibName: "ListsTableViewCell", bundle: nil), forCellReuseIdentifier: ListsTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
@@ -41,26 +41,25 @@ class WatchListViewController: UIViewController {
     }
     func updateUI(){
         navigationController?.hidesBarsOnSwipe = false
-        title = "WatchList".localized()
+        title = "Lists".localized()
 //        navigationController?.navigationBar.prefersLargeTitles = true
 //        navigationController?.navigationItem.largeTitleDisplayMode = .never
         setupTableView()
         if lists.count > 0 {
-            noWatchList.isHidden = true
+            noListView.isHidden = true
             tableView.isHidden = false
         } else {
-            noWatchList.isHidden = false
+            noListView.isHidden = false
             tableView.isHidden = true
         }
 
     }
     func setupLableView(){
-        view.addSubview(noWatchList)
-        let text = "No_Label".localized() + " " + "WatchList".localized()
-        let title = "Create".localized() + " " + "WatchList".localized()
-        noWatchList.configure(with: ActionLabelViewModel(text: text, actionTitle: title))
-        noWatchList.frame = view.bounds
-        noWatchList.didTapCreatPlaylist = { 
+        view.addSubview(noListView)
+        let text = "No_Label".localized() + " " + "Lists".localized()
+        let title = "Create".localized() + " " + "Lists".localized()
+        noListView.configure(with: ActionLabelViewModel(text: text, actionTitle: title))
+        noListView.didTapCreatLibrary = {
             self.createWatchList()
         }
     }
@@ -92,13 +91,13 @@ class WatchListViewController: UIViewController {
     }
 
 }
-extension WatchListViewController: UITableViewDelegate, UITableViewDataSource{
+extension ListsViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         lists.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WatchListTableViewCell.identifier, for: indexPath) as! WatchListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ListsTableViewCell.identifier, for: indexPath) as! ListsTableViewCell
         let list = lists[indexPath.row]
         cell.configureUI(list: list)
         return cell

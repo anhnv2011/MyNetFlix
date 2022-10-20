@@ -96,6 +96,13 @@ class SeeAllViewController: UIViewController {
     
     private func showFilmPopupDetail(film: Film){
         let vc = FilmDetailPopUpViewController()
+        vc.completion = {
+            if let tabItems = self.tabBarController?.tabBar.items {
+                // In this case we want to modify the badge number of the third tab:
+                let tabItem = tabItems[2]
+                tabItem.badgeValue = "New"
+            }
+        }
         vc.film = film
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)

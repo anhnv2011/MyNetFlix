@@ -1,22 +1,21 @@
 //
-//  SeeAllCollectionViewCell.swift
+//  LibraryCollectionViewCellCell.swift
 //  NetFlix
 //
-//  Created by MAC on 10/1/22.
+//  Created by MAC on 10/20/22.
 //
 
 import UIKit
 
-class SeeAllCollectionViewCell: UICollectionViewCell {
-    
-    static let identifier = "SeeAllCollectionViewCell"
+class LibraryCollectionViewCellCell: UICollectionViewCell {
+    static let identifier =  "LibraryCollectionViewCellCell"
     
     @IBOutlet weak var posterImage: UIImageView!
     var film:Film?
     {
         didSet {
 //
-            let url = "https://image.tmdb.org/t/p/w500/\(film?.poster_path ?? "")"
+            let url = "https://image.tmdb.org/t/p/w500/\(film?.posterPath ?? "")"
             posterImage.loadImageUsingCache(url)
         }
     }

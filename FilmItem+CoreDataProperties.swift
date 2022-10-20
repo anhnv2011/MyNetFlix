@@ -29,7 +29,7 @@ extension FilmItem {
     @NSManaged public var title: String?
     @NSManaged public var video: Bool
     @NSManaged public var vote_average: Double
-    @NSManaged public var vote_count: Int64
+    @NSManaged public var vote_count: Int
     @NSManaged public var videoUrl: String?
 
 }

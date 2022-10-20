@@ -10,6 +10,7 @@ import youtube_ios_player_helper
 
 class ShowMoreInforViewController: UIViewController {
     
+    
     @IBOutlet weak var similarcollectionView: UICollectionView!
     @IBOutlet weak var playerView: YTPlayerView!
     
@@ -17,8 +18,12 @@ class ShowMoreInforViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
     var youtubeLink: String?
     var film:Film!
+    var filmItems = [FilmItem]()
+    var completionShowMore: (() -> Void)? //badgeValue
     var similarFilms = [Film]()
     {
         didSet{
@@ -29,19 +34,60 @@ class ShowMoreInforViewController: UIViewController {
             }
         }
     }
+    
+    var isPlayed = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         fetchData()
-    }
-    
-    private func setupUI(){
-        setupCollectionView()
-        dismissButton.setImage(UIImage(systemName: ImageName.shared.xmark), for: .normal)
         
     }
     
+    private func setupUI(){
+        setupPlayer()
+        setupCollectionView()
+        setupLabel()
+        setupButton()
+    }
+    
+    private func setupPlayer(){
+        //        playerView.load(withVideoId: "bsM1qdGAVbU")
+        if let link = youtubeLink {
+            playerView.delegate = self
+            
+            playerView!.load(withVideoId: youtubeLink!, playerVars: ["playsinline": 1])
+        } else {
+            print("not found")
+        }
+        
+    }
+    
+    private func setupLabel(){
+        nameLabel.text = film.originalTitle != nil ? film.originalTitle : film.originalName
+        overviewLabel.text = film.overview
+    }
+    
+    private func setupButton(){
+        dismissButton.setImage(UIImage(systemName: ImageName.shared.xmark), for: .normal)
+        playButton.setTitle("    Play".localized(), for: .normal)
+        playButton.setTitleColor(UIColor.labelColor(), for: .normal)
+        playButton.backgroundColor = UIColor.buttonBackground()
+        playButton.tintColor = UIColor.labelColor()
+        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        
+        downloadButton.setTitle("Download".localized(), for: .normal)
+        downloadButton.setTitleColor(UIColor.labelColor(), for: .normal)
+        downloadButton.backgroundColor = UIColor.buttonBackground()
+        downloadButton.tintColor = UIColor.labelColor()
+        downloadButton.setImage(UIImage(systemName: "square.and.arrow.down.fill"), for: .normal)
+        
+        shareButton.setTitle("   Share".localized(), for: .normal)
+        shareButton.setTitleColor(UIColor.labelColor(), for: .normal)
+        shareButton.tintColor = UIColor.labelColor()
+        shareButton.backgroundColor = UIColor.buttonBackground()
+        shareButton.setImage(UIImage(systemName: "square.and.arrow.up.fill"), for: .normal)
+    }
     func setupCollectionView(){
         similarcollectionView.register(UINib(nibName: "ShowMoreTableViewCell", bundle: nil), forCellWithReuseIdentifier: ShowMoreTableViewCell.identifier)
         
@@ -64,8 +110,8 @@ class ShowMoreInforViewController: UIViewController {
     }
     func fetchData(){
         let id = film.id
-        guard let mediaType = film.media_type else {return}
-        APICaller.share.getSimilarFilm(mediaType: mediaType, filmID: id) { [weak self] result in
+        let mediaType = film.mediaType 
+        APICaller.share.getSimilarFilm(mediaType: mediaType ?? "", filmID: id!) { [weak self] result in
             guard let strongSelf = self else {return}
             switch result {
             case .success(let films):
@@ -81,12 +127,119 @@ class ShowMoreInforViewController: UIViewController {
         switch sender {
         case dismissButton:
             dismiss(animated: true)
+        case playButton:
+            playVideo()
+        case shareButton:
+            shareVieo()
+        case downloadButton:
+            downloadFilm()
         default:
             break
         }
     }
+    private func playVideo(){
+        if isPlayed == false {
+            playerView.playVideo()
+            playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            isPlayed.toggle()
+        } else {
+            playerView.pauseVideo()
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            isPlayed.toggle()
+        }
+    }
+    private func shareVieo(){
+        // Setting description
+        let textShare = "Share film for friend or family"
+        var linkString = ""
+        if film.mediaType == "movie" {
+            linkString = "themoviedb.org/movie/\(film.id!)"
+        } else {
+            linkString = "themoviedb.org/tv/\(film.id!)"
+        }
+        // Setting url
+        let linkFilm : NSURL = NSURL(string: linkString)!
+        
+        
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [textShare, linkFilm], applicationActivities: nil)
+        
+        // This lines is for the popover you need to show in iPad
+        activityViewController.popoverPresentationController?.sourceView = (self.view)
+        
+        // This line remove the arrow of the popover to show in iPad
+        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+        
+        // Pre-configuring activity items
+        activityViewController.activityItemsConfiguration = [
+            UIActivity.ActivityType.message
+        ] as? UIActivityItemsConfigurationReading
+        
+        // Anything you want to exclude
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.postToWeibo,
+            UIActivity.ActivityType.print,
+            UIActivity.ActivityType.assignToContact,
+            UIActivity.ActivityType.saveToCameraRoll,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToVimeo,
+            UIActivity.ActivityType.postToTencentWeibo,
+            UIActivity.ActivityType.postToFacebook
+        ]
+        
+        activityViewController.isModalInPresentation = true
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    func downloadFilm(){
+        
+        guard let youtubeLink = youtubeLink else {return}
+        
+        
+        DataPersistenceManager.shared.fetchingFilmsFromDataBase { [weak self] result in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .success(let filmItems):
+                strongSelf.filmItems = filmItems
+                if filmItems.map({Int($0.id)}).contains(strongSelf.film.id) {
+                    strongSelf.makeBasicCustomAlert(title: "Error", messaage: "Already download")
+                } else {
+                    DataPersistenceManager.shared.downloadFilm(model: strongSelf.film, url: youtubeLink) {[weak self] (result) in
+                        guard let strongSelf = self else {return}
+                        switch result {
+                        case .success():
+                            NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+                            strongSelf.makeBasicCustomAlert(title: "Status", messaage: "Downloading")
+                        case .failure(let error):
+                            strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
+                        }
+                    }
+                }
+                
+            case .failure(let error):
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
+            }
+        }
+        
+        
+        
+        completionShowMore!()
+        
+    }
     
-    
+    func getDownloadList(){
+        DataPersistenceManager.shared.fetchingFilmsFromDataBase { [weak self] result in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .success(let filmItems):
+                strongSelf.filmItems = filmItems
+                strongSelf.fetchData()
+            case .failure(let error):
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
+            }
+        }
+    }
 }
 extension ShowMoreInforViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -123,14 +276,14 @@ extension ShowMoreInforViewController: UICollectionViewDelegate, UICollectionVie
             for cell in collectionView.visibleCells as! [ShowMoreTableViewCell] {
                 let indexPath = collectionView.indexPath(for: cell)!
                 let attributes = collectionView.layoutAttributesForItem(at: indexPath)!
-//                print("attributes: ", attributes)
+                //                print("attributes: ", attributes)
                 let cellFrame = collectionView.convert(attributes.frame, to: view)
-//                print("cellFrame at \(indexPath): ", cellFrame)
+                //                print("cellFrame at \(indexPath): ", cellFrame)
                 
-//                let translationX = cellFrame.origin.x / 5
-//                cell.posterImageView.transform = CGAffineTransform(translationX: translationX, y: 0)
-
-                let centerCellFlame = (cellFrame.origin.x + cellFrame.width) / 2.0
+                //                let translationX = cellFrame.origin.x / 5
+                //                cell.posterImageView.transform = CGAffineTransform(translationX: translationX, y: 0)
+                
+//                let centerCellFlame = (cellFrame.origin.x + cellFrame.width) / 2.0
                 let leftShinkPoint = CGFloat(30.0)
                 let rightShinkPoint = view.frame.width - (cellFrame.width / 2)
                 if cellFrame.origin.x <= leftShinkPoint || cellFrame.origin.x >= rightShinkPoint  {
@@ -148,4 +301,10 @@ extension ShowMoreInforViewController: UICollectionViewDelegate, UICollectionVie
         return shirnk
     }
     
+}
+extension ShowMoreInforViewController: YTPlayerViewDelegate {
+    //    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+    //        playerView.delegate = self
+    //        playerView.playVideo()
+    //    }
 }

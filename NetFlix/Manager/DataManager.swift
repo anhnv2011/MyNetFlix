@@ -25,7 +25,7 @@ struct DataManager {
     }
     
     func removeSessionId(){
-        
+        KeychainWrapper.standard.removeObject(forKey: "SessionId")
     }
     
     func saveProfileId (id: String) {

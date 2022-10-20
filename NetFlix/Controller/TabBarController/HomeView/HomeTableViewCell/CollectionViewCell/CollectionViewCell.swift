@@ -18,7 +18,7 @@ class CollectionViewCell: UICollectionViewCell {
 //                return
 //            }
 //            posterImage.sd_setImage(with: url, completed: nil)
-            let url = "https://image.tmdb.org/t/p/w500/\(film?.poster_path ?? "")"
+            let url = "https://image.tmdb.org/t/p/w500/\(film?.posterPath ?? "")"
             posterImage.loadImageUsingCache(url)
         }
     }

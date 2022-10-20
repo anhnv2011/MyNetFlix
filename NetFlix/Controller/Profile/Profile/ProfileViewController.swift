@@ -86,8 +86,8 @@ class ProfileViewController: UIViewController {
     private func settingProfile(){
         profileSetting = [
             ProfileSetting(title: "Favorite".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.favoriteButton, isopen: false),
-            ProfileSetting(title: "Bookmark".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.bookmarkButton, isopen: false),
-            ProfileSetting(title: "WatchList".localized(), option: ["WatchList".localized()], image: ImageName.shared.listButton, isopen: false),
+            ProfileSetting(title: "WatchList".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.bookmarkButton, isopen: false),
+            ProfileSetting(title: "List".localized(), option: ["List".localized()], image: ImageName.shared.listButton, isopen: false),
             ProfileSetting(title: "Rate".localized(), option: ["Movie".localized(), "Tv".localized()], image: ImageName.shared.rateButton, isopen: false),
             ProfileSetting(title: "Language".localized(), option: languages.map({$0.language}), image: ImageName.shared.language, isopen: false),
             ProfileSetting(title: "Display".localized(), option: ViewMode.allCases.map({$0.rawValue.localized()}), image: ImageName.shared.rateButton, isopen: false),
@@ -114,7 +114,7 @@ class ProfileViewController: UIViewController {
             guard let strongSelf = self else {return}
             strongSelf.dismiss(animated: true, completion: nil)
         }
-        let deleteAction = ActionAlert(with: "Delete".localized(), style: .destructive) {[weak self] in
+        let deleteAction = ActionAlert(with: "Log Out".localized(), style: .destructive) {[weak self] in
             guard let strongSelf = self else {return}
             strongSelf.logOutAction()
         }
@@ -127,6 +127,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func logOutAction(){
+        DataManager.shared.removeSessionId()
         let transition = TransitionDelegate()
         self.transitionDelegate = transition
         let vc = LoginViewController()
@@ -223,12 +224,14 @@ class ProfileViewController: UIViewController {
     
     private func selectedViewMode(mode: String){
         
-        DataManager.shared.saveViewMode(mode: mode)
-        NotificationCenter.default.post(name: Notification.Name("ViewMode"), object: nil)
-        DispatchQueue.main.async {
-            self.setupUI()
-            
-        }
+          makeBasicCustomAlert(title: "Sorry", messaage: "Function will comming soon")
+        
+//        DataManager.shared.saveViewMode(mode: mode)
+//        NotificationCenter.default.post(name: Notification.Name("ViewMode"), object: nil)
+//        DispatchQueue.main.async {
+//            self.setupUI()
+//
+//        }
         
     }
     
@@ -252,14 +255,14 @@ class ProfileViewController: UIViewController {
     
     
     private func showYourList(){
-        let vc = WatchListViewController()
+        let vc = ListsViewController()
         vc.transitioningDelegate = transitionDelegate
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func showLibrary(title: String, indexPath: IndexPath){
+    private func showLibrary(librarType: LibraryType,indexPath: IndexPath){
         let vc = LibraryViewController()
-        vc.title = title
+        vc.libraryType = librarType
         vc.transitioningDelegate = transitionDelegate
         
         if indexPath.row == 0 {
@@ -279,13 +282,16 @@ class ProfileViewController: UIViewController {
 //MARK:- Tableview Delegate, Datasource
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, ExpenableHeaderViewDelegate {
     func toggleSection(header: ExpenableHeaderView, section: Int) {
-        profileSetting[section].isOpen = !profileSetting[section].isOpen
-        tableView.beginUpdates()
-        for i in 0..<profileSetting[section].option.count {
-            tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .left)
-            
+        if section < profileSetting.count - 1{
+            profileSetting[section].isOpen = !profileSetting[section].isOpen
+            tableView.beginUpdates()
+            for i in 0..<profileSetting[section].option.count {
+                tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .left)
+                
+            }
+            tableView.endUpdates()
         }
-        tableView.endUpdates()
+      
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -357,19 +363,19 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
         
         //Favorite
         case 0:
-            showLibrary(title: "Favorite".localized(), indexPath: indexPath)
+            showLibrary(librarType: .favorite, indexPath: indexPath)
             
-        //Bookmark
+        //Watch List
         case 1:
             print("")
-            showLibrary(title: "Bookmark".localized(), indexPath: indexPath)
+            showLibrary(librarType: .watchlist, indexPath: indexPath)
         // Your List
         case 2:
             showYourList()
             
         //Rating
         case 3:
-            showLibrary(title: "Rate".localized(), indexPath: indexPath)
+            showLibrary(librarType: .rate, indexPath: indexPath)
             
         //Language
         case 4:

@@ -94,18 +94,20 @@ class FilmDetailPopUpViewController: UIViewController {
     
     //MARK:- fetchData
     func fetchData(){
-        if let mediaType = film.media_type {
-            self.mediaType = mediaType
-            
+        let mediaType = film.mediaType
+        if mediaType != nil {
+            self.mediaType = mediaType!
         }
-        self.mediaId = film.id
+        
+        
+        self.mediaId = film.id!
         getFavoriteList()
         getWatchList()
         getRateList()
         
         // youtube
-        guard let name = film.original_name != nil ? film.original_name : film.original_title else {return}
-        let key = name + "Trailer"
+        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
+        let key = name! + "Trailer"
         
         getYoutubeLink(filmname: key)
     
@@ -138,19 +140,19 @@ class FilmDetailPopUpViewController: UIViewController {
         contenView.layer.cornerRadius = 20
         contenView.backgroundColor = UIColor.viewBackground()
         
-        let url = "\(Constanst.ImageBaseUrl)\(film?.poster_path ?? "")"
+        let url = "\(Constanst.ImageBaseUrl)\(film?.posterPath ?? "")"
         posterFilmImage.loadImageUsingCache(url)
         
-        let name = film.original_name != nil ? film.original_name : film.original_title
+        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
         filmNameLabel.text = name
         
-        let releasdate = film.release_date
+        let releasdate = film.releaseDate
         releaseDateLabel.text = releasdate
-        
+
         let overview = film.overview
         overviewLabel.text = overview
         
-        let rate = (film.vote_average)! / 2.0
+        let rate = (film.voteAverage!) / 2.0
         cosmosView.rating = rate
         
         
@@ -303,6 +305,9 @@ class FilmDetailPopUpViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         vc.film = self.film
         vc.youtubeLink = self.youtubeLink
+        vc.completionShowMore = {
+            self.completion!()
+        }
         present(vc, animated: true, completion: nil)
     }
     
@@ -341,7 +346,7 @@ extension FilmDetailPopUpViewController{
             switch response {
             case . success(let film):
                 if film.count > 0 {
-                    let listFavoriteID = (film.map({$0.id}))
+                    let listFavoriteID = (film.map({$0.id!}))
                     let isFav = strongSelf.checkFavorite(listFav: listFavoriteID)
                     strongSelf.isFavorited = isFav
                 }
@@ -359,7 +364,7 @@ extension FilmDetailPopUpViewController{
             switch response {
             case . success(let film):
                 if film.count > 0 {
-                    let listFavoriteID = (film.map({$0.id}))
+                    let listFavoriteID = (film.map({$0.id!}))
                     let isFav = strongSelf.checkFavorite(listFav: listFavoriteID)
                     strongSelf.isFavorited = isFav
                 }
@@ -411,7 +416,7 @@ extension FilmDetailPopUpViewController {
             switch response {
             case . success(let film):
                 if film.count > 0{
-                    let watchList = (film.map({$0.id}))
+                    let watchList = (film.map({$0.id!}))
                     let isWathch = strongSelf.checkWatchList(watchList: watchList)
                     strongSelf.isWatchListed = isWathch
                 }
@@ -430,7 +435,7 @@ extension FilmDetailPopUpViewController {
             switch response {
             case . success(let film):
                 if film.count > 0{
-                    let watchList = (film.map({$0.id}))
+                    let watchList = (film.map({$0.id!}))
                     let isWathch = strongSelf.checkWatchList(watchList: watchList)
                     strongSelf.isWatchListed = isWathch
                 }
@@ -456,7 +461,7 @@ extension FilmDetailPopUpViewController{
         let sessionid = DataManager.shared.getSaveSessionId()
         let profileid = DataManager.shared.getProfileId()
         var mediatype = ""
-        if self.film.media_type == "movie" {
+        if self.film.mediaType == "movie" {
             mediatype = "movies"
         } else {
             mediatype = "tv"
@@ -466,7 +471,7 @@ extension FilmDetailPopUpViewController{
             switch result {
             case .success(let films):
                 if films.count > 0 {
-                    let rateList = films.map({$0.id})
+                    let rateList = films.map({$0.id!})
                     let isRated = strongSelf.checkRate(rate: rateList)
                     strongSelf.isRated = isRated
                     if isRated == true {
@@ -489,13 +494,14 @@ extension FilmDetailPopUpViewController{
     }
     func takeYourRatingScore(films: [Film], mediaId: Int) -> Double {
         let film = films.filter({$0.id == mediaId})
-        let rating = film[0].rating
-        return rating ?? 0
+//        let rating = film[0].rating
+        let rating = 11
+        return Double(rating ?? 0)
     }
     
     func ratingFilm(rating: Double){
         let sessionid = DataManager.shared.getSaveSessionId()
-        let filid = film.id
+        let filid = film.id!
         APICaller.share.postRate(mediaType: mediaType, filmId: filid, sessionId: sessionid, value: rating) { [weak self] result in
             guard let strongSelf = self else {return}
             switch result {

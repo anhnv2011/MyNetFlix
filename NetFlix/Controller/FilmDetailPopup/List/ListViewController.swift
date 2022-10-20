@@ -51,9 +51,9 @@ class ListViewController: UIViewController {
 
         view.backgroundColor = UIColor.viewBackground()
         creatNewListButton.setTitle("New List", for: .normal)
-        let name = film.original_name != nil ? film.original_name : film.original_title
+        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
         
-        statusLabel.text = "Add " + "\(name!) " + "to one of your list"
+        statusLabel.text = "Add " + "\(name) " + "to one of your list"
         view.backgroundColor = UIColor.viewBackground()
         
     }
@@ -166,7 +166,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let mediaid = Int(film.id)
+        let mediaid = Int(film.id!)
         let listid = String(tempList[indexPath.row].id!)
         addTolist(listId: listid, mediaId: mediaid)
     }

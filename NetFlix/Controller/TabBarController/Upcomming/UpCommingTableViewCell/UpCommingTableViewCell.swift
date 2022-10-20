@@ -24,9 +24,9 @@ class UpCommingTableViewCell: UITableViewCell {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else {return}
-                let url = "\(Constanst.ImageBaseUrl)\(strongSelf.film?.poster_path ?? "")"
+                let url = "\(Constanst.ImageBaseUrl)\(strongSelf.film?.posterPath ?? "")"
                 strongSelf.detailImageView.loadImageUsingCache(url)
-                guard let name = strongSelf.film?.original_name != nil ? strongSelf.film?.original_name : strongSelf.film?.original_title else {return}
+                guard let name = strongSelf.film?.originalTitle  else {return}
 
                 strongSelf.nameLabel.text = name
             }
@@ -67,9 +67,11 @@ class UpCommingTableViewCell: UITableViewCell {
         completionHandler!()
     }
     func configDetailMovieTableCell (posterPath: String, name: String){
-        let url = "\(Constanst.ImageBaseUrl)\(posterPath)"
-        detailImageView.loadImageUsingCache(url)
-        nameLabel.text = name
+//        let url = "\(Constanst.ImageBaseUrl)\(posterPath)"
+//        detailImageView.loadImageUsingCache(url)
+//        nameLabel.text = name
         
+        print(posterPath)
+        print(name)
     }
 }

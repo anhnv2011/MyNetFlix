@@ -25,18 +25,18 @@ class DataPersistenceManager {
         
         let item = FilmItem(context: context)
         item.adult = model.adult ?? false
-        item.id = Int64(model.id)
-        item.media_type = model.media_type
-        item.original_language = model.original_language
-        item.original_name = model.original_name
-        item.original_title = model.original_title
+        item.id = Int64(model.id!)
+        item.media_type = model.mediaType
+        item.original_language = model.originalLanguage
+        item.original_name = model.originalTitle
+        item.original_title = model.originalTitle
         item.overview = model.overview
         item.popularity = model.popularity ?? 0
-        item.poster_path = model.poster_path
-        item.title = model.title
-        item.video = model.video ?? false
-        item.vote_average = model.vote_average ?? 0
-        item.vote_count = Int64(model.vote_count ?? 0)
+        item.poster_path = model.posterPath
+        item.title = ""
+        item.video = false
+        item.vote_average = model.voteAverage ?? 0
+        item.vote_count = Int(model.voteCount ?? 0)
         item.videoUrl = url
 
         

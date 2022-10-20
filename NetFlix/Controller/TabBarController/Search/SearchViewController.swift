@@ -34,8 +34,8 @@ class SearchViewController: UIViewController {
         
     }
     func setupNavigation(){
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.hidesBarsOnSwipe = false
         navigationController?.navigationBar.tintColor = UIColor.labelColor()
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
@@ -129,7 +129,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             strongSelf.present(vc, animated: true, completion: nil)
         }
         let film = films[indexPath.row]
-        cell.configDetailMovieTableCell(posterPath: film.poster_path , name: film.original_name ?? film.original_title ?? "Unknown name" )
+        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
+        cell.film = film
+//        cell.configDetailMovieTableCell(posterPath: film.posterPath! , name:  name!)
         
         
         

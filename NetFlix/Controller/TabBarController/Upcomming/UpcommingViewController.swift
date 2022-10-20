@@ -112,7 +112,7 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = FilmDetailPopUpViewController()
         
         var choseFilm = movie[indexPath.row]
-        choseFilm.media_type = "movie"
+        choseFilm.mediaType = "movie"
         print(choseFilm)
         vc.film = choseFilm
         vc.view.backgroundColor = .clear

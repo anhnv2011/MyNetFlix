@@ -8,8 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieLibraryViewController" customModule="NetFlix" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListsViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="3RR-Rl-Kh0" id="52B-Ow-mgV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,20 +19,20 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d6b-zI-HGy">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3RR-Rl-Kh0">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="d6b-zI-HGy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7xI-0o-A2S"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="d6b-zI-HGy" secondAttribute="trailing" id="Sd2-qr-6lT"/>
-                <constraint firstItem="d6b-zI-HGy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="dx3-Ra-7sw"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="d6b-zI-HGy" secondAttribute="bottom" id="xX1-ZK-pUJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3RR-Rl-Kh0" secondAttribute="trailing" id="Kzz-qE-h3a"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3RR-Rl-Kh0" secondAttribute="bottom" id="Mxm-fv-cb4"/>
+                <constraint firstItem="3RR-Rl-Kh0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ylP-pE-bmZ"/>
+                <constraint firstItem="3RR-Rl-Kh0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="zMd-oa-QQe"/>
             </constraints>
-            <point key="canvasLocation" x="100" y="99"/>
+            <point key="canvasLocation" x="99" y="76"/>
         </view>
     </objects>
     <resources>

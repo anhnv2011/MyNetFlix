@@ -70,7 +70,7 @@ class HeaderView: UIView {
         imageViewHeight = imageView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
         imageViewHeight.isActive = true
         
-        inforButton.anchor(bottom: containerView.bottomAnchor, right: containerView.rightAnchor, width: 56, height: 56, bottomPadding: 24, rightPadding: 24)
+        inforButton.anchor(bottom: containerView.bottomAnchor, right: containerView.rightAnchor, width: 70, height: 70, bottomPadding: 24, rightPadding: 24)
         inforButton.addTarget(self, action: #selector(getInfor), for: .touchUpInside)
     }
     

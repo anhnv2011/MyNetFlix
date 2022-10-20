@@ -13,12 +13,12 @@
 "Items" = "Items in";
 "WatchList" = "WatchList";
 "Favorite" = "Favorite";
-"Bookmark" = "Bookmark";
+"Lists" = "Lists";
 "Rate" = "Rate";
 "Download" = "DownLoad";
 "Create" = "Create";
 "Language" = "Language";
-"LogOut" = "Log Out";
+"Log Out" = "Log Out";
 "Account" = "Account";
 "Username" = "Username";
 "Password" = "Password";
@@ -39,3 +39,4 @@
 "Cancel" = "Cancel";
 "Are you sure?" = "Are you sure?";
 "See all" = "See all";
+

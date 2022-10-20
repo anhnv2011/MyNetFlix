@@ -14,14 +14,14 @@ struct ActionLabelViewModel {
 }
 
 class CreatLabelView: UIView {
-    var didTapCreatPlaylist: (()-> Void)?
+    var didTapCreatLibrary: (()-> Void)?
 
     private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = .secondaryLabel
+        label.textColor = UIColor.labelColor()
         return label
     }()
 
@@ -40,6 +40,7 @@ class CreatLabelView: UIView {
         isHidden = true
         addSubview(button)
         addSubview(label)
+        backgroundColor = UIColor.popupBackground()
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
 
@@ -50,19 +51,16 @@ class CreatLabelView: UIView {
     
     @objc func didTapButton() {
         //delegate?.actionLabelViewDidTapButton(self)
-        didTapCreatPlaylist!()
+        didTapCreatLibrary!()
     }
 
     override func layoutSubviews() {
-        super.layoutSubviews()
-//        button.frame = CGRect(x: 100 , y: 100, width: 100, height: 100)
 
-//        label.frame = CGRect(x: 0, y: 0, width: width, height: height-45)
-//        button.frame = CGRect(x: 0, y: 200, width: 100, height: 100)
         label.anchor(centerY: centerYAnchor, centerX: centerXAnchor, width: 200, height: 32)
-        button.anchor(top: label.bottomAnchor, centerX: centerXAnchor, width: 200, height: 32, topPadding: 22)
+        button.anchor(top: label.bottomAnchor, centerX: centerXAnchor, width: 200, height: 44, topPadding: 24)
 
     }
+
 
     func configure(with model: ActionLabelViewModel) {
         label.text = model.text

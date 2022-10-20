@@ -10,8 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LibraryViewController" customModule="NetFlix" customModuleProvider="target">
             <connections>
-                <outlet property="libraryScrollView" destination="Vwi-em-s8p" id="JON-zP-uEz"/>
-                <outlet property="topView" destination="pwc-XK-GE5" id="RbM-Z7-8NJ"/>
+                <outlet property="collectionView" destination="c9m-iD-HxK" id="bda-CJ-Zn5"/>
+                <outlet property="topView" destination="pwc-XK-GE5" id="sVz-Ul-4Nk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,26 +21,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pwc-XK-GE5">
-                    <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="43"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="CtV-WV-6LS"/>
+                        <constraint firstAttribute="height" constant="43" id="CtV-WV-6LS"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vwi-em-s8p">
-                    <rect key="frame" x="0.0" y="94" width="414" height="768"/>
-                </scrollView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="c9m-iD-HxK">
+                    <rect key="frame" x="0.0" y="87" width="414" height="775"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3yl-Pl-SHJ">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Vwi-em-s8p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1iv-gd-DIK"/>
-                <constraint firstItem="Vwi-em-s8p" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Cwi-je-MSE"/>
                 <constraint firstItem="pwc-XK-GE5" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="E2z-HN-P5h"/>
-                <constraint firstItem="Vwi-em-s8p" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="Ybh-dH-F43"/>
+                <constraint firstItem="c9m-iD-HxK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Q1C-N3-a5P"/>
                 <constraint firstItem="pwc-XK-GE5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bXQ-Za-8xu"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pwc-XK-GE5" secondAttribute="trailing" id="cHh-kR-Xtp"/>
-                <constraint firstItem="Vwi-em-s8p" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="zXh-D7-yot"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="c9m-iD-HxK" secondAttribute="bottom" id="fb9-4D-I0Z"/>
+                <constraint firstItem="c9m-iD-HxK" firstAttribute="top" secondItem="pwc-XK-GE5" secondAttribute="bottom" id="lIr-NS-d5I"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="c9m-iD-HxK" secondAttribute="trailing" id="qfn-Bt-DCF"/>
             </constraints>
             <point key="canvasLocation" x="-42.028985507246382" y="64.955357142857139"/>
         </view>

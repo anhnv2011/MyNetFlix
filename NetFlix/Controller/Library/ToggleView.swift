@@ -26,15 +26,18 @@ class ToggleView:UIView{
     
     private let movieButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
-        button.setTitle("Movies", for: .normal)
+        button.setTitleColor(UIColor.labelColor(), for: .normal)
+        button.backgroundColor = UIColor.buttonBackground()
+        button.setTitle("Movie".localized(), for: .normal)
         return button
     }()
 
     private let tvsButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.label, for: .normal)
-        button.setTitle("TV Show", for: .normal)
+        button.setTitleColor(UIColor.labelColor(), for: .normal)
+        button.setTitleColor(.red, for: .highlighted)
+        button.backgroundColor = UIColor.buttonBackground()
+        button.setTitle("Tv".localized(), for: .normal)
         return button
     }()
 
@@ -56,10 +59,11 @@ class ToggleView:UIView{
         addSubview(indicatorView)
         movieButton.addTarget(self, action: #selector(didTapmovies), for: .touchUpInside)
         tvsButton.addTarget(self, action: #selector(didTaptvs), for: .touchUpInside)
-        
-        
         movieButton.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
         tvsButton.frame = CGRect(x: movieButton.right, y: 0, width: 100, height: 40)
+        backgroundColor = UIColor.viewBackground()
+        
+        indicatorView.backgroundColor = .white
         layoutIndicator()
     }
     
@@ -95,10 +99,10 @@ class ToggleView:UIView{
             indicatorView.frame = CGRect(x: 0, y: movieButton.bottom, width: 100, height: 3)
 
             movieButton.setTitleColor(.blue, for: .normal)
-            tvsButton.setTitleColor(.label, for: .normal)
+            tvsButton.setTitleColor(UIColor.labelColor(), for: .normal)
         } else {
             indicatorView.frame = CGRect(x: 100, y: tvsButton.bottom, width: 100, height: 3)
-            movieButton.setTitleColor(.label, for: .normal)
+            movieButton.setTitleColor(UIColor.labelColor(), for: .normal)
             tvsButton.setTitleColor(.blue, for: .normal)
         }
     }

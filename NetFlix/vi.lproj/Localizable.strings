@@ -14,11 +14,12 @@
 "WatchList" = "Danh sách";
 "Favorite" = "Yêu thích";
 "Bookmark" = "Đánh dấu";
+"Lists" = "Danh sách";
 "Rate" = "Chấm điểm";
 "Download" = "Tải về";
 "Create" = "Tạo";
 "Language" = "Ngôn ngữ";
-"LogOut" = "Đăng xuất";
+"Log Out" = "Đăng xuất";
 "Account" = "Tài khoản";
 "Username" = "Tên";
 "Password" = "Mật khẩu";
