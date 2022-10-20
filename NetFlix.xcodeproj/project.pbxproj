@@ -59,6 +59,7 @@
 		045A3AF1286779DF000F84DE /* NetFlixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3AF0286779DF000F84DE /* NetFlixTests.swift */; };
 		045A3AFC286779DF000F84DE /* NetFlixUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3AFB286779DF000F84DE /* NetFlixUITests.swift */; };
 		045A3B1F28677BFD000F84DE /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3B1E28677BFD000F84DE /* MainTabBarViewController.swift */; };
+		045F536B2901753A00B2D1DF /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F536A2901753A00B2D1DF /* Home.png */; };
 		045F646A28FB191C001B266E /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F646828FB191B001B266E /* CarouselCollectionViewCell.swift */; };
 		045F646B28FB191C001B266E /* CarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045F646928FB191B001B266E /* CarouselCollectionViewCell.xib */; };
 		0464F3E728694C95008F6015 /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F3E528694C95008F6015 /* CollectionTableViewCell.swift */; };
@@ -204,6 +205,7 @@
 		045A3AFB286779DF000F84DE /* NetFlixUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetFlixUITests.swift; sourceTree = "<group>"; };
 		045A3AFD286779DF000F84DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		045A3B1E28677BFD000F84DE /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		045F536A2901753A00B2D1DF /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
 		045F646828FB191B001B266E /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
 		045F646928FB191B001B266E /* CarouselCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselCollectionViewCell.xib; sourceTree = "<group>"; };
 		0464F3E528694C95008F6015 /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 				045A3AE4286779DF000F84DE /* LaunchScreen.storyboard */,
 				049AC3C128ECB34B00A00027 /* Film.xcdatamodeld */,
 				044A9F2528F0942400761933 /* LocalizationSystem.swift */,
+				045F5366290173E600B2D1DF /* DemoImage */,
 			);
 			path = NetFlix;
 			sourceTree = "<group>";
@@ -546,6 +549,14 @@
 				045A3B1E28677BFD000F84DE /* MainTabBarViewController.swift */,
 			);
 			path = TabBarController;
+			sourceTree = "<group>";
+		};
+		045F5366290173E600B2D1DF /* DemoImage */ = {
+			isa = PBXGroup;
+			children = (
+				045F536A2901753A00B2D1DF /* Home.png */,
+			);
+			path = DemoImage;
 			sourceTree = "<group>";
 		};
 		045F646728FB18E8001B266E /* Carousel cell */ = {
@@ -990,6 +1001,7 @@
 				043300FC28F56475005C061A /* ListsViewController.xib in Resources */,
 				04D789D528677ED7007030DE /* UpcommingViewController.xib in Resources */,
 				04474D7B28FC8F0000A7FC94 /* ShowMoreTableViewCell.xib in Resources */,
+				045F536B2901753A00B2D1DF /* Home.png in Resources */,
 				04FA059828EB1107008628F1 /* AddNewListViewController.xib in Resources */,
 				0419E4F028ED3238002E657C /* PlayerViewController.xib in Resources */,
 				0423F2FF2869F3750075903B /* SearchResultViewController.xib in Resources */,
