@@ -197,10 +197,11 @@ class ProfileViewController: UIViewController {
     
     private func showCheckmarkLanguage(cell: UITableViewCell,indexPath: IndexPath){
         let language = DataManager.shared.getLanguage()
+        print(language)
         if profileSetting[indexPath.section].isOpen == true {
             switch language {
             case "en":
-                
+
                 if indexPath.row == 0 {
                     cell.accessoryType = .checkmark
                 } else {
@@ -218,7 +219,7 @@ class ProfileViewController: UIViewController {
         } else {
             cell.accessoryType = .none
         }
-        
+    
     }
     
     
@@ -282,7 +283,7 @@ class ProfileViewController: UIViewController {
 //MARK:- Tableview Delegate, Datasource
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, ExpenableHeaderViewDelegate {
     func toggleSection(header: ExpenableHeaderView, section: Int) {
-        if section < profileSetting.count - 1{
+//        if section < profileSetting.count - 1{
             profileSetting[section].isOpen = !profileSetting[section].isOpen
             tableView.beginUpdates()
             for i in 0..<profileSetting[section].option.count {
@@ -290,7 +291,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
                 
             }
             tableView.endUpdates()
-        }
+//        }
       
     }
     
@@ -339,12 +340,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
             //language
             if indexPath.section == 4 {
                 showCheckmarkLanguage(cell: cell, indexPath: indexPath)
-            } else {
-                cell.accessoryType = .none
-            }
-            
-            // view mode
-            if indexPath.section == 5 {
+//                cell.accessoryType = .checkmark
+            } else if indexPath.section == 5 {
                 showCheckmarkViewMode(cell: cell, indexPath: indexPath)
             } else {
                 cell.accessoryType = .none
