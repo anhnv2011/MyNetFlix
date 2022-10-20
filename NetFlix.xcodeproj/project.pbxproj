@@ -80,10 +80,6 @@
 		04877D5028AFD1F00025517B /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04877D4E28AFD1F00025517B /* ChooseProfileViewController.xib */; };
 		048809A328E8095500B49099 /* SeeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048809A128E8095500B49099 /* SeeAllViewController.swift */; };
 		048809A428E8095500B49099 /* SeeAllViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048809A228E8095500B49099 /* SeeAllViewController.xib */; };
-		0492EED128EDE78200EF8191 /* RepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0492EECF28EDE78200EF8191 /* RepeatViewController.swift */; };
-		0492EED228EDE78200EF8191 /* RepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0492EED028EDE78200EF8191 /* RepeatViewController.xib */; };
-		0492EED928EDE7AB00EF8191 /* RepeatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0492EED728EDE7AB00EF8191 /* RepeatTableViewCell.swift */; };
-		0492EEDA28EDE7AB00EF8191 /* RepeatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0492EED828EDE7AB00EF8191 /* RepeatTableViewCell.xib */; };
 		0496E31928FAC4F700E1FACC /* ViewModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0496E31728FAC4F700E1FACC /* ViewModeViewController.swift */; };
 		0496E31A28FAC4F700E1FACC /* ViewModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0496E31828FAC4F700E1FACC /* ViewModeViewController.xib */; };
 		049AC3C328ECB34B00A00027 /* Film.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 049AC3C128ECB34B00A00027 /* Film.xcdatamodeld */; };
@@ -229,10 +225,6 @@
 		04877D4E28AFD1F00025517B /* ChooseProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseProfileViewController.xib; sourceTree = "<group>"; };
 		048809A128E8095500B49099 /* SeeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewController.swift; sourceTree = "<group>"; };
 		048809A228E8095500B49099 /* SeeAllViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllViewController.xib; sourceTree = "<group>"; };
-		0492EECF28EDE78200EF8191 /* RepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatViewController.swift; sourceTree = "<group>"; };
-		0492EED028EDE78200EF8191 /* RepeatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepeatViewController.xib; sourceTree = "<group>"; };
-		0492EED728EDE7AB00EF8191 /* RepeatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatTableViewCell.swift; sourceTree = "<group>"; };
-		0492EED828EDE7AB00EF8191 /* RepeatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepeatTableViewCell.xib; sourceTree = "<group>"; };
 		0496E31728FAC4F700E1FACC /* ViewModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeViewController.swift; sourceTree = "<group>"; };
 		0496E31828FAC4F700E1FACC /* ViewModeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewModeViewController.xib; sourceTree = "<group>"; };
 		049AC3C228ECB34B00A00027 /* Film.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Film.xcdatamodel; sourceTree = "<group>"; };
@@ -502,7 +494,6 @@
 			children = (
 				044C985328F42DBD00D09CBE /* Language */,
 				04F7160528F085C6002DB4C3 /* Localizable.strings */,
-				0492EECE28EDE73100EF8191 /* Test */,
 				046A8C5728EB2A4B0052666E /* Animation */,
 				04248A7328D1919000CD0876 /* Extension */,
 				0464F3F728695100008F6015 /* Manager */,
@@ -668,17 +659,6 @@
 				048809A228E8095500B49099 /* SeeAllViewController.xib */,
 			);
 			path = SeeAllVC;
-			sourceTree = "<group>";
-		};
-		0492EECE28EDE73100EF8191 /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				0492EECF28EDE78200EF8191 /* RepeatViewController.swift */,
-				0492EED028EDE78200EF8191 /* RepeatViewController.xib */,
-				0492EED728EDE7AB00EF8191 /* RepeatTableViewCell.swift */,
-				0492EED828EDE7AB00EF8191 /* RepeatTableViewCell.xib */,
-			);
-			path = Test;
 			sourceTree = "<group>";
 		};
 		0496E31628FAC4D300E1FACC /* ChangeMode */ = {
@@ -1011,7 +991,6 @@
 				04D789D528677ED7007030DE /* UpcommingViewController.xib in Resources */,
 				04474D7B28FC8F0000A7FC94 /* ShowMoreTableViewCell.xib in Resources */,
 				04FA059828EB1107008628F1 /* AddNewListViewController.xib in Resources */,
-				0492EED228EDE78200EF8191 /* RepeatViewController.xib in Resources */,
 				0419E4F028ED3238002E657C /* PlayerViewController.xib in Resources */,
 				0423F2FF2869F3750075903B /* SearchResultViewController.xib in Resources */,
 				04248A7E28D1D52500CD0876 /* FilmDetailPopUpViewController.xib in Resources */,
@@ -1026,7 +1005,6 @@
 				04BFEB7128EEE63700F1173D /* ShowMoreInforViewController.xib in Resources */,
 				04D789DD28677EF1007030DE /* SearchViewController.xib in Resources */,
 				04F7160328F085C6002DB4C3 /* Localizable.strings in Resources */,
-				0492EEDA28EDE7AB00EF8191 /* RepeatTableViewCell.xib in Resources */,
 				0464F3EF28694CC9008F6015 /* CollectionViewCell.xib in Resources */,
 				04D789CA28677EA5007030DE /* HomeViewController.xib in Resources */,
 			);
@@ -1122,7 +1100,6 @@
 				043B35F628E7048000340D1D /* UIImageView-Extension.swift in Sources */,
 				044C985528F42DFA00D09CBE /* Language.swift in Sources */,
 				0464F3EE28694CC9008F6015 /* CollectionViewCell.swift in Sources */,
-				0492EED128EDE78200EF8191 /* RepeatViewController.swift in Sources */,
 				04DA0EA728FE6010007FA70D /* LoginResponse.swift in Sources */,
 				04A5BCBC28D4D06B00B6C3DF /* LibraryViewController.swift in Sources */,
 				0418F08E28F72B7800A84C87 /* NavigationDelegate.swift in Sources */,
@@ -1140,7 +1117,6 @@
 				04474D6E28FC399B00A7FC94 /* LogoutTableViewCell.swift in Sources */,
 				0464F3FA2869513C008F6015 /* HeaderView.swift in Sources */,
 				04546ADE28D1E9D2002F894B /* DetailFilmButton.swift in Sources */,
-				0492EED928EDE7AB00EF8191 /* RepeatTableViewCell.swift in Sources */,
 				04FD785928F85B4700F318FB /* CircleButton.swift in Sources */,
 				04474D7A28FC8F0000A7FC94 /* ShowMoreTableViewCell.swift in Sources */,
 				047ED7B728E014950006F6B3 /* String-Extension.swift in Sources */,
