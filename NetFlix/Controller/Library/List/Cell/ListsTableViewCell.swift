@@ -34,12 +34,18 @@ class ListsTableViewCell: UITableViewCell {
         typeList.textColor = UIColor.blue
     }
     func configureUI(list: Lists){
-        listName.text = list.name
-        let have = "Have_Label".localized() + " "
-        let string = String(list.itemCount ?? 0) + " "
-        let item = "Items".localized() + " "
-        let watch = "WatchList".localized()
-        numberItemLabel.text = have + string + item + watch
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.listName.text = list.name
+            let have = "Have_Label".localized() + " "
+            let string = String(list.itemCount ?? 0) + " "
+            let item = "Items".localized() + " "
+            let watch = "WatchList".localized()
+            strongSelf.numberItemLabel.text = have + string + item + watch
+//            let url = "\(Constanst.ImageBaseUrl)\(image)"
+//            strongSelf.posterImageView.loadImageUsingCache(url)
+        }
+        
     }
     
     

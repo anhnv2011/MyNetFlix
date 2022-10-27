@@ -21,6 +21,8 @@ class ListsViewController: UIViewController {
         super.viewDidLoad()
         setupLableView()
         getLists()
+        
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -30,7 +32,7 @@ class ListsViewController: UIViewController {
         
     }
 
-    func setupTableView(){
+    private func setupTableView(){
         
         tableView.register(UINib(nibName: "ListsTableViewCell", bundle: nil), forCellReuseIdentifier: ListsTableViewCell.identifier)
         tableView.delegate = self
@@ -39,7 +41,7 @@ class ListsViewController: UIViewController {
         tableView.backgroundColor = UIColor.backgroundColor()
 
     }
-    func updateUI(){
+    private func updateUI(){
         navigationController?.hidesBarsOnSwipe = false
         title = "Lists".localized()
 //        navigationController?.navigationBar.prefersLargeTitles = true
@@ -54,7 +56,7 @@ class ListsViewController: UIViewController {
         }
 
     }
-    func setupLableView(){
+    private func setupLableView(){
         view.addSubview(noListView)
         let text = "No_Label".localized() + " " + "Lists".localized()
         let title = "Create".localized() + " " + "Lists".localized()
@@ -64,7 +66,7 @@ class ListsViewController: UIViewController {
         }
     }
     
-    func getLists(){
+    private func getLists(){
         let sessionid = DataManager.shared.getSaveSessionId()
         let profileid = DataManager.shared.getProfileId()
         APICaller.share.getLists(profileID: profileid, sessionId: sessionid) { [weak self] (result) in
@@ -73,7 +75,7 @@ class ListsViewController: UIViewController {
             case .success(let lists):
                 strongSelf.lists = lists
                 strongSelf.updateUI()
-                print(lists)
+                
                 
             case .failure(let error):
                 strongSelf.makeBasicCustomAlert(title: "error", messaage: error.localizedDescription)
@@ -81,8 +83,20 @@ class ListsViewController: UIViewController {
         }
     }
     
+    private func getListDetail(listID: Int, completion: @escaping (([Film]) -> Void)){
+        APICaller.share.getlistDetail(listID: listID) { [weak self] (reslult) in
+            guard let strongSelf = self else {return}
+            switch reslult {
+            case .success(let films):
+                completion(films)
+               
+            case .failure(let error):
+                strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
+            }
+        }
+    }
     
-    func createWatchList(){
+    private func createWatchList(){
         let vc = AddNewListViewController()
         let popVc = PopupViewController(contentController: vc, popupWidth: 200, popupHeight: 200)
         popVc.transitioningDelegate = transitioningDelegate
@@ -99,7 +113,10 @@ extension ListsViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ListsTableViewCell.identifier, for: indexPath) as! ListsTableViewCell
         let list = lists[indexPath.row]
+//        let listId = list.id
         cell.configureUI(list: list)
+
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -108,9 +125,19 @@ extension ListsViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = DetailWatchListViewController()
+      print("asdasdasdasd")
+        getListDetail(listID: lists[indexPath.row].id!) { [weak self] (films) in
+            guard let strongSelf = self else {return}
+            DispatchQueue.main.async {
+                print("sadadadasdasdsadadasd")
 
-        navigationController?.pushViewController(vc, animated: true)
+                let vc = SeeAllViewController()
+                vc.films = films
+                strongSelf.navigationController?.pushViewController(vc, animated: true)
+            }
+           
+        }
+        
     }
     
 

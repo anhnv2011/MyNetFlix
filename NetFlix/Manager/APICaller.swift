@@ -145,10 +145,9 @@ class APICaller {
             guard let data = data,
                   error == nil else {return}
             do {
-                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                
                 let result = try JSONDecoder().decode(Trending.self, from: data)
                 completion(.success(result.results))
-                //print(result)
             } catch {
                 completion(.failure(error))
                 print(error.localizedDescription)
@@ -527,6 +526,25 @@ extension APICaller {
                 completion(.failure(error))
             }
             
+        }
+        task.resume()
+    }
+    
+    func getlistDetail(listID: Int, completion: @escaping (Result<[Film], Error>) -> Void){
+        guard let url = URL(string: "\(Constanst.baseUrl)3/list/\(listID)?api_key=\(Constanst.ApiKey)&language=en-US") else {return}
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                print(json)
+                let result = try JSONDecoder().decode(DetailListResponse.self, from: data)
+                print(result)
+//                completion(.success(result.items))
+            } catch {
+                completion(.failure(error))
+                print(error.localizedDescription)
+            }
         }
         task.resume()
     }

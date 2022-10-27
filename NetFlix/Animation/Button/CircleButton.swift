@@ -16,6 +16,7 @@ class CircleButton {
             rightConstrain.constant = height
             sender.layer.cornerRadius = sender.frame.height / 2
             vc.view.layoutIfNeeded()
+            sender.backgroundColor = .black
 
         } completion: { (_) in
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 10, options: .curveEaseInOut) {

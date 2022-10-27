@@ -193,6 +193,9 @@ class LoginViewController: UIViewController {
         let value = (view.frame.width - height)/2
         sender.setTitle("", for: .normal)
         sender.clipsToBounds = true
+        errorLabel.isHidden = true
+        dontHaveAccLabel.isHidden = true
+        signUpButton.isHidden = true
         CircleButton.customAnimation(sender: sender, leftConstrain: loginLeftConstrains, rightConstrain: loginRightConstrains, height: value, vc: self) {
             
             let vc = MainTabBarViewController()
@@ -200,7 +203,7 @@ class LoginViewController: UIViewController {
             vc.transitioningDelegate = self.transitionDelegate
             self.present(vc, animated: true, completion: nil)
         }
-
+        
     }
 
     func signup(){
@@ -224,7 +227,7 @@ extension LoginViewController: UITextFieldDelegate{
 }
 
 
-    //MARK:- login func
+    //MARK:- Login func
 extension LoginViewController {
     private func login(sender: UIButton){
         guard let username = self.usernameTextfiled.text, !username.isEmpty,
@@ -270,9 +273,7 @@ extension LoginViewController {
                         strongSelf.errorLabel.isHidden = false
 
                         ShakeButton.shake(sender: sender)
-//                        let aleart = UIAlertController(title: "Error", message: loginresult.status_message ?? "fail", preferredStyle: .alert)
-//                        aleart.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-//                        strongSelf.present(aleart, animated: true, completion: nil)
+                
                     }
                     
                 }
