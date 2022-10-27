@@ -299,12 +299,18 @@ extension LibraryViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LibraryCollectionViewCell.identifier, for: indexPath) as! LibraryCollectionViewCell
         cell.type = self.libraryType
+        
         cell.completionToRoot = { [weak self] in
              self?.navigationController?.popToRootViewController(animated: true)
         }
         cell.completionShow = { [weak self] film in
-            
-            self?.showFilmPopupDetail(film: film)
+            var nfilm = film
+            if indexPath.row == 0 {
+                nfilm.mediaType = "movie"
+            } else {
+                nfilm.mediaType = "tv"
+            }
+            self?.showFilmPopupDetail(film: nfilm)
         }
         
         if indexPath.row == 0 {
@@ -330,7 +336,7 @@ extension LibraryViewController : UICollectionViewDelegate, UICollectionViewData
     
     private func showFilmPopupDetail(film: Film){
         let vc = FilmDetailPopUpViewController()
-        vc.completion = {
+        vc.completionDownload = {
             if let tabItems = self.tabBarController?.tabBar.items {
                 // In this case we want to modify the badge number of the third tab:
                 let tabItem = tabItems[2]

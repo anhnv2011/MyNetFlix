@@ -18,7 +18,7 @@ class PlayerViewController: UIViewController {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self!.setupPlayer()
-                self!.setupUI()
+//                self!.setupUI()
             }
            
         }

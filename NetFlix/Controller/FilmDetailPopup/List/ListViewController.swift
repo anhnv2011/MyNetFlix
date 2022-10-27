@@ -45,19 +45,15 @@ class ListViewController: UIViewController {
    
     
     //MARK:- UI
-    func setupUI(){
+    private func setupUI(){
         setupTextField()
         setupTableView()
-
-        view.backgroundColor = UIColor.viewBackground()
-        creatNewListButton.setTitle("New List", for: .normal)
-        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
-        
-        statusLabel.text = "Add " + "\(name) " + "to one of your list"
+        setupLabel()
+    
         view.backgroundColor = UIColor.viewBackground()
         
     }
-    func setupTableView(){
+    private func setupTableView(){
         
         tableView.register(UINib(nibName: "ListTableViewCell", bundle: nil), forCellReuseIdentifier: ListTableViewCell.identifier)
         tableView.delegate = self
@@ -66,8 +62,13 @@ class ListViewController: UIViewController {
         tableView.backgroundColor = UIColor.viewBackground()
 
     }
-    
-    func setupTextField(){
+    private func setupLabel(){
+        creatNewListButton.setTitle("New List", for: .normal)
+        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
+        
+        statusLabel.text = "Add " + "\(name!) " + "to one of your list"
+    }
+    private func setupTextField(){
         searchTextField.delegate = self
     }
     

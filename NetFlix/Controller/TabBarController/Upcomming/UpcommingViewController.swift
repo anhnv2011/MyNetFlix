@@ -113,9 +113,16 @@ extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
         
         var choseFilm = movie[indexPath.row]
         choseFilm.mediaType = "movie"
-        print(choseFilm)
         vc.film = choseFilm
         vc.view.backgroundColor = .clear
+        vc.completionDownload = {
+            if let tabItems = self.tabBarController?.tabBar.items {
+                // In this case we want to modify the badge number of the third tab:
+                let tabItem = tabItems[2]
+                tabItem.badgeValue = "New"
+            }
+        }
+        
         present(vc, animated: true, completion: nil)
     }
 }

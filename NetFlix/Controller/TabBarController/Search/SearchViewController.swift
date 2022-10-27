@@ -23,7 +23,12 @@ class SearchViewController: UIViewController {
         
         setupUI()
         fetchDiscoverMovies()
-        
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        setupNavigation()
     }
     
     //MARK:- UI
@@ -33,9 +38,11 @@ class SearchViewController: UIViewController {
         setupSearchBar()
         
     }
+    
+    
     func setupNavigation(){
 //        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationController?.navigationItem.largeTitleDisplayMode = .always
+//        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
         navigationController?.hidesBarsOnSwipe = false
         navigationController?.navigationBar.tintColor = UIColor.labelColor()
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
@@ -58,6 +65,8 @@ class SearchViewController: UIViewController {
         searchController.searchBar.delegate = self
         //text in search box
         searchController.searchBar.searchTextField.textColor = UIColor.labelColor()
+        navigationItem.hidesSearchBarWhenScrolling = false
+
         
     }
     
@@ -121,6 +130,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             guard let strongSelf = self else {return}
             let transiton = TransitionDelegate()
             let film = strongSelf.films[indexPath.row]
+            
+            
             let vc = PlayerViewController(film: film)
 //            vc.film = strongSelf.films[indexPath.row]
             
@@ -129,7 +140,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             strongSelf.present(vc, animated: true, completion: nil)
         }
         let film = films[indexPath.row]
-        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
+//        let name = film.originalTitle != nil ? film.originalTitle : film.originalName
         cell.film = film
 //        cell.configDetailMovieTableCell(posterPath: film.posterPath! , name:  name!)
         
@@ -145,7 +156,20 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        let vc = FilmDetailPopUpViewController()
+        vc.completionDownload = {
+            if let tabItems = self.tabBarController?.tabBar.items {
+                // In this case we want to modify the badge number of the third tab:
+                let tabItem = tabItems[2]
+                tabItem.badgeValue = "New"
+            }
+        }
+        var choseFilm = films[indexPath.row]
+        choseFilm.mediaType = "movie"
+        vc.film = choseFilm
+        vc.modalPresentationStyle = .overFullScreen
+        vc.view.backgroundColor = .clear
+        present(vc, animated: true, completion: nil)
         
     }
     
@@ -156,4 +180,23 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             cellAimationFlag.append(indexPath.row)
         }
     }
+    
+    
+    func checkTV(id: Int, originTitle: String, completion: @escaping ((Bool) -> ())){
+       
+        APICaller.share.tvDetailResponse(id: id) { (response) in
+            switch response {
+            case .success(let data):
+                if data.episodeRunTime != nil {
+                    completion(true)
+                } else {
+                    print("")
+                }
+            case .failure(let error):
+                self.makeBasicCustomAlert(title: "error", messaage: error.localizedDescription)
+            }
+        }
+    }
 }
+
+

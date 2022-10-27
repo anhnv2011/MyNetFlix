@@ -18,7 +18,7 @@ class DownloadViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var filmItems = [FilmItem]()
-    var viewMode: DataViewMode = .TableView
+    var viewMode: DataViewMode = .Carousel
     {
         didSet {
             self.setupUI()
@@ -75,7 +75,7 @@ class DownloadViewController: UIViewController {
     //MARK:- UI
     private func setupUI(){
         topView.backgroundColor = UIColor.viewBackground()
-        changViewModeButton.backgroundColor = UIColor.buttonBackground()
+        changViewModeButton.backgroundColor = UIColor.viewBackground()
         changViewModeButton.setTitleColor(UIColor.labelColor(), for: .normal)
         view.backgroundColor = UIColor.backgroundColor()
         if viewMode == .TableView {
@@ -104,12 +104,14 @@ class DownloadViewController: UIViewController {
         downloadTableView.backgroundColor = UIColor.backgroundColor()
     }
     func setupNav(){
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.tintColor = UIColor.labelColor()
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+//
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
+//        navigationController?.navigationBar.tintColor = UIColor.labelColor()
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+       
         title = "Download".localized()
         
         
@@ -148,7 +150,7 @@ class DownloadViewController: UIViewController {
         present(popvc, animated: false, completion: nil)
     }
     
-    func deleteData(index: Int){
+    private func deleteData(index: Int){
         DataPersistenceManager.shared.deleteFilm(model: filmItems[index]) { [weak self] result in
             guard let strongSelf = self else {return}
             switch result {
@@ -161,6 +163,8 @@ class DownloadViewController: UIViewController {
             self?.filmItems.remove(at: index)
         }
     }
+    
+
 }
 
 
@@ -172,6 +176,9 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = downloadTableView.dequeueReusableCell(withIdentifier: UpCommingTableViewCell.identifier, for: indexPath) as! UpCommingTableViewCell
+        cell.completionHandler = {
+            
+        }
         let filmItem = filmItems[indexPath.row]
         let film = Film(adult: filmItem.adult, backdropPath: "", id: Int(filmItem.id), originalLanguage: filmItem.original_language, originalName: filmItem.original_name, originalTitle: filmItem.original_title, overview: filmItem.overview, posterPath: filmItem.poster_path, mediaType: filmItem.media_type, genreIds: nil, popularity: filmItem.popularity, releaseDate: filmItem.release_date, firstAirDate: nil, voteAverage: filmItem.vote_average, voteCount: filmItem.vote_count, originCountry: nil)
         cell.film = film
@@ -182,7 +189,11 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
 //        let name = film.original_name != nil ? film.original_name : film.original_title
         
 //        cell.configDetailMovieTableCell(posterPath: poster!, name: name)
-        
+        cell.completionHandler = {
+            let vc = PlayerViewController(film: film)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
         return cell
     }
     
@@ -195,16 +206,7 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-//            let alert = UIAlertController(title: "Cảnh báo", message: "Are you sure?", preferredStyle: .alert)
-//            let deleteButton = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
-//                guard let strongSelf = self else {return}
-//                strongSelf.deleteData(index: indexPath.row)
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            }
-//            let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//            alert.addAction(deleteButton)
-//            alert.addAction(cancelButton)
-//            present(alert, animated: true, completion: nil)
+//
             
             let cancelAction = ActionAlert(with: "Cancel".localized(), style: .normal) {[weak self] in
                 guard let strongSelf = self else {return}
@@ -273,7 +275,16 @@ extension DownloadViewController: UICollectionViewDataSource, UICollectionViewDe
 //        cell.layer.transform = animateCell(cellFrame: cell.frame)
         return cell
     }
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let filmItem = filmItems[indexPath.row]
+        let film = Film(adult: filmItem.adult, backdropPath: "", id: Int(filmItem.id), originalLanguage: filmItem.original_language, originalName: filmItem.original_name, originalTitle: filmItem.original_title, overview: filmItem.overview, posterPath: filmItem.poster_path, mediaType: filmItem.media_type, genreIds: nil, popularity: filmItem.popularity, releaseDate: filmItem.release_date, firstAirDate: nil, voteAverage: filmItem.vote_average, voteCount: filmItem.vote_count, originCountry: nil)
+        let vc = PlayerViewController(film: film)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+        
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let collectionView = scrollView as? UICollectionView {
             for cell in collectionView.visibleCells as! [CarouselCollectionViewCell] {

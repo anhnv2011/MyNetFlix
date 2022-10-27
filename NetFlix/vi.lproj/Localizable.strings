@@ -11,6 +11,7 @@
 "No_Label" = "Không";
 "Have_Label" = "Có";
 "Items" = "phim trong";
+"Play" = "Chơi";
 "WatchList" = "Danh sách";
 "Favorite" = "Yêu thích";
 "Bookmark" = "Đánh dấu";
@@ -40,3 +41,4 @@
 "Cancel" = "Thoát";
 "Are you sure?" = "Bạn chắc chứ";
 "See all" = "Tất cả";
+"Show information" = "Hiển thị thông tin";

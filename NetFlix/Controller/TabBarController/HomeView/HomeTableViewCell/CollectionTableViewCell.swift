@@ -23,6 +23,7 @@ class CollectionTableViewCell: UITableViewCell {
     
     var delegate: CollectionTableViewCellDelegate?
     var previewCompletion: ((IndexPath, Int)->Void)?
+    var showInforCompletion: ((Film, Int)->Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -111,22 +112,25 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
         } actionProvider: { _ -> UIMenu? in
             
         
-            let yourlistAction = UIAction(title: "Your list", image: UIImage(systemName: "list.dash")?.withTintColor(.red, renderingMode: .automatic), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
-                print("Your list")
+            let yourlistAction = UIAction(title: "Show information".localized(), image: UIImage(systemName: "list.dash")?.withTintColor(.red, renderingMode: .automatic), identifier: nil, discoverabilityTitle: nil, state: .off){ [weak self] _ in
+                guard let strongSelf = self else {return}
+                let film = strongSelf.films[indexPath.row]
+
+                strongSelf.showInforCompletion!(film, strongSelf.sectionInTable)
             }
-            let favoriteAction = UIAction(title: "Favorite", image: UIImage(systemName: "heart.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
-                print("Favorite")
-            }
+//            let favoriteAction = UIAction(title: "Favorite", image: UIImage(systemName: "heart.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Favorite")
+//            }
+//
+//            let watchListAction = UIAction(title: "Watch list", image: UIImage(systemName: "bookmark.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Watch list")
+//            }
+//            let rateItAction = UIAction(title: "Rate it", image: UIImage(systemName: "star.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+//                print("Rate it")
+//            }
             
-            let watchListAction = UIAction(title: "Watch list", image: UIImage(systemName: "bookmark.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
-                print("Watch list")
-            }
-            let rateItAction = UIAction(title: "Rate it", image: UIImage(systemName: "star.fill"), identifier: nil, discoverabilityTitle: nil, state: .off){_ in
-                print("Rate it")
-            }
             
-            
-            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [yourlistAction, favoriteAction, watchListAction, rateItAction])
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [yourlistAction])
         }
         
         

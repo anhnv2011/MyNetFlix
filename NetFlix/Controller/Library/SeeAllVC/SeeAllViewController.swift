@@ -96,7 +96,7 @@ class SeeAllViewController: UIViewController {
     
     private func showFilmPopupDetail(film: Film){
         let vc = FilmDetailPopUpViewController()
-        vc.completion = {
+        vc.completionDownload = {
             if let tabItems = self.tabBarController?.tabBar.items {
                 // In this case we want to modify the badge number of the third tab:
                 let tabItem = tabItems[2]

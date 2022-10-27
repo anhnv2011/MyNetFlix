@@ -28,7 +28,7 @@ class CarouselCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        nameLabel.textColor = UIColor.labelColor()
+        nameLabel.textColor = UIColor.white
         backgroundColor = UIColor.cellBackground()
     }
 

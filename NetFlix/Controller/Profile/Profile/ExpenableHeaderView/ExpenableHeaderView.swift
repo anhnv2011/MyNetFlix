@@ -16,6 +16,7 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var sectionTitleLabel: UILabel!
+    @IBOutlet weak var chevronImage: UIImageView!
     var delegate: ExpenableHeaderViewDelegate?
     
     var section: Int!

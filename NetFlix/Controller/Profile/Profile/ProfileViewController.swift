@@ -201,7 +201,7 @@ class ProfileViewController: UIViewController {
         if profileSetting[indexPath.section].isOpen == true {
             switch language {
             case "en":
-
+                
                 if indexPath.row == 0 {
                     cell.accessoryType = .checkmark
                 } else {
@@ -219,20 +219,20 @@ class ProfileViewController: UIViewController {
         } else {
             cell.accessoryType = .none
         }
-    
+        
     }
     
     
     private func selectedViewMode(mode: String){
         
-          makeBasicCustomAlert(title: "Sorry", messaage: "Function will comming soon")
+        makeBasicCustomAlert(title: "Sorry", messaage: "Function will comming soon")
         
-//        DataManager.shared.saveViewMode(mode: mode)
-//        NotificationCenter.default.post(name: Notification.Name("ViewMode"), object: nil)
-//        DispatchQueue.main.async {
-//            self.setupUI()
-//
-//        }
+        //        DataManager.shared.saveViewMode(mode: mode)
+        //        NotificationCenter.default.post(name: Notification.Name("ViewMode"), object: nil)
+        //        DispatchQueue.main.async {
+        //            self.setupUI()
+        //
+        //        }
         
     }
     
@@ -283,16 +283,22 @@ class ProfileViewController: UIViewController {
 //MARK:- Tableview Delegate, Datasource
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, ExpenableHeaderViewDelegate {
     func toggleSection(header: ExpenableHeaderView, section: Int) {
-//        if section < profileSetting.count - 1{
-            profileSetting[section].isOpen = !profileSetting[section].isOpen
-            tableView.beginUpdates()
-            for i in 0..<profileSetting[section].option.count {
-                tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .left)
-                
-            }
-            tableView.endUpdates()
-//        }
-      
+        //        if section < profileSetting.count - 1{
+        
+        if profileSetting[section].isOpen {
+            header.chevronImage.image = UIImage(systemName: "chevron.right")
+        } else {
+            header.chevronImage.image = UIImage(systemName: "chevron.down")
+        }
+        profileSetting[section].isOpen = !profileSetting[section].isOpen
+        tableView.beginUpdates()
+        for i in 0..<profileSetting[section].option.count {
+            tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .left)
+            
+        }
+        tableView.endUpdates()
+        //        }
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -340,7 +346,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
             //language
             if indexPath.section == 4 {
                 showCheckmarkLanguage(cell: cell, indexPath: indexPath)
-//                cell.accessoryType = .checkmark
+                //                cell.accessoryType = .checkmark
             } else if indexPath.section == 5 {
                 showCheckmarkViewMode(cell: cell, indexPath: indexPath)
             } else {

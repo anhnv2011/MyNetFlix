@@ -19,8 +19,14 @@ class FilmDetailPopUpViewController: UIViewController {
     @IBOutlet weak var filmNameLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
-    
     @IBOutlet weak var rateLabel: UILabel!
+    
+    @IBOutlet weak var playLabel: UILabel!
+    @IBOutlet weak var listLabel: UILabel!
+    @IBOutlet weak var favoriteLabel: UILabel!
+    @IBOutlet weak var watchListLabel: UILabel!
+    @IBOutlet weak var downloadLabel: UILabel!
+    
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var playButton: DetailFilmButton!
     @IBOutlet weak var downloadButton: DetailFilmButton!
@@ -30,7 +36,7 @@ class FilmDetailPopUpViewController: UIViewController {
     @IBOutlet weak var showMoreInforButton: UIButton!
     
     
-    var completion: (() -> Void)? //badgeValue
+    var completionDownload: (() -> Void)? //badgeValue
     var film:Film!
     var mediaType = ""
     var mediaId = 0
@@ -131,18 +137,19 @@ class FilmDetailPopUpViewController: UIViewController {
     }
     //MARK:- UI
     func setupUI(){
-        setupRateStar()
-
-//        view.alpha = 0.5
         view.backgroundColor = UIColor.popupBackground()
-//        view.backgroundColor = .clear
+        setupRateStar()
+        setupLabel()
+        setupPosterImage()
+        setupSubView()
         
-        contenView.layer.cornerRadius = 20
-        contenView.backgroundColor = UIColor.viewBackground()
+//        let rate = (film.voteAverage!) / 2.0
+//        cosmosView.rating = rate
         
-        let url = "\(Constanst.ImageBaseUrl)\(film?.posterPath ?? "")"
-        posterFilmImage.loadImageUsingCache(url)
-        
+         
+    }
+    
+    private func setupLabel(){
         let name = film.originalTitle != nil ? film.originalTitle : film.originalName
         filmNameLabel.text = name
         
@@ -151,11 +158,24 @@ class FilmDetailPopUpViewController: UIViewController {
 
         let overview = film.overview
         overviewLabel.text = overview
+      
+        rateLabel.sizeToFit()
         
-        let rate = (film.voteAverage!) / 2.0
-        cosmosView.rating = rate
-        
-        
+        playLabel.text = "Play".localized()
+        listLabel.text = "Lists".localized()
+        favoriteLabel.text = "Favorite".localized()
+        watchListLabel.text = "WatchList".localized()
+        downloadLabel.text = "Download".localized()
+    }
+    
+    private func setupPosterImage(){
+        let url = "\(Constanst.ImageBaseUrl)\(film?.posterPath ?? "")"
+        posterFilmImage.loadImageUsingCache(url)
+    }
+    
+    private func setupSubView(){
+        contenView.layer.cornerRadius = 20
+        contenView.backgroundColor = UIColor.viewBackground()
     }
     func setupFavoriteButton(){
         if isFavorited == false {
@@ -186,7 +206,6 @@ class FilmDetailPopUpViewController: UIViewController {
     
     
    
-    
     // Star
     private func setupRateStar(){
         //can edit star
@@ -194,7 +213,7 @@ class FilmDetailPopUpViewController: UIViewController {
         //fill mode
         cosmosView.settings.fillMode = .half
         // Change the size of the stars
-        cosmosView.settings.starSize = 25
+        cosmosView.settings.starSize = 15
         cosmosView.didFinishTouchingCosmos = { [weak self] rating in
             guard let strongSelf = self else {
                 return
@@ -202,6 +221,8 @@ class FilmDetailPopUpViewController: UIViewController {
             strongSelf.ratingFilm(rating: rating * 2)
             
         }
+        let rate = (film.voteAverage!) / 2.0
+        cosmosView.rating = rate
     }
     
     
@@ -216,8 +237,8 @@ class FilmDetailPopUpViewController: UIViewController {
         case playButton:
             openPlayVC()
         case favoriteButton:
-            print(mediaType)
-            print(mediaId)
+//            print(mediaType)
+//            print(mediaId)
             markFavarite(mediaType: mediaType, mediaId: mediaId, type: !isFavorited)
             isFavorited = !isFavorited
         case watchListButton:
@@ -236,7 +257,7 @@ class FilmDetailPopUpViewController: UIViewController {
         
     }
     
-    func openPlayVC(){
+    private func openPlayVC(){
         let vc = PlayerViewController(film: film)
 //        vc.transitioningDelegate = self
 //        vc.transitioningDelegate = transitionDelegate
@@ -244,7 +265,7 @@ class FilmDetailPopUpViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
-    func downloadFilm(){
+    private func downloadFilm(){
 
         guard let youtubeLink = youtubeLink else {return}
         
@@ -285,11 +306,11 @@ class FilmDetailPopUpViewController: UIViewController {
 //            }
 //        }
 
-        completion!()
+        completionDownload!()
         
     }
     
-    func listFilm(){
+    private func listFilm(){
         let vc = ListViewController()
         vc.film = self.film
         let popVC = PopupViewController(contentController: vc, popupWidth: 300, popupHeight: 300)
@@ -299,14 +320,14 @@ class FilmDetailPopUpViewController: UIViewController {
     }
     
     
-    func showMore(){
+    private func showMore(){
         let vc = ShowMoreInforViewController()
         vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .fullScreen
         vc.film = self.film
         vc.youtubeLink = self.youtubeLink
         vc.completionShowMore = {
-            self.completion!()
+            self.completionDownload!()
         }
         present(vc, animated: true, completion: nil)
     }

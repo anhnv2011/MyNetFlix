@@ -610,7 +610,7 @@ extension APICaller {
         guard let url = URL(string: "\(Constanst.baseUrl)3/account/\(profileID)/rated/\(mediaType)?api_key=\(Constanst.ApiKey)&language=en-US&session_id=\(sessionID)&sort_by=created_at.asc&page=1")
             else {return}
         
-        print("rate", url)
+        
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data,
                   error == nil else {return}
@@ -684,6 +684,45 @@ extension APICaller {
         task.resume()
     }
 }
+
+    //MARK:- Detail
+extension APICaller {
+    func movieDetailResponse(id: Int, completion: @escaping (Result<MovieDetailResponse, Error>) -> Void){
+        
+        let urlString = "https://api.themoviedb.org/3/movie/\(id)?api_key=dc7bb41154658ee8cd23ecf49d7203c2&language=en-US"
+        guard let url = URL(string: urlString) else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
+                let result = try JSONDecoder().decode(MovieDetailResponse.self, from: data)
+                
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    func tvDetailResponse(id: Int, completion: @escaping (Result<TVDetailResponse, Error>) -> Void){
+        
+        let urlString = "https://api.themoviedb.org/3/tv/\(id)?api_key=dc7bb41154658ee8cd23ecf49d7203c2&language=en-US"
+        guard let url = URL(string: urlString) else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
+                let result = try JSONDecoder().decode(TVDetailResponse.self, from: data)
+                
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+}
+
 
 extension APICaller {
     

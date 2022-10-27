@@ -68,12 +68,67 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        let vc = FilmDetailPopUpViewController()
+        var choseFilm = films[indexPath.row]
+        print("choose", choseFilm.overview)
+//        strongSelf.checkMovie(id: film.id!, posterPath: film.posterPath ?? "") { (isMovie) in
+//            if isMovie == true {
+//                film.mediaType = "movie"
+//            } else {
+//                film.mediaType = "tv"
+//            }
+//            print(film.mediaType)
+//        }
         
+        vc.completionDownload = {
+            if let tabItems = self.tabBarController?.tabBar.items {
+                // In this case we want to modify the badge number of the third tab:
+                let tabItem = tabItems[2]
+                tabItem.badgeValue = "New"
+            }
+        }
+        checkMovie(id: choseFilm.id!, overview: choseFilm.overview!) { (isMovie) in
+            if isMovie == true {
+                choseFilm.mediaType = "movie"
+            } else {
+                choseFilm.mediaType = "tv"
+
+            }
+            print(choseFilm)
+//            print(choseFilm.mediaType)
+//            print("add more", choseFilm)
+            vc.film = choseFilm
+            DispatchQueue.main.async {
+                vc.modalPresentationStyle = .overFullScreen
+
+                vc.view.backgroundColor = .clear
+                self.present(vc, animated: true, completion: nil)
+            }
+            
+        }
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         DisplayCollectionCell.displayCollectionCell(cell: cell, indexPath: indexPath)
         
+    }
+}
+extension UIViewController {
+    func checkMovie(id: Int, overview: String, completion: @escaping ((Bool) -> ())){
+        APICaller.share.movieDetailResponse(id: id) { (response) in
+            switch response {
+            case .success(let succes):
+//                print("ssad", succes.overview)
+                if succes.overview == overview {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            case .failure(let error):
+                self.makeBasicCustomAlert(title: "error", messaage: error.localizedDescription)
+            }
+        }
     }
 }

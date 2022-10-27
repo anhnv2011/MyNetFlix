@@ -10,7 +10,8 @@ import youtube_ios_player_helper
 
 class ShowMoreInforViewController: UIViewController {
     
-    
+    @IBOutlet weak var safeView: UIView!
+    @IBOutlet weak var bottomSafeView: UIView!
     @IBOutlet weak var similarcollectionView: UICollectionView!
     @IBOutlet weak var playerView: YTPlayerView!
     
@@ -49,14 +50,18 @@ class ShowMoreInforViewController: UIViewController {
         setupCollectionView()
         setupLabel()
         setupButton()
+        setupSubView()
     }
-    
+    private func setupSubView(){
+        safeView.backgroundColor = UIColor.tabbarBackground().withAlphaComponent(0.9)
+        bottomSafeView.backgroundColor = UIColor.tabbarBackground().withAlphaComponent(0.9)
+    }
     private func setupPlayer(){
         //        playerView.load(withVideoId: "bsM1qdGAVbU")
-        if let link = youtubeLink {
+        if let youtubeLink = youtubeLink {
             playerView.delegate = self
             
-            playerView!.load(withVideoId: youtubeLink!, playerVars: ["playsinline": 1])
+            playerView!.load(withVideoId: youtubeLink, playerVars: ["playsinline": 1])
         } else {
             print("not found")
         }

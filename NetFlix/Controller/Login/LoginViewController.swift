@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var dontHaveAccLabel: UILabel!
+    @IBOutlet weak var errorLabel: UILabel!
     
     
     @IBOutlet weak var usernameTextfiled: UITextField!
@@ -95,6 +96,8 @@ class LoginViewController: UIViewController {
         
         dontHaveAccLabel.text = "Don't have an account ?".localized()
         dontHaveAccLabel.textColor = UIColor.labelColor()
+        
+        errorLabel.isHidden = true
     }
     
     private func setupButton(){
@@ -153,7 +156,7 @@ class LoginViewController: UIViewController {
 ////        }
 //
 //    }
-    //MARK:- Action
+    //MARK:- Button Action
     @IBAction func buttonAction(_ sender: UIButton) {
         
         switch sender {
@@ -199,6 +202,30 @@ class LoginViewController: UIViewController {
         }
 
     }
+
+    func signup(){
+        guard let url = URL(string: "https://www.themoviedb.org/signup") else {return}
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true, completion: nil)
+    }
+    func showPassword(){
+        passwordTextfield.isSecureTextEntry.toggle()
+        passwordTextfield.isSecureTextEntry ? showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal   ) : showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+    }
+
+}
+
+    //MARK:- TextFielf Delegate
+extension LoginViewController: UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        showPasswordButton.isHidden = textField.text == nil
+    }
+}
+
+
+    //MARK:- login func
+extension LoginViewController {
     private func login(sender: UIButton){
         guard let username = self.usernameTextfiled.text, !username.isEmpty,
               let password = self.passwordTextfield.text, !password.isEmpty else {
@@ -212,73 +239,67 @@ class LoginViewController: UIViewController {
             
             case .success(let auth):
                 let requestToken = auth.request_token
-             
-                print(requestToken)
+                strongSelf.creatSessionLogin(username: username, password: password, requestToken: requestToken, sender: sender)
                 
-                APICaller.share.creatSessionWithLogin(username: username, password: password, requestToken: requestToken) { [weak self]result in
-                    guard let strongSelf = self else {return}
-                    switch result{
-                    case .success(let loginresult):
-                        
-                        let success = loginresult
-                            .success
-                        if success == true {
-                            print("ssssssssssssssssssssss")
-                            APICaller.share.getSessionId(requesToken: requestToken) { [weak self] result in
-                                guard let strongSelf = self else {return}
-                                switch result{
-                                case .success(let sessionID):
-                                    print("aaa")
-                                    DispatchQueue.main.async {
-                                        DataManager.shared.saveSessionId(id: sessionID)
-                                        strongSelf.loginAnimation(sender: sender)
-
-                                    }
-                                   
-                                case .failure(let error):
-                                    print(error.localizedDescription)
-                                
-                                }
-                            }
-                            
-                        } else {
-                            
-                            strongSelf.makeBasicCustomAlert(title: "Error", messaage: loginresult.status_message ?? "fail")
-                            DispatchQueue.main.async {
-                                ShakeButton.shake(sender: sender)
-                                let aleart = UIAlertController(title: "Error", message: loginresult.status_message ?? "fail", preferredStyle: .alert)
-                                aleart.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                                strongSelf.present(aleart, animated: true, completion: nil)
-                            }
-                            
-                        }
-                    case .failure(let error):
-                        strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
-                    }
-                }
                 
             case .failure(let error):
                 strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
         }
     }
-    func signup(){
-        guard let url = URL(string: "https://www.themoviedb.org/signup") else {return}
-        let vc = SFSafariViewController(url: url)
-        present(vc, animated: true, completion: nil)
+    
+    private func creatSessionLogin(username: String, password:String, requestToken: String, sender: UIButton){
+        APICaller.share.creatSessionWithLogin(username: username, password: password, requestToken: requestToken) { [weak self]result in
+            guard let strongSelf = self else {return}
+            switch result{
+            case .success(let loginresult):
+                
+                let success = loginresult
+                    .success
+                if success == true {
+                    print("ssssssssssssssssssssss")
+                    strongSelf.getSesionID(requestToken: requestToken, sender: sender)
+                    
+                } else {
+                    
+//                    strongSelf.makeBasicCustomAlert(title: "Error", messaage: loginresult.status_message ?? "fail")
+                    
+                    
+                    DispatchQueue.main.async {
+                        strongSelf.errorLabel.text = loginresult.status_message ?? "fail"
+                        strongSelf.errorLabel.isHidden = false
+
+                        ShakeButton.shake(sender: sender)
+//                        let aleart = UIAlertController(title: "Error", message: loginresult.status_message ?? "fail", preferredStyle: .alert)
+//                        aleart.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+//                        strongSelf.present(aleart, animated: true, completion: nil)
+                    }
+                    
+                }
+            case .failure(let error):
+                strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
+            }
+        }
     }
-    func showPassword(){
-        passwordTextfield.isSecureTextEntry.toggle()
-        passwordTextfield.isSecureTextEntry ? showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal   ) : showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-    }
+    
+    
+    private func getSesionID(requestToken: String, sender: UIButton){
+        APICaller.share.getSessionId(requesToken: requestToken) { [weak self] result in
+            guard let strongSelf = self else {return}
+            switch result{
+            case .success(let sessionID):
+                print("aaa")
+                DispatchQueue.main.async {
+                    DataManager.shared.saveSessionId(id: sessionID)
+                    strongSelf.loginAnimation(sender: sender)
 
-}
-
-
-extension LoginViewController: UITextFieldDelegate{
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        showPasswordButton.isHidden = textField.text == nil
+                }
+               
+            case .failure(let error):
+                print(error.localizedDescription)
+            
+            }
+        }
     }
 }
 

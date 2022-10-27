@@ -283,6 +283,29 @@ class HomeViewController: UIViewController {
         
     }
     
+    private func showPopupInfor(film: Film, tableCellNumber: Int){
+        let vc = FilmDetailPopUpViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        var choosefilm = film
+        
+        //Vài kết quả có kiểu media là nil nên cần chắc chắn
+        if tableCellNumber == 3 || tableCellNumber == 5 || tableCellNumber == 1 {
+            choosefilm.mediaType = "movie"
+        }
+        if tableCellNumber == 4 || tableCellNumber == 6 || tableCellNumber == 2 {
+            choosefilm.mediaType = "tv"
+        }
+        vc.film = choosefilm
+
+        vc.completionDownload = {
+            if let tabItems = self.tabBarController?.tabBar.items {
+                // In this case we want to modify the badge number of the third tab:
+                let tabItem = tabItems[2]
+                tabItem.badgeValue = "New"
+            }
+        }
+        present(vc, animated: true, completion: nil)
+    }
     //MARK:- Fetch data
     func fetchData(){
         getAvatar()
@@ -403,8 +426,9 @@ class HomeViewController: UIViewController {
             guard let strongSelf = self else {return}
             strongSelf.tableView.reloadData()
         }
-       
     }
+    
+    
 }
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -423,6 +447,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.previewCompletion = { [weak self] indexpath, sectionInTable in
             guard let strongSelf = self else {return}
             strongSelf.showPlayer(indexPath: indexpath, sectionInTable: sectionInTable)
+        }
+        cell.showInforCompletion = { [weak self] film, sectionInTable in
+            guard let strongSelf = self else {return}
+            strongSelf.showPopupInfor(film: film, tableCellNumber: sectionInTable)
+
         }
         cell.delegate = self
         
@@ -569,13 +598,9 @@ extension HomeViewController: CollectionTableViewCellDelegate{
         if tableCellNumber == 4 || tableCellNumber == 6 || tableCellNumber == 2 {
             choosefilm.mediaType = "tv"
         }
-                
-//        print(type)
-//        vc.mediaType = type
-        
         vc.film = choosefilm
 
-        vc.completion = {
+        vc.completionDownload = {
             if let tabItems = self.tabBarController?.tabBar.items {
                 // In this case we want to modify the badge number of the third tab:
                 let tabItem = tabItems[2]

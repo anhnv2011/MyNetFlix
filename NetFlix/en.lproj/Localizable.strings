@@ -11,6 +11,7 @@
 "No_Label" = "No";
 "Have_Label" = "Have";
 "Items" = "Items in";
+"Play" = "Play";
 "WatchList" = "WatchList";
 "Favorite" = "Favorite";
 "Lists" = "Lists";
@@ -39,4 +40,4 @@
 "Cancel" = "Cancel";
 "Are you sure?" = "Are you sure?";
 "See all" = "See all";
-
+"Show information" = "Show information";
