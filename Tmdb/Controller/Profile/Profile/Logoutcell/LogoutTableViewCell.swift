@@ -1,6 +1,6 @@
 //
 //  LogoutTableViewCell.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/16/22.
 //

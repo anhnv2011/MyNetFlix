@@ -1,6 +1,6 @@
 //
 //  CreatLabelView.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 9/25/22.
 //

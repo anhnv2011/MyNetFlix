@@ -1,6 +1,6 @@
 //
 //  SeeAllCollectionViewCell.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/1/22.
 //

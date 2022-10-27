@@ -1,6 +1,6 @@
 //
 //  SimpleOver.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/11/22.
 //
@@ -83,7 +83,7 @@ class SimpleOver: NSObject, UIViewControllerAnimatedTransitioning {
 
 ////
 ////  SimpleOver.swift
-////  NetFlix
+////  Tmdb
 ////
 ////  Created by MAC on 10/11/22.
 ////

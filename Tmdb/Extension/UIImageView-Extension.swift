@@ -1,6 +1,6 @@
 //
 //  UIImageView-Extension.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 9/30/22.
 //

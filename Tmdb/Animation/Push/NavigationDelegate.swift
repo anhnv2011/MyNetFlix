@@ -1,6 +1,6 @@
 //
 //  CustomNavigationController.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/13/22.
 //

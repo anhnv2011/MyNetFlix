@@ -1,6 +1,6 @@
 //
 //  DiscoveryButton.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 9/13/22.
 //

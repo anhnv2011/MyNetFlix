@@ -1,6 +1,6 @@
 //
 //  HomeViewController.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 8/26/22.
 //

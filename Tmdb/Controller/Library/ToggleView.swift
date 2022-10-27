@@ -1,6 +1,6 @@
 //
 //  ToggleView.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 9/16/22.
 //

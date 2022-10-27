@@ -1,6 +1,6 @@
 //
 //  SessionId.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 7/25/22.
 //

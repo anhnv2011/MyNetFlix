@@ -1,6 +1,6 @@
 //
 //  TableSectionHeader.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 9/28/22.
 //

@@ -1,6 +1,6 @@
 //
 //  DetailFilm.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 9/29/22.
 //

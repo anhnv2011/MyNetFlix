@@ -1,6 +1,6 @@
 //
 //  TVDetailResponse.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/22/22.
 //

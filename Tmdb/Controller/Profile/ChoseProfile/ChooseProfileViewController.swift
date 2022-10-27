@@ -1,6 +1,6 @@
 //
 //  ChooseProfileViewController.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 8/19/22.
 //

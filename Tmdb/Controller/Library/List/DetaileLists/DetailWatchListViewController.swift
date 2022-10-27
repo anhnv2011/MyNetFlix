@@ -1,6 +1,6 @@
 //
 //  DetailWatchListViewController.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/11/22.
 //

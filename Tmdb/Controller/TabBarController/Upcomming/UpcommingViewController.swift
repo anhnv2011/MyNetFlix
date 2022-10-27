@@ -1,6 +1,6 @@
 //
 //  UpcommingViewController.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 6/26/22.
 //

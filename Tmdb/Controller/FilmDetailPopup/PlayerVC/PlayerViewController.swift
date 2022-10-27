@@ -1,6 +1,6 @@
 //
 //  PlayerViewController.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/5/22.
 //

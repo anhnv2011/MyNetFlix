@@ -1,6 +1,6 @@
 //
 //  LoginResponse.swift
-//  NetFlix
+//  Tmdb
 //
 //  Created by MAC on 10/18/22.
 //
