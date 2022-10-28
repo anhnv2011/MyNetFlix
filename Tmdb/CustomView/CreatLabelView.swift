@@ -30,7 +30,7 @@ class CreatLabelView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.labelColor(), for: .normal)
         button.backgroundColor = UIColor.buttonBackground()
-        button.layer.cornerRadius = 12
+        button.layer.cornerRadius = ConfigConstant.buttonCornerRadius
         return button
     }()
 

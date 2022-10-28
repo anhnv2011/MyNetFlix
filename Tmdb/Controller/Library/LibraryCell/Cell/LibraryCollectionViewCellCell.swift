@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class LibraryCollectionViewCellCell: UICollectionViewCell {
     static let identifier =  "LibraryCollectionViewCellCell"
     
@@ -16,12 +16,16 @@ class LibraryCollectionViewCellCell: UICollectionViewCell {
         didSet {
 //
             let url = "https://image.tmdb.org/t/p/w500/\(film?.posterPath ?? "")"
-            posterImage.loadImageUsingCache(url)
+//            posterImage.loadImageUsingCache(url)
+            posterImage.sd_setImage(with: URL(string: url), completed: nil)
         }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
         
+    }
+    override func prepareForReuse() {
+        posterImage.image = nil
     }
 
 }

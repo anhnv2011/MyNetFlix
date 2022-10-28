@@ -80,18 +80,21 @@ class ShowMoreInforViewController: UIViewController {
         playButton.backgroundColor = UIColor.buttonBackground()
         playButton.tintColor = UIColor.labelColor()
         playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        playButton.layer.cornerRadius = ConfigConstant.buttonCornerRadius
         
         downloadButton.setTitle("Download".localized(), for: .normal)
         downloadButton.setTitleColor(UIColor.labelColor(), for: .normal)
         downloadButton.backgroundColor = UIColor.buttonBackground()
         downloadButton.tintColor = UIColor.labelColor()
         downloadButton.setImage(UIImage(systemName: "square.and.arrow.down.fill"), for: .normal)
+        downloadButton.layer.cornerRadius = ConfigConstant.buttonCornerRadius
         
         shareButton.setTitle("   Share".localized(), for: .normal)
         shareButton.setTitleColor(UIColor.labelColor(), for: .normal)
         shareButton.tintColor = UIColor.labelColor()
         shareButton.backgroundColor = UIColor.buttonBackground()
         shareButton.setImage(UIImage(systemName: "square.and.arrow.up.fill"), for: .normal)
+        shareButton.layer.cornerRadius = ConfigConstant.buttonCornerRadius
     }
     func setupCollectionView(){
         similarcollectionView.register(UINib(nibName: "ShowMoreTableViewCell", bundle: nil), forCellWithReuseIdentifier: ShowMoreTableViewCell.identifier)
@@ -214,7 +217,7 @@ class ShowMoreInforViewController: UIViewController {
                         guard let strongSelf = self else {return}
                         switch result {
                         case .success():
-                            NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+                            NotificationCenter.default.post(name: NSNotification.Name.downloadNotiName, object: nil)
                             strongSelf.makeBasicCustomAlert(title: "Status", messaage: "Downloading")
                         case .failure(let error):
                             strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)

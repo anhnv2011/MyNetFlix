@@ -15,7 +15,7 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else {return}
-                let url = "\(Constanst.ImageBaseUrl)\(strongSelf.film?.poster_path ?? "")"
+                let url = "\(Constant.ImageBaseUrl)\(strongSelf.film?.poster_path ?? "")"
                 strongSelf.posterImageView.loadImageUsingCache(url)
                 guard let name = strongSelf.film?.original_name != nil ? strongSelf.film?.original_name : strongSelf.film?.original_title else {return}
 

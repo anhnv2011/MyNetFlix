@@ -38,7 +38,8 @@ class ListsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor.backgroundColor()
+        tableView.backgroundColor = UIColor.viewBackground()
+        
 
     }
     private func updateUI(){
@@ -106,31 +107,48 @@ class ListsViewController: UIViewController {
 
 }
 extension ListsViewController: UITableViewDelegate, UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return lists.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        lists.count
+//        lists.count
+        1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ListsTableViewCell.identifier, for: indexPath) as! ListsTableViewCell
-        let list = lists[indexPath.row]
-//        let listId = list.id
-        cell.configureUI(list: list)
-
-        
+        let list = lists[indexPath.section]
+        if let listId = list.id {
+            getListDetail(listID: listId) {(films) in
+                if let poster = films.randomElement()?.posterPath {
+                    cell.configureUI(list: list, poster: poster)
+                } else {
+                    cell.configureUI(list: list, poster: nil)
+                }
+            }
+        }
+      
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         150
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        20
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
       print("asdasdasdasd")
         getListDetail(listID: lists[indexPath.row].id!) { [weak self] (films) in
             guard let strongSelf = self else {return}
             DispatchQueue.main.async {
-                print("sadadadasdasdsadadasd")
-
                 let vc = SeeAllViewController()
                 vc.films = films
                 strongSelf.navigationController?.pushViewController(vc, animated: true)

@@ -33,7 +33,13 @@ class ListsTableViewCell: UITableViewCell {
         numberItemLabel.textColor = UIColor.labelColor()
         typeList.textColor = UIColor.blue
     }
-    func configureUI(list: Lists){
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
+    }
+    func configureUI(list: Lists, poster: String?){
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else {return}
             strongSelf.listName.text = list.name
@@ -42,11 +48,14 @@ class ListsTableViewCell: UITableViewCell {
             let item = "Items".localized() + " "
             let watch = "WatchList".localized()
             strongSelf.numberItemLabel.text = have + string + item + watch
-//            let url = "\(Constanst.ImageBaseUrl)\(image)"
-//            strongSelf.posterImageView.loadImageUsingCache(url)
+            guard let poster = poster else {return}
+                    
+            let url = "\(Constant.ImageBaseUrl)\(poster)"
+            strongSelf.posterImageView.loadImageUsingCache(url)
         }
         
     }
+    
     
     
 }

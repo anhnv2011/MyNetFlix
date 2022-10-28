@@ -65,7 +65,7 @@ class UpcommingViewController: UIViewController {
 }
 
 
-    //MARK:- TableView Delegate
+    //MARK:- TableView Delegate, Datasource
 extension UpcommingViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

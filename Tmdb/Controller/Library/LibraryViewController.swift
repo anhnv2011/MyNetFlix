@@ -1,6 +1,6 @@
 //
 //  LibraryViewController.swift
-//  Tmdb
+//  NetFlix
 //
 //  Created by MAC on 9/16/22.
 //
@@ -27,10 +27,10 @@ enum LibraryType {
 
 class LibraryViewController: UIViewController{
     
-    
+    //MARK:- Outlet
+
     
     @IBOutlet weak var collectionView: UICollectionView!
-    //MARK:- Outlet
     @IBOutlet weak var topView: UIView!
     
     var libraryType: LibraryType = .favorite
@@ -54,14 +54,21 @@ class LibraryViewController: UIViewController{
         }
     }
     var tvsData = [Film]()
+    {
+        didSet{
+            DispatchQueue.main.async { [self] in
+                self.setupUI()
+                collectionView.reloadData()
+            }
+        }
+    }
     
     //MARK:- Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        fetData()
-        
-        setupCollectionView()
+        fetchData()
+        setupNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,6 +98,7 @@ class LibraryViewController: UIViewController{
         flowLayout.scrollDirection = .horizontal
         collectionView.collectionViewLayout = flowLayout
 //        setupPositionView()
+        
         
     }
     private func setupTittle(){
@@ -132,7 +140,7 @@ class LibraryViewController: UIViewController{
     
     
     //MARK:- Fetch Data
-    private func fetData(){
+    private func fetchData(){
         if libraryType == .favorite {
            
             getmovieFavorite()
@@ -149,10 +157,22 @@ class LibraryViewController: UIViewController{
             getRateTVList()
         }
     }
-    
+    //MARK:- Notification
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.favoriteNotiName, object: nil, queue: nil) { [weak self] _ in
+            guard let strongSelf = self else {return}
+            strongSelf.fetchData()
+        }
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.watchListNotiName, object: nil, queue: nil) { [weak self] (_) in
+            guard let strongSelf = self else {return}
+            strongSelf.fetchData()
+        }
+    }
+
 }
 
-
+    
 
 //MARK:- Favorite function
 extension LibraryViewController{

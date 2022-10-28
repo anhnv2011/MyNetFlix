@@ -66,15 +66,20 @@ class SeeAllViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupCollectionView()
+        setupUI()
     }
 
-
+    func setupUI (){
+        view.backgroundColor = UIColor.backgroundColor()
+        setupCollectionView()
+    }
+    
     func setupCollectionView(){
         seeAllCollectionView.delegate = self
         seeAllCollectionView.dataSource = self
         seeAllCollectionView.register(UINib(nibName: "SeeAllCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: SeeAllCollectionViewCell.identifier)
         seeAllCollectionView.collectionViewLayout = creatViewLayout()
+        seeAllCollectionView.backgroundColor = UIColor.popupBackground()
     }
 
     func creatViewLayout() -> UICollectionViewCompositionalLayout {

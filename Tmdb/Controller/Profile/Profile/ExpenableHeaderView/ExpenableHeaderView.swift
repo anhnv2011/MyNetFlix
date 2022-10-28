@@ -37,20 +37,27 @@ class ExpenableHeaderView: UITableViewHeaderFooterView {
         self.addGestureRecognizer(tapGesture)
     }
     
-    func customInit(title: String,image: String, section: Int, delegate: ExpenableHeaderViewDelegate){
+    func customInit(title: String,image: String, section: Int, chervonimage: String, delegate: ExpenableHeaderViewDelegate){
         //        self.textLabel?.text = title
         self.sectionTitleLabel.text = title
         self.sectionTitleLabel.textColor = .white
         self.imageView.image = UIImage(systemName: image)
         self.imageView.tintColor = .white
+        self.chevronImage.image = UIImage(systemName: chervonimage)
+        self.chevronImage.tintColor = .white
         self.clipsToBounds = true
         self.section = section
+        
         self.delegate = delegate
     }
     
     @objc func selectHeaderAction(gestureRecognizer: UITapGestureRecognizer){
         let cell = gestureRecognizer.view as! ExpenableHeaderView
         delegate?.toggleSection(header: self, section: cell.section)
+    }
+    
+    func setupImage(){
+        
     }
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -16,7 +16,9 @@ class LibraryCollectionViewCell: UICollectionViewCell {
     {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?.setupUI()
+                guard let strongSelf = self else {return}
+                strongSelf.setupUI()
+                strongSelf.collectionView.reloadData()
             }
         }
         
@@ -25,7 +27,9 @@ class LibraryCollectionViewCell: UICollectionViewCell {
     var films = [Film](){
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?.setupUI()
+                guard let strongSelf = self else {return}
+                strongSelf.setupUI()
+                strongSelf.collectionView.reloadData()
                
             }
         }
@@ -43,7 +47,6 @@ class LibraryCollectionViewCell: UICollectionViewCell {
     private func setupUI(){
         setupLableView()
         contentView.backgroundColor = UIColor.backgroundColor()
-        collectionView.backgroundColor = UIColor.backgroundColor()
         setupCollectionView()
         if films.count > 0 {
             noFilmView.isHidden = true
@@ -55,6 +58,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCollectionView(){
+        collectionView.backgroundColor = UIColor.backgroundColor()
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "LibraryCollectionViewCellCell", bundle: nil), forCellWithReuseIdentifier: LibraryCollectionViewCellCell.identifier)

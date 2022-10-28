@@ -15,7 +15,7 @@ class ShowMoreTableViewCell: UICollectionViewCell {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else {return}
-                let url = "\(Constanst.ImageBaseUrl)\(strongSelf.film?.posterPath ?? "")"
+                let url = "\(Constant.ImageBaseUrl)\(strongSelf.film?.posterPath ?? "")"
                 strongSelf.posterImageView.loadImageUsingCache(url)
                
 

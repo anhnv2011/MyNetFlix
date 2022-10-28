@@ -153,7 +153,7 @@ class ProfileViewController: UIViewController {
     private func setupImage(){
         
         avartarImageView.layer.cornerRadius = avartarImageView.frame.size.height / 2
-        let url =  "\(Constanst.ImageBaseUrl)\(profileData?.avatar?.tmdb?.avatarPath ?? "")"
+        let url =  "\(Constant.ImageBaseUrl)\(profileData?.avatar?.tmdb?.avatarPath ?? "")"
         
         avartarImageView.loadImageUsingCache(url)
     }
@@ -326,7 +326,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate, Exp
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ExpenableHeaderView.identifier) as! ExpenableHeaderView
-        header.customInit(title: profileSetting[section].title, image: profileSetting[section].image, section: section, delegate: self)
+        if (section == profileSetting.count - 1) {
+            header.customInit(title: profileSetting[section].title, image: profileSetting[section].image, section: section, chervonimage: "chevron.down", delegate: self)
+        } else {
+            header.customInit(title: profileSetting[section].title, image: profileSetting[section].image, section: section, chervonimage: "chevron.right", delegate: self)
+        }
+        
         return header
     }
     

@@ -24,7 +24,7 @@ class UpCommingTableViewCell: UITableViewCell {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else {return}
-                let url = "\(Constanst.ImageBaseUrl)\(strongSelf.film?.posterPath ?? "")"
+                let url = "\(Constant.ImageBaseUrl)\(strongSelf.film?.posterPath ?? "")"
                 strongSelf.detailImageView.loadImageUsingCache(url)
                 guard let name = strongSelf.film?.originalTitle  else {return}
 
@@ -39,8 +39,9 @@ class UpCommingTableViewCell: UITableViewCell {
         setupUI()
     }
 
+    //MARK:- UI
     func setupUI(){
-        view.backgroundColor = UIColor.cellBackground()
+        view.backgroundColor = UIColor.viewBackground()
         nameLabel.textColor = UIColor.labelColor()
         playButton.tintColor = UIColor.labelColor()
     }

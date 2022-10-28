@@ -47,7 +47,8 @@ class DownloadViewController: UIViewController {
     }
     
     func setupNotification(){
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("downloaded"), object: nil, queue: nil) { _ in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.downloadNotiName, object: nil, queue: nil) { _ in
+            
             self.fetchLocalStorageForDownload()
         }
     }
@@ -59,11 +60,11 @@ class DownloadViewController: UIViewController {
             
             switch result {
             case .success(let filmItems):
-                print(filmItems)
                 self?.filmItems = filmItems
                 print(filmItems)
                 DispatchQueue.main.async {
                     self?.downloadTableView.reloadData()
+                    self?.collectionView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)

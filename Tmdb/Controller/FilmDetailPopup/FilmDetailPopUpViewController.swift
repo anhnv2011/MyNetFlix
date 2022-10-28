@@ -104,9 +104,8 @@ class FilmDetailPopUpViewController: UIViewController {
         if mediaType != nil {
             self.mediaType = mediaType!
         }
-        
-        
         self.mediaId = film.id!
+        
         getFavoriteList()
         getWatchList()
         getRateList()
@@ -114,11 +113,9 @@ class FilmDetailPopUpViewController: UIViewController {
         // youtube
         let name = film.originalTitle != nil ? film.originalTitle : film.originalName
         let key = name! + "Trailer"
-        
+        print("tesst key", key)
         getYoutubeLink(filmname: key)
-    
-        //core data
-//        getDownloadList()
+
         
     }
     
@@ -169,7 +166,7 @@ class FilmDetailPopUpViewController: UIViewController {
     }
     
     private func setupPosterImage(){
-        let url = "\(Constanst.ImageBaseUrl)\(film?.posterPath ?? "")"
+        let url = "\(Constant.ImageBaseUrl)\(film?.posterPath ?? "")"
         posterFilmImage.loadImageUsingCache(url)
     }
     
@@ -226,7 +223,7 @@ class FilmDetailPopUpViewController: UIViewController {
     }
     
     
-    //MARK:- Action
+    //MARK:- Button Action
     
     @IBAction func buttonAction(_ sender: UIButton) {
         
@@ -282,7 +279,7 @@ class FilmDetailPopUpViewController: UIViewController {
                         guard let strongSelf = self else {return}
                         switch result {
                         case .success():
-                            NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+                            NotificationCenter.default.post(name: NSNotification.Name.downloadNotiName, object: nil)
                             strongSelf.makeBasicCustomAlert(title: "Status", messaage: "Downloading")
                         case .failure(let error):
                             strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
@@ -346,6 +343,7 @@ extension FilmDetailPopUpViewController{
             switch result {
             case .success(let response):
                 strongSelf.makeBasicCustomAlert(title: String(response.status_code ?? 0) , messaage: response.status_message ?? "unknow")
+                NotificationCenter.default.post(name: NSNotification.Name.favoriteNotiName, object: nil)
             case .failure(let error):
                 strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
@@ -416,6 +414,7 @@ extension FilmDetailPopUpViewController {
             switch result {
             case .success(let response):
                 strongSelf.makeBasicCustomAlert(title: String(response.status_code ?? 0) , messaage: response.status_message ?? "unknow")
+                NotificationCenter.default.post(name: NSNotification.Name.watchListNotiName, object: nil)
             case .failure(let error):
                 strongSelf.makeBasicCustomAlert(title: "Error", messaage: error.localizedDescription)
             }
@@ -526,7 +525,7 @@ extension FilmDetailPopUpViewController{
             guard let strongSelf = self else {return}
             switch result {
             case .success(let response):
-                strongSelf.makeBasicCustomAlert(title: "Succes", messaage: response.status_message!)
+                strongSelf.makeBasicCustomAlert(title: "Success", messaage: response.status_message!)
                 strongSelf.yourRate = rating
                 if strongSelf.isRated == false {
                     strongSelf.isRated.toggle()
@@ -549,7 +548,7 @@ extension FilmDetailPopUpViewController{
             guard let strongSelf = self else {return}
             switch result {
             case .success(let video):
-                
+                print(video.id.videoId)
                 strongSelf.youtubeLink = video.id.videoId
             case .failure(let error):
                 print(error.localizedDescription)
