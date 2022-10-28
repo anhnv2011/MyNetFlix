@@ -23,7 +23,7 @@ class LogoutTableViewCell: UITableViewCell {
     private func setupUI(){
         logoutButton.layer.cornerRadius = 0
         logoutButton.setTitle("LogOut".localized(), for: .normal)
-        logoutButton.setTitleColor(.blue, for: .normal)
+        logoutButton.setTitleColor(UIColor.toggleButtonColor(), for: .normal)
         logoutButton.backgroundColor = .darkGray
         backgroundColor = UIColor.cellBackground()
     }

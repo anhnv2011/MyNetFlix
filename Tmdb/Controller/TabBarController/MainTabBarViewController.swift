@@ -24,38 +24,47 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTabbar()
+        setupUI()
         getProfileData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
        
-        applyLocalization()
-        styleUIComponents()
+        setupTitle()
+        setupIcon()
     }
     
-    func setupTabbar(){
+    private func setupUI(){
+        setupTabbar()
+        setupTabbar()
+    }
+    
+    private func setuNav(){
+        
+    }
+    
+    private func setupTabbar(){
         
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().barTintColor = UIColor.naviBackground()
         self.tabBarController?.tabBar.backgroundColor = UIColor.tabbarBackground()
         self.tabBar.barTintColor = UIColor.tabbarBackground()
-        self.tabBar.tintColor = .blue
+        self.tabBar.tintColor = UIColor.toggleButtonColor()
         setupViewControllers()
     
         
     }
     
     
-    func styleUIComponents() {
+    func setupIcon() {
         for (index, item) in (self.tabBar.items ?? []).enumerated() {
             item.image = UIImage(systemName: MainTabBarViewController.menu[index].icon)
                 
         }
     }
     
-    func applyLocalization() {
+    func setupTitle() {
         for (index, item) in (self.tabBar.items ?? []).enumerated() {
             item.title = MainTabBarViewController.menu[index].title
         }

@@ -35,7 +35,6 @@ class ToggleView:UIView{
     private let tvsButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor.labelColor(), for: .normal)
-        button.setTitleColor(.red, for: .highlighted)
         button.backgroundColor = UIColor.buttonBackground()
         button.setTitle("Tv".localized(), for: .normal)
         return button
@@ -98,13 +97,14 @@ class ToggleView:UIView{
         if state == .movie {
             indicatorView.frame = CGRect(x: 0, y: movieButton.bottom, width: 100, height: 3)
 
-            movieButton.setTitleColor(.blue, for: .normal)
+            movieButton.setTitleColor(UIColor.toggleButtonColor(), for: .normal)
             tvsButton.setTitleColor(UIColor.labelColor(), for: .normal)
         } else {
             indicatorView.frame = CGRect(x: 100, y: tvsButton.bottom, width: 100, height: 3)
             movieButton.setTitleColor(UIColor.labelColor(), for: .normal)
-            tvsButton.setTitleColor(.blue, for: .normal)
+            tvsButton.setTitleColor(UIColor.toggleButtonColor(), for: .normal)
         }
+
     }
     func update(for state: ToggleState) {
         self.state = state

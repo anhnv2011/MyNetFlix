@@ -277,14 +277,43 @@ extension DownloadViewController: UICollectionViewDataSource, UICollectionViewDe
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+//        collectionView.deselectItem(at: indexPath, animated: true)
+//
+//        let filmItem = filmItems[indexPath.row]
+//        let film = Film(adult: filmItem.adult, backdropPath: "", id: Int(filmItem.id), originalLanguage: filmItem.original_language, originalName: filmItem.original_name, originalTitle: filmItem.original_title, overview: filmItem.overview, posterPath: filmItem.poster_path, mediaType: filmItem.media_type, genreIds: nil, popularity: filmItem.popularity, releaseDate: filmItem.release_date, firstAirDate: nil, voteAverage: filmItem.vote_average, voteCount: filmItem.vote_count, originCountry: nil)
+//        let vc = PlayerViewController(film: film)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true, completion: nil)
         
-        let filmItem = filmItems[indexPath.row]
-        let film = Film(adult: filmItem.adult, backdropPath: "", id: Int(filmItem.id), originalLanguage: filmItem.original_language, originalName: filmItem.original_name, originalTitle: filmItem.original_title, overview: filmItem.overview, posterPath: filmItem.poster_path, mediaType: filmItem.media_type, genreIds: nil, popularity: filmItem.popularity, releaseDate: filmItem.release_date, firstAirDate: nil, voteAverage: filmItem.vote_average, voteCount: filmItem.vote_count, originCountry: nil)
-        let vc = PlayerViewController(film: film)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+    }
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         
+        let config = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil) {[weak self] _ in
+            
+            let deleteAction = UIAction(title: "Delete".localized(), image: nil, identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                    self?.deleteData(index: indexPath.row)
+                    self?.fetchLocalStorageForDownload()
+                    self?.dismiss(animated: true, completion: nil)
+                }
+                return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [deleteAction])
+            }
+        return config
+    }
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil) {[weak self] _ in
+           
+            let deleteAction = UIAction(title: "Delete".localized(), image: nil, identifier: nil, discoverabilityTitle: nil, state: .off){_ in
+                self?.deleteData(index: indexPath.row)
+                self?.fetchLocalStorageForDownload()
+                self?.dismiss(animated: true, completion: nil)
+                }
+                return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [deleteAction])
+            }
+        return config
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let collectionView = scrollView as? UICollectionView {

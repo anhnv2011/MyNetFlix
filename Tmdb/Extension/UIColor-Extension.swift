@@ -22,6 +22,10 @@ extension UIColor {
         }
 //        return UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
     }
+    
+    class func toggleButtonColor() -> UIColor {
+        return UIColor(red: 78/255, green: 177/255, blue: 204/255, alpha: 1.00)
+    }
     class func popupBackground() -> UIColor {
         return UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 0.5)
     }
