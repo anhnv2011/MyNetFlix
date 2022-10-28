@@ -86,6 +86,7 @@ class LibraryViewController: UIViewController{
         setupToggle()
         setupPositionView()
         setupCollectionView()
+        view.backgroundColor = UIColor.backgroundColor()
     }
     
     

@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CarouselCollectionViewCell" customModule="NetFlix" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CarouselCollectionViewCell" customModule="Tmdb" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="297" height="462"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -31,10 +31,12 @@
             <constraints>
                 <constraint firstItem="MLd-B7-FTX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="2Ze-mq-kY0"/>
                 <constraint firstAttribute="trailing" secondItem="MLd-B7-FTX" secondAttribute="trailing" id="3f8-nn-SXC"/>
+                <constraint firstItem="MLd-B7-FTX" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="7Zo-sQ-xZr"/>
                 <constraint firstItem="yyP-Fk-inh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Hvx-hS-6a2"/>
                 <constraint firstItem="MLd-B7-FTX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TJF-C9-cO5"/>
                 <constraint firstAttribute="trailing" secondItem="yyP-Fk-inh" secondAttribute="trailing" constant="8" id="pMB-yt-ekE"/>
                 <constraint firstAttribute="bottom" secondItem="yyP-Fk-inh" secondAttribute="bottom" constant="8" id="pru-eN-Uxp"/>
+                <constraint firstItem="MLd-B7-FTX" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.867965" id="sgf-vO-c3M"/>
                 <constraint firstItem="yyP-Fk-inh" firstAttribute="top" secondItem="MLd-B7-FTX" secondAttribute="bottom" constant="16" id="wgQ-TW-8pf"/>
             </constraints>
             <size key="customSize" width="297" height="462"/>

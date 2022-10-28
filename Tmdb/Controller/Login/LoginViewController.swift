@@ -241,8 +241,8 @@ extension LoginViewController {
             switch result {
             
             case .success(let auth):
-                let requestToken = auth.request_token
-                strongSelf.creatSessionLogin(username: username, password: password, requestToken: requestToken, sender: sender)
+                let requestToken = auth.requestToken
+                strongSelf.creatSessionLogin(username: username, password: password, requestToken: requestToken ?? "", sender: sender)
                 
                 
             case .failure(let error):
@@ -269,7 +269,7 @@ extension LoginViewController {
                     
                     
                     DispatchQueue.main.async {
-                        strongSelf.errorLabel.text = loginresult.status_message ?? "fail"
+                        strongSelf.errorLabel.text = loginresult.statusMessage ?? "fail"
                         strongSelf.errorLabel.isHidden = false
 
                         ShakeButton.shake(sender: sender)

@@ -113,7 +113,6 @@ class FilmDetailPopUpViewController: UIViewController {
         // youtube
         let name = film.originalTitle != nil ? film.originalTitle : film.originalName
         let key = name! + "Trailer"
-        print("tesst key", key)
         getYoutubeLink(filmname: key)
 
         

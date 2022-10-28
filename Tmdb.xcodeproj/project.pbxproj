@@ -71,10 +71,10 @@
 		0457B298290BE977007060F0 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B297290BE977007060F0 /* Search.png */; };
 		0457B2A0290BE9A8007060F0 /* SearchResult.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B29F290BE9A8007060F0 /* SearchResult.png */; };
 		0457B2A8290BE9E8007060F0 /* NewList.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B2A7290BE9E8007060F0 /* NewList.png */; };
-		0457B2B0290BEA2B007060F0 /* Library.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B2AF290BEA2B007060F0 /* Library.png */; };
-		0457B2BA290BEA58007060F0 /* NoLibrary.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B2B9290BEA58007060F0 /* NoLibrary.png */; };
 		0457B2C2290BEB0B007060F0 /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B2C1290BEB0B007060F0 /* Profile.png */; };
 		0457B2CD290BECB9007060F0 /* Share.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B2CC290BECB9007060F0 /* Share.png */; };
+		0457B2D5290BF6A0007060F0 /* Library.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B2D4290BF6A0007060F0 /* Library.png */; };
+		0457B2DD290BF6BF007060F0 /* NoLibrary.png in Resources */ = {isa = PBXBuildFile; fileRef = 0457B2DC290BF6BE007060F0 /* NoLibrary.png */; };
 		0457F01C28D21E4800DDE8B9 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457F01B28D21E4800DDE8B9 /* DataManager.swift */; };
 		045A3ADA286779DB000F84DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A3AD9286779DB000F84DE /* AppDelegate.swift */; };
 		045A3AE3286779DF000F84DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 045A3AE2286779DF000F84DE /* Assets.xcassets */; };
@@ -239,10 +239,10 @@
 		0457B297290BE977007060F0 /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search.png; sourceTree = "<group>"; };
 		0457B29F290BE9A8007060F0 /* SearchResult.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchResult.png; sourceTree = "<group>"; };
 		0457B2A7290BE9E8007060F0 /* NewList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewList.png; sourceTree = "<group>"; };
-		0457B2AF290BEA2B007060F0 /* Library.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Library.png; sourceTree = "<group>"; };
-		0457B2B9290BEA58007060F0 /* NoLibrary.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NoLibrary.png; sourceTree = "<group>"; };
 		0457B2C1290BEB0B007060F0 /* Profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile.png; sourceTree = "<group>"; };
 		0457B2CC290BECB9007060F0 /* Share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Share.png; sourceTree = "<group>"; };
+		0457B2D4290BF6A0007060F0 /* Library.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Library.png; sourceTree = "<group>"; };
+		0457B2DC290BF6BE007060F0 /* NoLibrary.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NoLibrary.png; sourceTree = "<group>"; };
 		0457F01B28D21E4800DDE8B9 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		045A3AD6286779DB000F84DE /* Tmdb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tmdb.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		045A3AD9286779DB000F84DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -543,8 +543,8 @@
 				0457B29F290BE9A8007060F0 /* SearchResult.png */,
 				0457B227290BC11C007060F0 /* PopupDetail.png */,
 				0457B2A7290BE9E8007060F0 /* NewList.png */,
-				0457B2AF290BEA2B007060F0 /* Library.png */,
-				0457B2B9290BEA58007060F0 /* NoLibrary.png */,
+				0457B2D4290BF6A0007060F0 /* Library.png */,
+				0457B2DC290BF6BE007060F0 /* NoLibrary.png */,
 				0457B2C1290BEB0B007060F0 /* Profile.png */,
 				0457B250290BC5CE007060F0 /* PlayerView.png */,
 				0457B257290BC61B007060F0 /* Preview.png */,
@@ -1092,18 +1092,19 @@
 				04877D5028AFD1F00025517B /* ChooseProfileViewController.xib in Resources */,
 				04FF71D828EC315E005A9A11 /* ListTableViewCell.xib in Resources */,
 				0457B278290BD53E007060F0 /* LoginFail.gif in Resources */,
-				0457B2B0290BEA2B007060F0 /* Library.png in Resources */,
 				04FA058028EAD9CD008628F1 /* ListViewController.xib in Resources */,
 				045A3AE6286779DF000F84DE /* LaunchScreen.storyboard in Resources */,
 				04FEB079288E55B000A88F5A /* LoginViewController.xib in Resources */,
 				045A3AE3286779DF000F84DE /* Assets.xcassets in Resources */,
 				0433010F28F58C16005C061A /* DetailWatchListViewController.xib in Resources */,
+				0457B2D5290BF6A0007060F0 /* Library.png in Resources */,
 				0457B223290BC10D007060F0 /* Loading.png in Resources */,
 				0457B258290BC61B007060F0 /* Preview.png in Resources */,
 				0457B219290BC0F2007060F0 /* Signup.png in Resources */,
 				048809A428E8095500B49099 /* SeeAllViewController.xib in Resources */,
 				045F646B28FB191C001B266E /* CarouselCollectionViewCell.xib in Resources */,
 				04D789E828677F8D007030DE /* DownloadViewController.xib in Resources */,
+				0457B2DD290BF6BF007060F0 /* NoLibrary.png in Resources */,
 				0438CF302900734C0000C00E /* LibraryCollectionViewCell.xib in Resources */,
 				043300FC28F56475005C061A /* ListsViewController.xib in Resources */,
 				04D789D528677ED7007030DE /* UpcommingViewController.xib in Resources */,
@@ -1134,7 +1135,6 @@
 				04BFEB7128EEE63700F1173D /* ShowMoreInforViewController.xib in Resources */,
 				0457B267290BC7C1007060F0 /* ShowMore.png in Resources */,
 				04D789DD28677EF1007030DE /* SearchViewController.xib in Resources */,
-				0457B2BA290BEA58007060F0 /* NoLibrary.png in Resources */,
 				0457B276290BD53E007060F0 /* ChangeLanguage.gif in Resources */,
 				04F7160328F085C6002DB4C3 /* Localizable.strings in Resources */,
 				0457B27A290BD53E007060F0 /* SketchyHeader.gif in Resources */,

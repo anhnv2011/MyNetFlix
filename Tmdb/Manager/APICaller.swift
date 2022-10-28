@@ -27,118 +27,153 @@ class APICaller {
     static let share = APICaller()
     
     
+  
+    
+    //MARK:- Login
     func creatSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (Result<LoginResponse, Error>) -> Void){
-        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constant.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
-            print("invalid url")
-            return
-        }
-        let urlRequest = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription as Any)
-                return
-            }
-            do {
-                
-                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                let result = try JSONDecoder().decode(LoginResponse.self, from: data)
+//        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constant.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
+//            print("invalid url")
+//            return
+//        }
+//
+//
+//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//            guard let data = data, error == nil else {
+//                print(error?.localizedDescription as Any)
+//                return
+//            }
+//            do {
+//
+//                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                let result = try JSONDecoder().decode(LoginResponse.self, from: data)
+//                print(result)
+//                completion(.success(result))
+//
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }
+//        task.resume()
+        
+        let url =  "\(Constant.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constant.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)"
+        let parameters: Parameters = [
+            "api_key" : "\(Constant.ApiKey)",
+            "username" : username,
+            "password" : password,
+            "request_token" : requestToken
+                   
+        ]
+        AF.request(url, method: .get, parameters: parameters).response { (response) in
+            switch response.result {
+            case .success(let data):
+                let result = LoginResponse(JSON(data!))
                 print(result)
                 completion(.success(result))
-                
-            } catch {
+            case .failure(let error):
                 completion(.failure(error))
+            print("")
+                
             }
         }
-        task.resume()
-        
-        
         
         
     }
     func getSessionId(requesToken:String, completion: @escaping (Result<String, Error>)->Void){
-        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/session/new?api_key=\(Constant.ApiKey)&request_token=\(requesToken)") else {
-            print("invalid url")
-            return
-        }
-        print(url)
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
-            guard let data = data, error == nil else {
-                print("invalid")
-                return
-            }
-            do {
-                
-                //                let result = try JSONDecoder().decode(SessionId.self, from: data)
-                //                print(result.session_id)
-                //completion(.success(result.session_id))
-                let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/session/new?api_key=\(Constant.ApiKey)&request_token=\(requesToken)") else {
+//            print("invalid url")
+//            return
+//        }
+//        print(url)
+//        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
+//            guard let data = data, error == nil else {
+//                print("invalid")
+//                return
+//            }
+//            do {
+//
+//                //                let result = try JSONDecoder().decode(SessionId.self, from: data)
+//                //                print(result.session_id)
+//                //completion(.success(result.session_id))
+//                let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(result)
+//                let a = try JSONDecoder().decode(SessionId.self, from: data)
+//                print(a.session_id)
+//                completion(.success(a.session_id))
+//                //                print(result.session_id)
+//            } catch{
+//                completion(.failure(error))
+//                print(error.localizedDescription)
+//            }
+//        }
+//        task.resume()
+        
+        let url =  "\(Constant.baseUrl)3/authentication/session/new?"
+        
+        let parameters: Parameters = [
+            "api_key" : "\(Constant.ApiKey)",
+            "request_token" : requesToken
+            
+        ]
+        AF.request(url, method: .get, parameters: parameters).response { (response) in
+            switch response.result {
+            case .success(let data):
+                let result = SessionId(JSON(data!))
                 print(result)
-                let a = try JSONDecoder().decode(SessionId.self, from: data)
-                print(a.session_id)
-                completion(.success(a.session_id))
-                //                print(result.session_id)
-            } catch{
+                completion(.success(result.sessionId!))
+            case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
-            }
-        }
-        task.resume()
-    }
-    func login(username: String, password: String, requestToken: String, completion: @escaping (Result<Authentication, Error>) -> Void){
-        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constant.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
-            print("invalid url")
-            return
-        }
-        let urlRequest = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription as Any)
-                return
-            }
-            do {
+        
                 
-                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                let result = try JSONDecoder().decode(Authentication.self, from: data)
-                completion(.success(result))
-                
-            } catch {
-                print("nhap sai user")
-                completion(.failure(error))
             }
         }
-        task.resume()
         
-        
-        
-        
+
     }
-    
+   
     func getRequestToken(compeltion: @escaping (Result<RequestToken, Error>) -> Void){
-        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/token/new?api_key=\(Constant.ApiKey)") else {
-            return
-        }
-        print(url)
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
-            guard let data = data,
-                  error == nil else {
-                
-                return
-                
-            }
-            do {
-                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                let result = try JSONDecoder().decode(RequestToken.self, from: data)
-                print(result)
-                compeltion(.success(result))
-                //print(result.request_token)
-                
-            } catch {
-                compeltion(.failure(error))
-                print(error.localizedDescription)
-            }
-        }
-        task.resume()
+//        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/token/new?api_key=\(Constant.ApiKey)") else {
+//            return
+//        }
+//        print("getRequestToken", url)
+//        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
+//            guard let data = data,
+//                  error == nil else {
+//
+//                return
+//
+//            }
+//            do {
+//                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                let result = try JSONDecoder().decode(RequestToken.self, from: data)
+//                print(result)
+//                compeltion(.success(result))
+//                //print(result.request_token)
+//
+//            } catch {
+//                compeltion(.failure(error))
+//                print(error.localizedDescription)
+//            }
+//        }
+//        task.resume()
+//
         
+       
+        
+       let url =  "\(Constant.baseUrl)3/authentication/token/new?"
+        let parameters: Parameters = [
+                    "api_key" : "\(Constant.ApiKey)"
+                   
+        ]
+        AF.request(url, method: .get, parameters: parameters).response { (response) in
+            switch response.result {
+            case .success(let data):
+                let result = RequestToken(JSON(data!))
+                compeltion(.success(result))
+            case .failure(let error):
+                compeltion(.failure(error))
+                
+            }
+        }
     }
     func getTrending (mediaType: MediaType, time: TimeWindow, completion: @escaping (Result<[Film], Error>) -> Void){
         guard let url = URL(string: "\(Constant.baseUrl)3/trending/\(mediaType.rawValue)/\(time.rawValue)?api_key=\(Constant.ApiKey)") else {return}
@@ -245,11 +280,11 @@ class APICaller {
             "api_key" : "\(Constant.ApiKey)" ,
             "session_id" : sessionid
         ]
-        AF.request(url, method: .get, parameters: parameters).responseJSON { (response) in
+        AF.request(url, method: .get, parameters: parameters).response { (response) in
             
             switch response.result {
             case .success(let data):
-                let profile = Profile(JSON(data))
+                let profile = Profile(JSON(data!))
                 completion(.success(profile))
             case .failure(let error):
                 completion(.failure(error))
@@ -262,75 +297,7 @@ class APICaller {
     
     
 }
-//MARK:- WatchList
-extension APICaller {
-    func getWatchList(mediaType: String,sessonid: String, profileID: String, completion: @escaping (Result<[Film], Error>) -> Void) {
-  
-        
-        guard let url = URL(string:       "\(Constant.baseUrl)3/account/\(profileID)/watchlist/\(mediaType)?api_key=\(Constant.ApiKey)&language=en-US&session_id=\(sessonid)&sort_by=created_at.asc&page=1") else {return}
-        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
-            guard let data = data,
-                  error == nil else {return}
-            do {
-//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                             print(json)
-                let result = try JSONDecoder().decode(Trending.self, from: data)
-                
-                completion(.success(result.results))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        task.resume()
-    }
-    func postWatchList(mediaType: String, mediaId: Int,type:Bool, completion: @escaping (Result<StatusResponse, Error>) -> Void){
-        let sessionid = DataManager.shared.getSaveSessionId()
-        let profileid = DataManager.shared.getProfileId()
-        let url = "\(Constant.baseUrl)3/account/\(profileid)/watchlist?api_key=\(Constant.ApiKey)&session_id=\(sessionid)"
-   
-        
-        var request = URLRequest(url: URL(string: url)!)
-        request.addValue("application/json;charset=utf-8", forHTTPHeaderField: "Content-Type")
-        
-        // Serialize HTTP Body data as JSON
-        let body = [
-            "media_type": mediaType,
-            "media_id": mediaId,
-            "watchlist": type
-        ] as [String : Any]
-        let bodyData = try? JSONSerialization.data(
-            withJSONObject: body,
-            options: []
-        )
-        
-        // Change the URLRequest to a POST request
-        request.httpMethod = "POST"
-        request.httpBody = bodyData
-        
-        // Create the HTTP request
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { (data, response, error) in
-            
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            do {
-//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                print(json)
-                let result = try JSONDecoder().decode(StatusResponse.self, from: data)
-                print(result)
-                completion(.success(result))
-                
-            } catch {
-                completion(.failure(error))
-            }
-            
-        }
-        task.resume()
-        
-    }
-}
+
 
 //MARK:- Favorite
 extension APICaller {
@@ -425,7 +392,79 @@ extension APICaller {
     
     
 }
+//MARK:- WatchList
+extension APICaller {
+    
+    func postWatchList(mediaType: String, mediaId: Int,type:Bool, completion: @escaping (Result<StatusResponse, Error>) -> Void){
+        let sessionid = DataManager.shared.getSaveSessionId()
+        let profileid = DataManager.shared.getProfileId()
+        let url = "\(Constant.baseUrl)3/account/\(profileid)/watchlist?api_key=\(Constant.ApiKey)&session_id=\(sessionid)"
+   
+        
+        var request = URLRequest(url: URL(string: url)!)
+        request.addValue("application/json;charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        // Serialize HTTP Body data as JSON
+        let body = [
+            "media_type": mediaType,
+            "media_id": mediaId,
+            "watchlist": type
+        ] as [String : Any]
+        
+        let bodyData = try? JSONSerialization.data(
+            withJSONObject: body,
+            options: []
+        )
+        
+        // Change the URLRequest to a POST request
+        request.httpMethod = "POST"
+        request.httpBody = bodyData
+        
+        // Create the HTTP request
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(json)
+                let result = try JSONDecoder().decode(StatusResponse.self, from: data)
+                print(result)
+                completion(.success(result))
+                
+            } catch {
+                completion(.failure(error))
+            }
+            
+        }
+        task.resume()
+        
+    }
+    
+    
+    func getWatchList(mediaType: String,sessonid: String, profileID: String, completion: @escaping (Result<[Film], Error>) -> Void) {
+  
+        
+        guard let url = URL(string:       "\(Constant.baseUrl)3/account/\(profileID)/watchlist/\(mediaType)?api_key=\(Constant.ApiKey)&language=en-US&session_id=\(sessonid)&sort_by=created_at.asc&page=1") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data,
+                  error == nil else {return}
+            do {
 
+                let result = try JSONDecoder().decode(Trending.self, from: data)
+                
+                completion(.success(result.results))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+}
 
 
 //MARK:- List
@@ -435,11 +474,11 @@ extension APICaller {
             return
         }
 
-        AF.request(url, method: .get, parameters: nil).responseJSON { (response) in
+        AF.request(url, method: .get, parameters: nil).response { (response) in
             
             switch response.result {
             case .success(let data):
-                let lists = ListResponse(JSON(data))
+                let lists = ListResponse(JSON(data!))
                 completion(.success(lists.results!))
                 
             case .failure(let error):

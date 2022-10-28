@@ -30,9 +30,10 @@ class UpcommingViewController: UIViewController {
     func setupUI(){
         setupTableView()
         setupNav()
+        view.backgroundColor = UIColor.backgroundColor()
     }
     func setupNav(){
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
     func fetchData(){
         APICaller.share.getUpcomming(mediaType: "movie") { (result) in

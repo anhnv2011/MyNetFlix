@@ -24,6 +24,8 @@ class DownloadViewController: UIViewController {
             self.setupUI()
         }
     }
+    let width = UIScreen.main.bounds.width - 10
+    var height = UIScreen.main.bounds.height
     
     //MARK:- LifeCycle
     
@@ -32,6 +34,8 @@ class DownloadViewController: UIViewController {
         setupUI()
         setupNotification()
         fetchLocalStorageForDownload()
+        height = UIScreen.main.bounds.height - (tabBarController?.tabBar.frame.size.height)! - (navigationController?.navigationBar.frame.maxY)! - 10
+       
     }
     
     var showImageIndex = [Int]()
@@ -75,7 +79,7 @@ class DownloadViewController: UIViewController {
     
     //MARK:- UI
     private func setupUI(){
-        topView.backgroundColor = UIColor.viewBackground()
+//        topView.backgroundColor = UIColor.viewBackground()
         changViewModeButton.backgroundColor = UIColor.viewBackground()
         changViewModeButton.setTitleColor(UIColor.labelColor(), for: .normal)
         view.backgroundColor = UIColor.backgroundColor()
@@ -94,6 +98,8 @@ class DownloadViewController: UIViewController {
         setupCollectionView()
         setupTabbar()
         setupNav()
+        topView.isHidden = true
+        collectionView.reloadData()
     }
     
     
@@ -111,7 +117,7 @@ class DownloadViewController: UIViewController {
 //        navigationController?.navigationBar.tintColor = UIColor.labelColor()
 //        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
 //        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor()]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
        
         title = "Download".localized()
         
@@ -126,6 +132,31 @@ class DownloadViewController: UIViewController {
     }
     
     
+    //MARK:- Landscape, portrait
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.current.orientation.isLandscape {
+            configUIForLandscape()
+        } else {
+            configUIForPortrait()
+        }
+        
+        self.view.setNeedsUpdateConstraints()
+    }
+    override func updateViewConstraints() {
+        print("updateViewConstraints")
+    
+        super.updateViewConstraints()
+    }
+    private func configUIForLandscape(){
+        viewMode = .TableView
+//        view.layoutIfNeeded()
+    }
+    
+    private func configUIForPortrait (){
+        viewMode = .Carousel
+//        view.layoutIfNeeded()
+
+    }
     //MARK:- Action
     @IBAction func buttonAction(_ sender: UIButton) {
         switch sender {
@@ -238,10 +269,16 @@ extension DownloadViewController: UITableViewDataSource, UITableViewDelegate {
         
         
     }
+
+
 }
+
+
 
 //MARK:- collection
 extension DownloadViewController {
+    
+  
     func degreeToRadian(deg: CGFloat) -> CGFloat {
         return (deg * CGFloat.pi) / 180
     }
@@ -250,14 +287,15 @@ extension DownloadViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "CarouselCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: CarouselCollectionViewCell.identifier)
-        let width = collectionView.frame.width
-        let height = collectionView.frame.height
+//        let width = collectionView.frame.width
+//        let height = collectionView.frame.height
+       
         //2
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         layout.itemSize = CGSize(width: width, height: height)
         layout.minimumInteritemSpacing = 5
-        layout.minimumLineSpacing = 5
+        layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
         //3
         collectionView!.collectionViewLayout = layout

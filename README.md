@@ -42,8 +42,9 @@
 -  Xem trailer phim 
 - Test và dev trên ios 15, không hỗ trợ lanscape
 
-## Mục tiêu của project
+## Mục tiêu và kết quả của project
 - Thực hành call API: Get, post, delete..
 - Thực hành việc tuỳ biến giao diện của các thành phần cơ bản như button, collectionView, tableView
 - Thực hành và tìm hiểu các animation cơ bản với các thành phần trên cũng như khi dùng present và navigation
+- Thực hành Core Data
 - Tối ưu code, thực hành chia nhỏ modul, reuse code, mô hình MVC

@@ -83,6 +83,9 @@ class HomeViewController: UIViewController {
     
     let discoveryButton = DiscoveryButton()
     var discoveryState: DiscoveryState = . close
+    var discoveryButtonWidthConstraint: NSLayoutConstraint?
+    var discoveryButtonRightConstraint: NSLayoutConstraint?
+   
     
     //header
     var headerView: HeaderView?
@@ -106,6 +109,8 @@ class HomeViewController: UIViewController {
 //        navigationController?.navigationBar.prefersLargeTitles = false
         
     }
+    
+    
     //MARK:- UI
     
     private func setupUI(){
@@ -119,12 +124,32 @@ class HomeViewController: UIViewController {
         setupNavbar()
         setupDiscoveryButton()
     }
+    
+    //MARK:- Landscape, portrait
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.current.orientation.isLandscape {
+            configUIForLandscape()
+        } else {
+            configUIForPortrait()
+        }
+    }
+    private func configUIForLandscape(){
+        discoveryButtonRightConstraint?.constant = -50
+        view.layoutIfNeeded()
+    }
+    
+    private func configUIForPortrait (){
+        discoveryButtonRightConstraint?.constant = -8
+        view.layoutIfNeeded()
+
+    }
+    
     let topView: UIView = {
         let view = UIView()
         view.backgroundColor = . red
         return view
     }()
-    func setupTopView(){
+    private func setupTopView(){
         navigationController?.hidesBarsOnSwipe = true
         view.addSubview(topView)
         topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 0, leftPadding: 0, rightPadding: 0)
@@ -132,7 +157,7 @@ class HomeViewController: UIViewController {
    
 
     
-    func setupTableView(){
+    private func setupTableView(){
         tableView.register(UINib(nibName: "CollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CollectionTableViewCell")
         tableView.register(TableSectionHeader.self, forHeaderFooterViewReuseIdentifier: TableSectionHeader.identifier)
         
@@ -145,7 +170,7 @@ class HomeViewController: UIViewController {
     }
     
    
-    func setupHeader(){
+    private func setupHeader(){
         APICaller.share.getTrending(mediaType: .movie, time: .day) { [weak self] (result) in
             guard let strongSelf = self else {return}
             switch result {
@@ -189,18 +214,6 @@ class HomeViewController: UIViewController {
     }
     
     private func getAvatar() {
-//        let profiledata = DataManager.shared.profileData
-//        let urlString =  "\(Constanst.ImageBaseUrl)\(profiledata?.avatar?.tmdb?.avatarPath ?? "")"
-//        guard let url = URL(string: urlString) else {return}
-//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            if let error = error {
-//                print(error)
-//            }
-//            if let data = data {
-//                let downloadImage = UIImage(data: data)
-//            }
-//        }
-//        task.resume()
         
     }
     func updateDiscoveryButton(){
@@ -208,7 +221,7 @@ class HomeViewController: UIViewController {
         if discoveryState == .close {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
 
-                self.widthConstraint1?.constant = 250
+                self.discoveryButtonWidthConstraint?.constant = 250
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
             })
@@ -216,7 +229,7 @@ class HomeViewController: UIViewController {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: {
 
                 
-                self.widthConstraint1?.constant = 56
+                self.discoveryButtonWidthConstraint?.constant = 56
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
                 
@@ -239,7 +252,6 @@ class HomeViewController: UIViewController {
     }
    
     
-    var widthConstraint1: NSLayoutConstraint?
    
     func setupDiscoveryButton(){
         
@@ -249,13 +261,20 @@ class HomeViewController: UIViewController {
                                                                  backgroundColor: .white))
         let tabBarHeight = self.tabBarController!.tabBar.intrinsicContentSize.height + 16
         
-        discoveryButton.anchor(bottom: view.bottomAnchor, right: view.rightAnchor, height: 56, bottomPadding: tabBarHeight, rightPadding: 8)
+        discoveryButton.anchor(bottom: view.bottomAnchor, height: 56, bottomPadding: tabBarHeight)
         discoveryButton.layer.cornerRadius = 28
-        widthConstraint1 = discoveryButton.widthAnchor.constraint(equalToConstant: 56)
-        widthConstraint1?.isActive = true
+        
+        discoveryButtonWidthConstraint = discoveryButton.widthAnchor.constraint(equalToConstant: 56)
+        discoveryButtonWidthConstraint?.isActive = true
+        
+        discoveryButtonRightConstraint = discoveryButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8)
+        discoveryButtonRightConstraint?.isActive = true
+        
         discoveryButton.addTarget(self, action: #selector(discoveryFilm), for: .touchUpInside)
         
     }
+    
+    
     
     @objc func discoveryFilm(){
         print("dissco")
@@ -271,7 +290,6 @@ class HomeViewController: UIViewController {
                     
                     vc.film = random
                     vc.mediaType = "movie"
-                    print("sdfsdfsdfdsfsdf")
 //
                     strongSelf.present(vc, animated: true, completion: nil)
                   
