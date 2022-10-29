@@ -80,8 +80,8 @@ class DownloadViewController: UIViewController {
     //MARK:- UI
     private func setupUI(){
 //        topView.backgroundColor = UIColor.viewBackground()
-        changViewModeButton.backgroundColor = UIColor.viewBackground()
-        changViewModeButton.setTitleColor(UIColor.labelColor(), for: .normal)
+//        changViewModeButton.backgroundColor = UIColor.viewBackground()
+//        changViewModeButton.setTitleColor(UIColor.labelColor(), for: .normal)
         view.backgroundColor = UIColor.backgroundColor()
         if viewMode == .TableView {
             view.backgroundColor = UIColor.backgroundColor()
@@ -143,7 +143,6 @@ class DownloadViewController: UIViewController {
         self.view.setNeedsUpdateConstraints()
     }
     override func updateViewConstraints() {
-        print("updateViewConstraints")
     
         super.updateViewConstraints()
     }

@@ -61,6 +61,14 @@ class SeeAllViewController: UIViewController {
     //MARK:- Property
     var cellAimationFlag = [Int]()
     var films = [Film]()
+    var isLanscape = false {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let strongSelf = self else {return}
+                strongSelf.setupUI()
+            }
+        }
+    }
 
     //MARK:- LifeCycle
     override func viewDidLoad() {
@@ -69,20 +77,50 @@ class SeeAllViewController: UIViewController {
         setupUI()
     }
 
+    
+    //MARK:- UI
     func setupUI (){
         view.backgroundColor = UIColor.backgroundColor()
         setupCollectionView()
+    }
+    //MARK:- Landscape, portrait
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.current.orientation.isLandscape {
+            configUIForLandscape()
+        } else {
+            configUIForPortrait()
+        }
+        
+        self.view.setNeedsUpdateConstraints()
+    }
+    override func updateViewConstraints() {
+    
+        super.updateViewConstraints()
+    }
+    private func configUIForLandscape(){
+        isLanscape = true
+        view.layoutIfNeeded()
+    }
+    
+    private func configUIForPortrait (){
+        isLanscape = false
+        view.layoutIfNeeded()
+
     }
     
     func setupCollectionView(){
         seeAllCollectionView.delegate = self
         seeAllCollectionView.dataSource = self
         seeAllCollectionView.register(UINib(nibName: "SeeAllCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: SeeAllCollectionViewCell.identifier)
-        seeAllCollectionView.collectionViewLayout = creatViewLayout()
+        if isLanscape == false {
+            seeAllCollectionView.collectionViewLayout = creatViewLayout(heightRatio: 0.3)
+        } else {
+            seeAllCollectionView.collectionViewLayout = creatViewLayout(heightRatio: 1)
+        }
         seeAllCollectionView.backgroundColor = UIColor.popupBackground()
     }
 
-    func creatViewLayout() -> UICollectionViewCompositionalLayout {
+    func creatViewLayout(heightRatio: Float) -> UICollectionViewCompositionalLayout {
         //item
         let item = CompositionalLayout.createItem(width: .fractionalWidth(0.5), height: .fractionalHeight(1), spacing: 1)
         
@@ -93,7 +131,7 @@ class SeeAllViewController: UIViewController {
         let verticalgroup = CompositionalLayout.createGroup(alignment: .vertical, width: .fractionalWidth(0.5), height: .fractionalHeight(1), item: horizontalGroup, count: 2)
         
         //group
-        let group = CompositionalLayout.createGroup(alignment: .horizontal, width: .fractionalWidth(1), height: .fractionalHeight(0.3), items: [item, verticalgroup])
+        let group = CompositionalLayout.createGroup(alignment: .horizontal, width: .fractionalWidth(1), height: .fractionalHeight(CGFloat(heightRatio)), items: [item, verticalgroup])
         //section
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)

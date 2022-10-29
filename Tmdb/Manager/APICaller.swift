@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import RxSwift
+
 
 
 
@@ -30,32 +30,30 @@ class APICaller {
   
     
     //MARK:- Login
-    func creatSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (Result<LoginResponse, Error>) -> Void){
-//        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constant.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)") else {
-//            print("invalid url")
-//            return
-//        }
-//
-//
-//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            guard let data = data, error == nil else {
-//                print(error?.localizedDescription as Any)
-//                return
-//            }
-//            do {
-//
-//                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                let result = try JSONDecoder().decode(LoginResponse.self, from: data)
-//                print(result)
-//                completion(.success(result))
-//
-//            } catch {
-//                completion(.failure(error))
-//            }
-//        }
-//        task.resume()
+    
+    func getRequestToken(compeltion: @escaping (Result<RequestToken, Error>) -> Void){
+
         
-        let url =  "\(Constant.baseUrl)3/authentication/token/validate_with_login?api_key=\(Constant.ApiKey)&username=\(username)&password=\(password)&request_token=\(requestToken)"
+       let url =  "\(Constant.baseUrl)3/authentication/token/new?"
+        let parameters: Parameters = [
+                    "api_key" : "\(Constant.ApiKey)"
+                   
+        ]
+        AF.request(url, method: .get, parameters: parameters).response { (response) in
+            switch response.result {
+            case .success(let data):
+                let result = RequestToken(JSON(data!))
+                compeltion(.success(result))
+            case .failure(let error):
+                compeltion(.failure(error))
+                
+            }
+        }
+    }
+    func creatSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (Result<LoginResponse, Error>) -> Void){
+//
+        
+        let url =  "\(Constant.baseUrl)3/authentication/token/validate_with_login?"
         let parameters: Parameters = [
             "api_key" : "\(Constant.ApiKey)",
             "username" : username,
@@ -79,33 +77,7 @@ class APICaller {
         
     }
     func getSessionId(requesToken:String, completion: @escaping (Result<String, Error>)->Void){
-//        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/session/new?api_key=\(Constant.ApiKey)&request_token=\(requesToken)") else {
-//            print("invalid url")
-//            return
-//        }
-//        print(url)
-//        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
-//            guard let data = data, error == nil else {
-//                print("invalid")
-//                return
-//            }
-//            do {
-//
-//                //                let result = try JSONDecoder().decode(SessionId.self, from: data)
-//                //                print(result.session_id)
-//                //completion(.success(result.session_id))
-//                let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                print(result)
-//                let a = try JSONDecoder().decode(SessionId.self, from: data)
-//                print(a.session_id)
-//                completion(.success(a.session_id))
-//                //                print(result.session_id)
-//            } catch{
-//                completion(.failure(error))
-//                print(error.localizedDescription)
-//            }
-//        }
-//        task.resume()
+
         
         let url =  "\(Constant.baseUrl)3/authentication/session/new?"
         
@@ -130,51 +102,7 @@ class APICaller {
 
     }
    
-    func getRequestToken(compeltion: @escaping (Result<RequestToken, Error>) -> Void){
-//        guard let url = URL(string: "\(Constant.baseUrl)3/authentication/token/new?api_key=\(Constant.ApiKey)") else {
-//            return
-//        }
-//        print("getRequestToken", url)
-//        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in
-//            guard let data = data,
-//                  error == nil else {
-//
-//                return
-//
-//            }
-//            do {
-//                //let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                let result = try JSONDecoder().decode(RequestToken.self, from: data)
-//                print(result)
-//                compeltion(.success(result))
-//                //print(result.request_token)
-//
-//            } catch {
-//                compeltion(.failure(error))
-//                print(error.localizedDescription)
-//            }
-//        }
-//        task.resume()
-//
-        
-       
-        
-       let url =  "\(Constant.baseUrl)3/authentication/token/new?"
-        let parameters: Parameters = [
-                    "api_key" : "\(Constant.ApiKey)"
-                   
-        ]
-        AF.request(url, method: .get, parameters: parameters).response { (response) in
-            switch response.result {
-            case .success(let data):
-                let result = RequestToken(JSON(data!))
-                compeltion(.success(result))
-            case .failure(let error):
-                compeltion(.failure(error))
-                
-            }
-        }
-    }
+ 
     func getTrending (mediaType: MediaType, time: TimeWindow, completion: @escaping (Result<[Film], Error>) -> Void){
         guard let url = URL(string: "\(Constant.baseUrl)3/trending/\(mediaType.rawValue)/\(time.rawValue)?api_key=\(Constant.ApiKey)") else {return}
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error) in

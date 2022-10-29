@@ -34,6 +34,15 @@ class LibraryCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    var isLanscape = false {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let strongSelf = self else {return}
+                strongSelf.setupUI()
+            }
+        }
+    }
+    
     private let noFilmView = CreatLabelView()
     var completionToRoot : (() -> Void)?
     var completionShow : ((Film) -> Void)?
@@ -62,9 +71,14 @@ class LibraryCollectionViewCell: UICollectionViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "LibraryCollectionViewCellCell", bundle: nil), forCellWithReuseIdentifier: LibraryCollectionViewCellCell.identifier)
-        collectionView.collectionViewLayout = creatViewLayout()
+        
+        if isLanscape == false {
+            collectionView.collectionViewLayout = creatViewLayout(heightRatio: 0.3)
+        } else {
+            collectionView.collectionViewLayout = creatViewLayout(heightRatio: 1)
+        }
     }
-    func creatViewLayout() -> UICollectionViewCompositionalLayout {
+    func creatViewLayout(heightRatio: Float) -> UICollectionViewCompositionalLayout {
         //item
         let item = CompositionalLayout.createItem(width: .fractionalWidth(0.5), height: .fractionalHeight(1), spacing: 1)
         
@@ -75,7 +89,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
         let verticalgroup = CompositionalLayout.createGroup(alignment: .vertical, width: .fractionalWidth(0.5), height: .fractionalHeight(1), item: horizontalGroup, count: 2)
         
         //group
-        let group = CompositionalLayout.createGroup(alignment: .horizontal, width: .fractionalWidth(1), height: .fractionalHeight(0.3), items: [item, verticalgroup])
+        let group = CompositionalLayout.createGroup(alignment: .horizontal, width: .fractionalWidth(1), height: .fractionalHeight(CGFloat(heightRatio)), items: [item, verticalgroup])
         //section
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)
@@ -111,6 +125,8 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 //        present(vc, animated: true, completion: nil)
         completionShow!(film)
     }
+    
+    
 }
 extension LibraryCollectionViewCell : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

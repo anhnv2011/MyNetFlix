@@ -437,7 +437,7 @@ class HomeViewController: UIViewController {
                 strongSelf.makeBasicCustomAlert(title: "Error".localized(), messaage: error.localizedDescription)
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.loadingTextView.removeFromSuperview()
         }
         DispatchQueue.main.async { [weak self] in

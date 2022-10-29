@@ -63,6 +63,15 @@ class LibraryViewController: UIViewController{
         }
     }
     
+    var isLanscape = false {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let strongSelf = self else {return}
+                strongSelf.setupUI()
+                print(strongSelf.isLanscape)
+            }
+        }
+    }
     //MARK:- Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +149,31 @@ class LibraryViewController: UIViewController{
     }
     
     
+    //MARK:- Landscape, portrait
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.current.orientation.isLandscape {
+            configUIForLandscape()
+        } else {
+            configUIForPortrait()
+        }
+        
+        self.view.setNeedsUpdateConstraints()
+    }
+    override func updateViewConstraints() {
+    
+        super.updateViewConstraints()
+    }
+    private func configUIForLandscape(){
+        isLanscape = true
+        view.layoutIfNeeded()
+    }
+    
+    private func configUIForPortrait (){
+        isLanscape = false
+        view.layoutIfNeeded()
+
+    }
+    
     //MARK:- Fetch Data
     private func fetchData(){
         if libraryType == .favorite {
@@ -158,6 +192,7 @@ class LibraryViewController: UIViewController{
             getRateTVList()
         }
     }
+    
     //MARK:- Notification
     private func setupNotification() {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.favoriteNotiName, object: nil, queue: nil) { [weak self] _ in
@@ -312,6 +347,8 @@ extension LibraryViewController: UIScrollViewDelegate{
 }
 
 
+    //MARK:- Collection View Delegate, Datasource
+
 extension LibraryViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
@@ -320,7 +357,7 @@ extension LibraryViewController : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LibraryCollectionViewCell.identifier, for: indexPath) as! LibraryCollectionViewCell
         cell.type = self.libraryType
-        
+        cell.isLanscape = self.isLanscape
         cell.completionToRoot = { [weak self] in
              self?.navigationController?.popToRootViewController(animated: true)
         }
