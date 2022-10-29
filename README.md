@@ -40,7 +40,8 @@
 - Thêm, sửa, xoá, tuỳ chọn danh sách, yêu thích, hoặc lưu lại  các bộ phim 
 - Một vài custom animation nhỏ cho present, navigaton hay cell của tableview, collection view
 -  Xem trailer phim 
-- Test và dev trên ios 15, không hỗ trợ lanscape
+- Preview bằng cách longtap khi ở màn hình home
+- Test và dev trên ios 15, hỗ trợ lanscape (update)
 
 ## Mục tiêu và kết quả của project
 - Thực hành call API: Get, post, delete..
