@@ -67,7 +67,7 @@ class LoginViewController: UIViewController {
     }
     
     private func notificationCenter(){
-        NotificationCenter.default.addObserver(self, selector: #selector(changeLanguage), name: Notification.Name("ChangeLanguage"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeLanguage), name: Notification.Name.changeLanguageNotiName, object: nil)
     }
     @objc func changeLanguage(){
         setupUI()

@@ -48,7 +48,7 @@ class PlayerViewController: UIViewController {
     
     private func fetchData(){
         let name = film.originalTitle != nil ? film.originalTitle : film.originalName
-        let key = name! + "Trailer"
+         let key = name! + "Trailer"
         getYoutubeLink(filmname: key)
     }
     

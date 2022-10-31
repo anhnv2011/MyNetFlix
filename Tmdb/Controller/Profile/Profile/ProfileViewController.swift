@@ -177,7 +177,7 @@ class ProfileViewController: UIViewController {
         tableView.register(UINib(nibName: "ExpenableHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: ExpenableHeaderView.identifier)
         tableView.register(UINib(nibName: "LogoutTableViewCell", bundle: nil), forCellReuseIdentifier: LogoutTableViewCell.identifier)
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor.backgroundColor()
+        tableView.backgroundColor = UIColor.viewBackground()
         
     }
     
@@ -185,7 +185,7 @@ class ProfileViewController: UIViewController {
     //MARK:- TableViewAction
     private func selectedLanguages(selectedLanguage: String){
         DataManager.shared.saveLanguage(code: selectedLanguage)
-        NotificationCenter.default.post(name: Notification.Name("ChangeLanguage"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name.changeLanguageNotiName, object: nil)
         DispatchQueue.main.async {
             self.setupUI()
             

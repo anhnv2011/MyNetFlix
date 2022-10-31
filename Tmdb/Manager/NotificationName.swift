@@ -13,5 +13,5 @@ extension Notification.Name {
     static let favoriteNotiName = Notification.Name("Favorite")
     static let watchListNotiName = Notification.Name("WatchList")
     static let downloadNotiName = Notification.Name(rawValue: "Download")
-
+    static let changeLanguageNotiName = Notification.Name(rawValue: "ChangeLanguage")
 }

@@ -23,7 +23,8 @@ class MainTabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(view.frame.width)
+        print(view.frame.height)
         setupUI()
         getProfileData()
     }

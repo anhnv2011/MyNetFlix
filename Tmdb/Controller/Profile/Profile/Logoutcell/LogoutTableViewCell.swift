@@ -15,6 +15,7 @@ class LogoutTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
+        notificationCenter()
     }
 
     @IBAction func logOut(_ sender: UIButton) {
@@ -22,7 +23,7 @@ class LogoutTableViewCell: UITableViewCell {
     }
     private func setupUI(){
         logoutButton.layer.cornerRadius = 0
-        logoutButton.setTitle("LogOut".localized(), for: .normal)
+        logoutButton.setTitle("Log Out".localized(), for: .normal)
         logoutButton.setTitleColor(UIColor.toggleButtonColor(), for: .normal)
         logoutButton.backgroundColor = .darkGray
         backgroundColor = UIColor.cellBackground()
@@ -32,5 +33,10 @@ class LogoutTableViewCell: UITableViewCell {
 
         
     }
-    
+    private func notificationCenter(){
+        NotificationCenter.default.addObserver(self, selector: #selector(changeLanguage), name: Notification.Name.changeLanguageNotiName, object: nil)
+    }
+    @objc func changeLanguage(){
+        setupUI()
+    }
 }
