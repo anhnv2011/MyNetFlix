@@ -53,8 +53,8 @@ class ShowMoreInforViewController: UIViewController {
         setupSubView()
     }
     private func setupSubView(){
-        safeView.backgroundColor = UIColor.viewBackground()
-        bottomSafeView.backgroundColor = UIColor.viewBackground()
+        safeView.backgroundColor = UIColor.tabbarBackground().withAlphaComponent(0.95)
+        bottomSafeView.backgroundColor = UIColor.naviBackground().withAlphaComponent(0.95)
 //        view.backgroundColor = UIColor.viewBackground()
     }
     private func setupPlayer(){
