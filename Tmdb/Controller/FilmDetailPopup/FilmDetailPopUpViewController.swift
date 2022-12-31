@@ -97,6 +97,11 @@ class FilmDetailPopUpViewController: UIViewController {
         fetchData()
        
     }
+    ///asdasdasdasdads
+    func saasdasd(){
+        
+    }
+    
     
     //MARK:- fetchData
     func fetchData(){
@@ -315,8 +320,8 @@ class FilmDetailPopUpViewController: UIViewController {
         present(popVC, animated: true, completion: nil)
     }
     
-    
-    private func showMore(){
+    ///aasdasdassda
+    func showMore(){
         let vc = ShowMoreInforViewController()
         vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .fullScreen
@@ -331,6 +336,7 @@ class FilmDetailPopUpViewController: UIViewController {
     
     
 }
+
 
 //MARK:- Favorite function
 extension FilmDetailPopUpViewController{

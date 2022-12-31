@@ -134,10 +134,10 @@
 		04EDC9D6291038C400F19BF0 /* Preview.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04EDC9D5291038C400F19BF0 /* Preview.gif */; };
 		04EDC9DE2910393400F19BF0 /* WatchList.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04EDC9DD2910393400F19BF0 /* WatchList.gif */; };
 		04EDC9E629103B2700F19BF0 /* ChooseFilm.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04EDC9E529103B2700F19BF0 /* ChooseFilm.gif */; };
-		04EDC9EB29103BBE00F19BF0 /* Search.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04EDC9EA29103BBE00F19BF0 /* Search.gif */; };
 		04EDC9F329103C6B00F19BF0 /* Library.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04EDC9F229103C6B00F19BF0 /* Library.gif */; };
 		04EEACFF2910D015002D39BE /* ShowMores.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04EEACFE2910D015002D39BE /* ShowMores.gif */; };
 		04EEAD0D2910D0D2002D39BE /* ShowMore.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EEAD0C2910D0D2002D39BE /* ShowMore.png */; };
+		04EEAD462911A394002D39BE /* Search.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04EEAD452911A393002D39BE /* Search.gif */; };
 		04EF691C28DDFAF9005D5C0A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF691B28DDFAF9005D5C0A /* LoginViewModel.swift */; };
 		04F7160328F085C6002DB4C3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04F7160528F085C6002DB4C3 /* Localizable.strings */; };
 		04FA057528EAD7CD008628F1 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FA057428EAD7CD008628F1 /* PopupViewController.swift */; };
@@ -310,10 +310,10 @@
 		04EDC9D5291038C400F19BF0 /* Preview.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Preview.gif; sourceTree = "<group>"; };
 		04EDC9DD2910393400F19BF0 /* WatchList.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = WatchList.gif; sourceTree = "<group>"; };
 		04EDC9E529103B2700F19BF0 /* ChooseFilm.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ChooseFilm.gif; sourceTree = "<group>"; };
-		04EDC9EA29103BBE00F19BF0 /* Search.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Search.gif; sourceTree = "<group>"; };
 		04EDC9F229103C6B00F19BF0 /* Library.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Library.gif; sourceTree = "<group>"; };
 		04EEACFE2910D015002D39BE /* ShowMores.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ShowMores.gif; sourceTree = "<group>"; };
 		04EEAD0C2910D0D2002D39BE /* ShowMore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShowMore.png; sourceTree = "<group>"; };
+		04EEAD452911A393002D39BE /* Search.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Search.gif; sourceTree = "<group>"; };
 		04EF691B28DDFAF9005D5C0A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		04F7160428F085C6002DB4C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04F7160928F08612002DB4C3 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -567,8 +567,8 @@
 				04EDC9A82910317200F19BF0 /* SketchyHeader.gif */,
 				04EDC9E529103B2700F19BF0 /* ChooseFilm.gif */,
 				04EEACFE2910D015002D39BE /* ShowMores.gif */,
-				04EDC9EA29103BBE00F19BF0 /* Search.gif */,
 				04EDC99B2910304E00F19BF0 /* Download.gif */,
+				04EEAD452911A393002D39BE /* Search.gif */,
 				04EDC9DD2910393400F19BF0 /* WatchList.gif */,
 				04EDC98829102E1800F19BF0 /* ChangeLanguage.gif */,
 				04EDC9F229103C6B00F19BF0 /* Library.gif */,
@@ -1102,6 +1102,7 @@
 				04EDC9E629103B2700F19BF0 /* ChooseFilm.gif in Resources */,
 				04EEACFF2910D015002D39BE /* ShowMores.gif in Resources */,
 				04EDC9DE2910393400F19BF0 /* WatchList.gif in Resources */,
+				04EEAD462911A394002D39BE /* Search.gif in Resources */,
 				045A3AE6286779DF000F84DE /* LaunchScreen.storyboard in Resources */,
 				04FEB079288E55B000A88F5A /* LoginViewController.xib in Resources */,
 				045A3AE3286779DF000F84DE /* Assets.xcassets in Resources */,
@@ -1115,7 +1116,6 @@
 				04D789E828677F8D007030DE /* DownloadViewController.xib in Resources */,
 				0457B2DD290BF6BF007060F0 /* NoLibrary.png in Resources */,
 				0438CF302900734C0000C00E /* LibraryCollectionViewCell.xib in Resources */,
-				04EDC9EB29103BBE00F19BF0 /* Search.gif in Resources */,
 				043300FC28F56475005C061A /* ListsViewController.xib in Resources */,
 				04D789D528677ED7007030DE /* UpcommingViewController.xib in Resources */,
 				04474D7B28FC8F0000A7FC94 /* ShowMoreTableViewCell.xib in Resources */,
